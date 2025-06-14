@@ -6,43 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXContainerItemProxy section */
-		442CF7712DFDBBFB00A7E8DC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 442CF7592DFDBBFA00A7E8DC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 442CF7602DFDBBFA00A7E8DC;
-			remoteInfo = Periscope;
-		};
-		442CF77B2DFDBBFB00A7E8DC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 442CF7592DFDBBFA00A7E8DC /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 442CF7602DFDBBFA00A7E8DC;
-			remoteInfo = Periscope;
-		};
-/* End PBXContainerItemProxy section */
+/* Begin PBXBuildFile section */
+		442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */ = {isa = PBXBuildFile; productRef = 442CF78F2DFDBCD900A7E8DC /* Lego */; };
+/* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		442CF7612DFDBBFA00A7E8DC /* Periscope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Periscope.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		442CF7702DFDBBFB00A7E8DC /* PeriscopeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PeriscopeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		442CF77A2DFDBBFB00A7E8DC /* PeriscopeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PeriscopeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		442CF78D2DFDBC2400A7E8DC /* Lego */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Lego; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		442CF7632DFDBBFA00A7E8DC /* Periscope */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Periscope;
-			sourceTree = "<group>";
-		};
-		442CF7732DFDBBFB00A7E8DC /* PeriscopeTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PeriscopeTests;
-			sourceTree = "<group>";
-		};
-		442CF77D2DFDBBFB00A7E8DC /* PeriscopeUITests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PeriscopeUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -52,20 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		442CF76D2DFDBBFB00A7E8DC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		442CF7772DFDBBFB00A7E8DC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,9 +38,8 @@
 		442CF7582DFDBBFA00A7E8DC = {
 			isa = PBXGroup;
 			children = (
+				442CF78D2DFDBC2400A7E8DC /* Lego */,
 				442CF7632DFDBBFA00A7E8DC /* Periscope */,
-				442CF7732DFDBBFB00A7E8DC /* PeriscopeTests */,
-				442CF77D2DFDBBFB00A7E8DC /* PeriscopeUITests */,
 				442CF7622DFDBBFA00A7E8DC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,8 +48,6 @@
 			isa = PBXGroup;
 			children = (
 				442CF7612DFDBBFA00A7E8DC /* Periscope.app */,
-				442CF7702DFDBBFB00A7E8DC /* PeriscopeTests.xctest */,
-				442CF77A2DFDBBFB00A7E8DC /* PeriscopeUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -112,56 +72,11 @@
 			);
 			name = Periscope;
 			packageProductDependencies = (
+				442CF78F2DFDBCD900A7E8DC /* Lego */,
 			);
 			productName = Periscope;
 			productReference = 442CF7612DFDBBFA00A7E8DC /* Periscope.app */;
 			productType = "com.apple.product-type.application";
-		};
-		442CF76F2DFDBBFB00A7E8DC /* PeriscopeTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 442CF7872DFDBBFB00A7E8DC /* Build configuration list for PBXNativeTarget "PeriscopeTests" */;
-			buildPhases = (
-				442CF76C2DFDBBFB00A7E8DC /* Sources */,
-				442CF76D2DFDBBFB00A7E8DC /* Frameworks */,
-				442CF76E2DFDBBFB00A7E8DC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				442CF7722DFDBBFB00A7E8DC /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				442CF7732DFDBBFB00A7E8DC /* PeriscopeTests */,
-			);
-			name = PeriscopeTests;
-			packageProductDependencies = (
-			);
-			productName = PeriscopeTests;
-			productReference = 442CF7702DFDBBFB00A7E8DC /* PeriscopeTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		442CF7792DFDBBFB00A7E8DC /* PeriscopeUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 442CF78A2DFDBBFB00A7E8DC /* Build configuration list for PBXNativeTarget "PeriscopeUITests" */;
-			buildPhases = (
-				442CF7762DFDBBFB00A7E8DC /* Sources */,
-				442CF7772DFDBBFB00A7E8DC /* Frameworks */,
-				442CF7782DFDBBFB00A7E8DC /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				442CF77C2DFDBBFB00A7E8DC /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				442CF77D2DFDBBFB00A7E8DC /* PeriscopeUITests */,
-			);
-			name = PeriscopeUITests;
-			packageProductDependencies = (
-			);
-			productName = PeriscopeUITests;
-			productReference = 442CF77A2DFDBBFB00A7E8DC /* PeriscopeUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
@@ -176,14 +91,6 @@
 					442CF7602DFDBBFA00A7E8DC = {
 						CreatedOnToolsVersion = 26.0;
 					};
-					442CF76F2DFDBBFB00A7E8DC = {
-						CreatedOnToolsVersion = 26.0;
-						TestTargetID = 442CF7602DFDBBFA00A7E8DC;
-					};
-					442CF7792DFDBBFB00A7E8DC = {
-						CreatedOnToolsVersion = 26.0;
-						TestTargetID = 442CF7602DFDBBFA00A7E8DC;
-					};
 				};
 			};
 			buildConfigurationList = 442CF75C2DFDBBFA00A7E8DC /* Build configuration list for PBXProject "Periscope" */;
@@ -195,34 +102,21 @@
 			);
 			mainGroup = 442CF7582DFDBBFA00A7E8DC;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				442CF78E2DFDBCD900A7E8DC /* XCLocalSwiftPackageReference "Lego" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 442CF7622DFDBBFA00A7E8DC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				442CF7602DFDBBFA00A7E8DC /* Periscope */,
-				442CF76F2DFDBBFB00A7E8DC /* PeriscopeTests */,
-				442CF7792DFDBBFB00A7E8DC /* PeriscopeUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		442CF75F2DFDBBFA00A7E8DC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		442CF76E2DFDBBFB00A7E8DC /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		442CF7782DFDBBFB00A7E8DC /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -239,34 +133,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		442CF76C2DFDBBFB00A7E8DC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		442CF7762DFDBBFB00A7E8DC /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		442CF7722DFDBBFB00A7E8DC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 442CF7602DFDBBFA00A7E8DC /* Periscope */;
-			targetProxy = 442CF7712DFDBBFB00A7E8DC /* PBXContainerItemProxy */;
-		};
-		442CF77C2DFDBBFB00A7E8DC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 442CF7602DFDBBFA00A7E8DC /* Periscope */;
-			targetProxy = 442CF77B2DFDBBFB00A7E8DC /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		442CF7822DFDBBFB00A7E8DC /* Debug */ = {
@@ -452,86 +319,6 @@
 			};
 			name = Release;
 		};
-		442CF7882DFDBBFB00A7E8DC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = W2MHQ39N9M;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniqlabs.PeriscopeTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Periscope.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Periscope";
-			};
-			name = Debug;
-		};
-		442CF7892DFDBBFB00A7E8DC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = W2MHQ39N9M;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniqlabs.PeriscopeTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Periscope.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Periscope";
-			};
-			name = Release;
-		};
-		442CF78B2DFDBBFB00A7E8DC /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = W2MHQ39N9M;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniqlabs.PeriscopeUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Periscope;
-			};
-			name = Debug;
-		};
-		442CF78C2DFDBBFB00A7E8DC /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = W2MHQ39N9M;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.uniqlabs.PeriscopeUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Periscope;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -553,25 +340,21 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		442CF7872DFDBBFB00A7E8DC /* Build configuration list for PBXNativeTarget "PeriscopeTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				442CF7882DFDBBFB00A7E8DC /* Debug */,
-				442CF7892DFDBBFB00A7E8DC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		442CF78A2DFDBBFB00A7E8DC /* Build configuration list for PBXNativeTarget "PeriscopeUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				442CF78B2DFDBBFB00A7E8DC /* Debug */,
-				442CF78C2DFDBBFB00A7E8DC /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		442CF78E2DFDBCD900A7E8DC /* XCLocalSwiftPackageReference "Lego" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Lego;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		442CF78F2DFDBCD900A7E8DC /* Lego */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Lego;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 442CF7592DFDBBFA00A7E8DC /* Project object */;
 }

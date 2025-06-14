@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import Lego
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
@@ -20,6 +21,7 @@ struct ContentView: View {
                         Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
                     } label: {
                         Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                            .foregroundColor(.highlightColor)
                     }
                 }
                 .onDelete(perform: deleteItems)
