@@ -3,6 +3,7 @@ import Foundation
 /// Represents the supported HTTP methods for network requests.
 public enum HTTPMethod: String {
     case get = "GET"
+    case post = "POST"
 }
 
 /// Protocol defining the necessary properties for an API endpoint.
@@ -22,16 +23,21 @@ public protocol API {
     /// The timeout interval for the request.
     var timeout: TimeInterval { get }
     
-    /// The query paramenter attached with the request
-    var queryParamenters: [String: String] { get }
+    /// The query parameter attached with the request
+    var queryParameters: [String: String] { get }
+    
+    /// The body to attach to the request (for POST, PUT, etc.)
+    var body: Data? { get }
 }
 
 // MARK: - Optional conformance
 
 public extension API {
-    var queryParamenters: [String: String] {
+    var queryParameters: [String: String] {
         [:]
     }
+    
+    var body: Data? { nil }
 }
 
 extension API {
@@ -43,9 +49,9 @@ extension API {
         
         var components = URLComponents(url: urlWithPath, resolvingAgainstBaseURL: false)
         
-        if !queryParamenters.isEmpty {
+        if !queryParameters.isEmpty {
             // We don't want the trailling `?`
-            components?.queryItems = queryParamenters.map(URLQueryItem.init)
+            components?.queryItems = queryParameters.map(URLQueryItem.init)
         }
         
         guard let finalURL = components?.url else {
@@ -59,6 +65,7 @@ extension API {
         )
         
         urlRequest.httpMethod = method.rawValue
+        urlRequest.httpBody = body
         return urlRequest
     }
 }
