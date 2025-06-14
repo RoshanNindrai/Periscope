@@ -13,6 +13,7 @@
 /* Begin PBXFileReference section */
 		442CF7612DFDBBFA00A7E8DC /* Periscope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Periscope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		442CF78D2DFDBC2400A7E8DC /* Lego */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Lego; sourceTree = "<group>"; };
+		442CF7912DFDC11500A7E8DC /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Networking; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -38,6 +39,7 @@
 		442CF7582DFDBBFA00A7E8DC = {
 			isa = PBXGroup;
 			children = (
+				442CF7912DFDC11500A7E8DC /* Networking */,
 				442CF78D2DFDBC2400A7E8DC /* Lego */,
 				442CF7632DFDBBFA00A7E8DC /* Periscope */,
 				442CF7622DFDBBFA00A7E8DC /* Products */,
