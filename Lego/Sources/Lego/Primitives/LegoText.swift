@@ -7,92 +7,103 @@ import SwiftUI
 ///
 /// Example:
 /// ```swift
-/// LegoText("Welcome!", style: .title) {
+/// LegoText(
+///     "Welcome!",
+///     style: styleSheet.text(.title)
+/// ) {
 ///     $0.multilineTextAlignment(.center)
 /// }
 /// ```
 public struct LegoText<ContentView: View>: View {
     
-    public enum TextStyle {
+    @Environment(\.styleSheet)
+    var styleSheet: StyleSheet
+    
+    private let verbatim: String
+    
+    private let style: TextStyle
+    
+    private let textModifier: (Text) -> ContentView
+    
+    public init(
+        _ text: String,
+        style: TextStyle,
+        textModifier: @escaping (Text) -> ContentView = { $0 }
+    ) {
+        self.verbatim = text
+        
+        self.style = style
+        
+        self.textModifier = textModifier
+    }
+    
+    public var body: some View {
+        textModifier(Text(verbatim))
+            .font(style.textFont)
+            .foregroundColor(style.textColor)
+    }
+}
+
+extension LegoText {
+    
+    public enum TextType {
         case title
         case subtitle
         case body
         case callout
         case caption
     }
-
-    @Environment(\.styleSheet)
-    var styleSheet: StyleSheet
     
-    private let verbatim: String
-    private let style: LegoText.TextStyle
-    private let textModifier: (Text) -> ContentView
-    
-    public init(
-        _ text: String,
-        style: LegoText.TextStyle,
-        textModifier: @escaping (Text) -> ContentView = { $0 }
-    ) {
-        self.verbatim = text
-        self.style = style
-        self.textModifier = textModifier
-    }
-    
-    public var body: some View {
-        textModifier(Text(verbatim))
-            .font(font)
-            .foregroundColor(foregroundColor)
+    public struct TextStyle {
+        let textColor: SwiftUI.Color
+        
+        let textFont: Font
     }
 }
 
-// MARK: - Helpers
-
-private extension LegoText {
-    var font: Font {
-        switch style {
-            case .title:
-            styleSheet.typography.title
-        case .subtitle:
-            styleSheet.typography.subtitle
-        case .body:
-            styleSheet.typography.body
-        case .callout:
-            styleSheet.typography.callout
-        case .caption:
-            styleSheet.typography.caption
-        }
-    }
+public extension StyleSheet {
     
-    var foregroundColor: SwiftUI.Color {
+    func text<Content: View>(_ style: LegoText<Content>.TextType) -> LegoText<Content>.TextStyle {
         switch style {
-            case .title:
-            styleSheet.colors.textPrimary
-        case .subtitle, .callout, .caption:
-            styleSheet.colors.textSecondary
+        case .title:
+            return LegoText<Content>.TextStyle(textColor: colors.textPrimary, textFont: typography.title)
+            
+        case .subtitle:
+            return LegoText<Content>.TextStyle(textColor: colors.textSecondary, textFont: typography.subtitle)
+            
         case .body:
-            styleSheet.colors.textPrimary
+            return LegoText<Content>.TextStyle(textColor: colors.textPrimary, textFont: typography.body)
+            
+        case .callout:
+            return LegoText<Content>.TextStyle(textColor: colors.textSecondary, textFont: typography.callout)
+            
+        case .caption:
+            return LegoText<Content>.TextStyle(textColor: colors.textSecondary, textFont: typography.caption)
         }
     }
 }
 
 #Preview {
-    LegoText("Welcome to the Galactic Library", style: .title) {
+    
+    let styleSheet = LegoStyleSheet()
+    
+    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.title)) {
         $0.multilineTextAlignment(.center)
     }
     
-    LegoText("Welcome to the Galactic Library", style: .subtitle) {
+    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.subtitle)) {
         $0.multilineTextAlignment(.center)
     }
     
-    LegoText("Welcome to the Galactic Library", style: .body) {
+    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.body)) {
         $0.multilineTextAlignment(.center)
     }
     
-    LegoText("Welcome to the Galactic Library", style: .callout){
+    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.callout)) {
         $0.multilineTextAlignment(.center)
     }
     
-    LegoText("Welcome to the Galactic Library", style: .caption){
+    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.caption)) {
         $0.multilineTextAlignment(.center)
     }
 }

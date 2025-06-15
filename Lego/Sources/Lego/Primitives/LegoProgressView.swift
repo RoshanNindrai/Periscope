@@ -10,7 +10,7 @@ import SwiftUI
 /// LegoProgressView()
 /// ```
 public struct LegoProgressView: View {
-
+    
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     

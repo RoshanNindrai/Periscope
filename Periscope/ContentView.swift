@@ -9,16 +9,20 @@ import SwiftUI
 import SwiftData
 import Lego
 
+
 struct ContentView: View {
+    
     @Environment(\.modelContext) private var modelContext
+    
     @Query private var items: [Item]
+    
 
     var body: some View {
         NavigationSplitView {
             List {
                 ForEach(items) { item in
                     NavigationLink {
-                        LegoText("Item at \(item.timestamp.formatted(date: .numeric, time: .standard))", style: .title)
+                        Text("Item at \(item.timestamp.formatted(date: .numeric, time: .standard))")
                     } label: {
                         Text(item.timestamp.formatted(date: .numeric, time: .standard))
                             .foregroundColor(.primary)
@@ -30,6 +34,7 @@ struct ContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     EditButton()
                 }
+                
                 ToolbarItem {
                     Button(action: addItem) {
                         Label("Add Item", systemImage: "plus")
@@ -40,6 +45,7 @@ struct ContentView: View {
             Text("Select an item")
         }
     }
+    
 
     private func addItem() {
         withAnimation {
@@ -47,6 +53,7 @@ struct ContentView: View {
             modelContext.insert(newItem)
         }
     }
+    
 
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
@@ -57,7 +64,9 @@ struct ContentView: View {
     }
 }
 
+
 #Preview {
     ContentView()
         .modelContainer(for: Item.self, inMemory: true)
 }
+
