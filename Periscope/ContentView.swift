@@ -18,10 +18,10 @@ struct ContentView: View {
             List {
                 ForEach(items) { item in
                     NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                        LegoText("Item at \(item.timestamp.formatted(date: .numeric, time: .standard))", style: .title)
                     } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                            .foregroundColor(.highlightColor)
+                        Text(item.timestamp.formatted(date: .numeric, time: .standard))
+                            .foregroundColor(.primary)
                     }
                 }
                 .onDelete(perform: deleteItems)

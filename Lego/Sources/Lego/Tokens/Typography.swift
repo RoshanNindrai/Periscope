@@ -1,11 +1,11 @@
 import SwiftUI
 
-public extension Font {
-    static let largeTitle = Font.system(size: 34, weight: .bold, design: .default)
-    static let title = Font.system(size: 24, weight: .semibold)
-    static let subtitle = Font.system(size: 18, weight: .medium)
-    static let body = Font.system(size: 16, weight: .regular)
-    static let callout = Font.system(size: 14, weight: .regular)
-    static let caption = Font.system(size: 12, weight: .regular)
-    static let button = Font.system(size: 16, weight: .semibold)
+public struct Typography: Sendable {
+    public let largeTitle = Font.system(.largeTitle, design: .default).weight(.bold)
+    public let title = Font.system(.title2, design: .default).weight(.semibold)
+    public let subtitle = Font.system(.subheadline, design: .default).weight(.medium)
+    public let body = Font.system(.body, design: .default).weight(.regular)
+    public let callout = Font.system(.callout, design: .default).weight(.regular)
+    public let caption = Font.system(.caption, design: .default).weight(.regular)
+    public let button = Font.system(.headline, design: .default).weight(.semibold)
 }
