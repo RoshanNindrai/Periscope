@@ -1,4 +1,5 @@
 import Foundation
+import Networking
 
 private typealias RawNetworkResponse = (data: Data, response: HTTPURLResponse?)
 

@@ -4,6 +4,11 @@ import Foundation
 public struct NetworkResponse<Resource: Decodable> {
     public let resource: Resource
     public let cacheExpiryDate: Date?
+    
+    public init(resource: Resource, cacheExpiryDate: Date?) {
+        self.resource = resource
+        self.cacheExpiryDate = cacheExpiryDate
+    }
 }
 
 /// Error that might occur while executing a request at Client / Server end.

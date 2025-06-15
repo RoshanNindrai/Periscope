@@ -40,7 +40,7 @@ public extension API {
     var body: Data? { nil }
 }
 
-extension API {
+public extension API {
     /// Converts the API definition into a `URLRequest` object.
     /// - Returns: A configured `URLRequest`.
     func toURLRequest() -> URLRequest {
