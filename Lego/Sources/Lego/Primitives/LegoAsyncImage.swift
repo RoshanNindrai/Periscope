@@ -1,16 +1,13 @@
 import SwiftUI
 
-
 @Observable
 private final class LegoAsyncImageState {
-
     var imageData: Data?
     
     var uiImage: UIImage? {
         return imageData.flatMap(UIImage.init)
     }
 }
-
 
 /// A simple SwiftUI view that asynchronously loads and displays an image from a URL.
 ///
@@ -37,19 +34,15 @@ private final class LegoAsyncImageState {
 public struct LegoAsyncImage<Placeholder: View, ContentView: View>: View {
 
     private let url: URL
-
     private let placeholder: () -> Placeholder
-
     private let imageModifier: (Image) -> ContentView
     
     
     @Environment(\.imageLoader)
     private var imageLoader: ImageLoader
-
     
     @State
     private var state: LegoAsyncImageState = .init()
-
     
     init(
         url: URL,
@@ -74,14 +67,10 @@ public struct LegoAsyncImage<Placeholder: View, ContentView: View>: View {
     }
 }
 
-
 // MARK: - Image Loader
 
-
 struct NetworkImageLoader {
-
     private let session: URLSession
-
     
     init(session: URLSession = .shared) {
         self.session = session
@@ -93,13 +82,9 @@ struct NetworkImageLoader {
     }
 }
 
-
 actor InflightImageRequest {
-
     private var requestMap: [URL: Task<Data, Error>] = [:]
-
     static let shared = InflightImageRequest()
-
     
     func addRequest(for url: URL, task: Task<Data, Error>) {
         requestMap[url] = task
@@ -115,13 +100,9 @@ actor InflightImageRequest {
     }
 }
 
-
 struct ImageLoader {
-
     private let networkImageLoader: NetworkImageLoader
-
     private let inflightImageRequest: InflightImageRequest
-
     
     init(
         networkImageLoader: NetworkImageLoader = .init(),
@@ -137,7 +118,6 @@ struct ImageLoader {
         }
 
         if let inFlightRequest = await inflightImageRequest.request(for: url) {
-            print("Fetching from inflight")
             return try await inFlightRequest.value
         }
                 
@@ -154,13 +134,10 @@ struct ImageLoader {
 
 
 struct ImageLoaderEnvironmentKey: EnvironmentKey {
-
     static let defaultValue: ImageLoader = .init()
 }
 
-
 extension EnvironmentValues {
-
     var imageLoader: ImageLoader {
         get {
             self[ImageLoaderEnvironmentKey.self]
@@ -170,17 +147,16 @@ extension EnvironmentValues {
     }
 }
 
-
 #Preview {
-
-    LegoAsyncImage(
-        url: URL(string: "https://lumiere-a.akamaihd.net/v1/images/solo-theatrical-poster_f98a86eb_62fc4b3c.jpeg")!,
-        placeholder: {
-            LegoProgressView()
-        },
-        imageViewBuilder: { image in
-            image.resizable().scaledToFit().frame(width: 200, height: 300)
-        }
-    )
-
+    VStack {
+        LegoAsyncImage(
+            url: URL(string: "https://lumiere-a.akamaihd.net/v1/images/solo-theatrical-poster_f98a86eb_62fc4b3c.jpeg")!,
+            placeholder: {
+                LegoProgressView(type: .medium)
+            },
+            imageViewBuilder: { image in
+                image.resizable().scaledToFit().frame(width: 200, height: 300)
+            }
+        )
+    }
 }

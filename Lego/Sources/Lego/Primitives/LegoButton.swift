@@ -98,8 +98,6 @@ public struct LegoButton<Label: View, ContentView: View>: View {
 
 /// A stylable button view for consistent appearance, based on the application's StyleSheet.
 extension LegoButton {
-
-
     /// Predefined roles for button styles, indicating the common use cases for each style.
     ///
     /// Use `.primary` for the main call-to-action buttons, `.secondary` for less prominent actions, and `.error` for destructive or error-related actions.

@@ -45,7 +45,6 @@ public struct LegoText<ContentView: View>: View {
 }
 
 extension LegoText {
-    
     public enum TextType {
         case title
         case subtitle
