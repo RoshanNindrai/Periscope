@@ -150,7 +150,9 @@ extension EnvironmentValues {
 #Preview {
     VStack {
         LegoAsyncImage(
-            url: URL(string: "https://lumiere-a.akamaihd.net/v1/images/solo-theatrical-poster_f98a86eb_62fc4b3c.jpeg")!,
+            url: URL(
+                string: "https://lumiere-a.akamaihd.net/v1/images/solo-theatrical-poster_f98a86eb_62fc4b3c.jpeg"
+            )!,
             placeholder: {
                 LegoProgressView(type: .medium)
             },

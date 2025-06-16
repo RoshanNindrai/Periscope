@@ -78,6 +78,28 @@ public struct LegoButton<Label: View, ContentView: View>: View {
         )
     }
 
+    /// Convenience initializer for a text-only LegoButton with style, onTap, and buttonModifier.
+    ///
+    /// - Parameters:
+    ///   - style: The button style.
+    ///   - text: The string to display.
+    ///   - textStyle: The LegoText text style.
+    ///   - onTap: Action when the button is tapped.
+    ///   - buttonModifier: Modifier applied to the underlying Button.
+    public init(
+        style: ButtonStyle,
+        text: String,
+        textStyle: LegoText<Text>.TextStyle,
+        onTap: @escaping () -> Void,
+        buttonModifier: @escaping (Button<LegoText<Text>>) -> ContentView = { $0 }
+    ) where Label == LegoText<Text> {
+        self.init(
+            style: style,
+            label: { LegoText(text, style: textStyle) { $0.foregroundColor(.white) } },
+            onTap: onTap,
+            buttonModifier: buttonModifier
+        )
+    }
 
     /// The content and layout of the button.
     public var body: some View {
@@ -122,7 +144,6 @@ extension LegoButton {
     }
 }
 
-
 public extension StyleSheet {
 
     /// Returns the appropriate `ButtonStyleSheet` for a given button role.
@@ -157,10 +178,18 @@ public extension StyleSheet {
     }
 }
 
-
 #Preview {
 
     let styleSheet = LegoStyleSheet()
+    
+    LegoButton(
+        style: styleSheet.button(.primary),
+        text: "Title Button",
+        textStyle: styleSheet.text(.title),
+        onTap: {
+            print("Sign in tapped")
+        }
+    )
     
     LegoButton(
         style: styleSheet.button(.primary),
@@ -170,7 +199,6 @@ public extension StyleSheet {
         onTap: {}
     )
     
-
     // Secondary button with text
     LegoButton(
         style: styleSheet.button(.secondary),
@@ -180,7 +208,6 @@ public extension StyleSheet {
         onTap: {}
     )
     
-
     // Error button with text
     LegoButton(
         style: styleSheet.button(.error),
@@ -190,7 +217,6 @@ public extension StyleSheet {
         onTap: {}
     )
     
-
     // Primary button with async image
     LegoButton(
         style: styleSheet.button(.primary),
@@ -202,5 +228,5 @@ public extension StyleSheet {
         },
         onTap: {}
     )
-    
 }
+

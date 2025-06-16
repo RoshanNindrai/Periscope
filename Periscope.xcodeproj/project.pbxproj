@@ -15,6 +15,7 @@
 		442CF78D2DFDBC2400A7E8DC /* Lego */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Lego; sourceTree = "<group>"; };
 		442CF7912DFDC11500A7E8DC /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Networking; sourceTree = "<group>"; };
 		442CF7932DFDCDA400A7E8DC /* TMDBRepository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TMDBRepository; sourceTree = "<group>"; };
+		4495F77C2E0033140037D598 /* LoginFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginFeature; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -40,6 +41,7 @@
 		442CF7582DFDBBFA00A7E8DC = {
 			isa = PBXGroup;
 			children = (
+				4495F77C2E0033140037D598 /* LoginFeature */,
 				442CF7932DFDCDA400A7E8DC /* TMDBRepository */,
 				442CF7912DFDC11500A7E8DC /* Networking */,
 				442CF78D2DFDBC2400A7E8DC /* Lego */,

@@ -46,6 +46,7 @@ public struct LegoText<ContentView: View>: View {
 
 extension LegoText {
     public enum TextType {
+        case largeTitle
         case title
         case subtitle
         case body
@@ -64,6 +65,8 @@ public extension StyleSheet {
     
     func text<Content: View>(_ style: LegoText<Content>.TextType) -> LegoText<Content>.TextStyle {
         switch style {
+        case .largeTitle:
+            return LegoText<Content>.TextStyle(textColor: colors.textPrimary, textFont: typography.largeTitle)
         case .title:
             return LegoText<Content>.TextStyle(textColor: colors.textPrimary, textFont: typography.title)
             
@@ -85,6 +88,10 @@ public extension StyleSheet {
 #Preview {
     
     let styleSheet = LegoStyleSheet()
+    
+    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.largeTitle)) {
+        $0.multilineTextAlignment(.center)
+    }
     
     LegoText("Welcome to the Galactic Library", style: styleSheet.text(.title)) {
         $0.multilineTextAlignment(.center)
