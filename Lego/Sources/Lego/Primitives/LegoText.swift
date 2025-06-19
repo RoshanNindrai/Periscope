@@ -19,26 +19,46 @@ public struct LegoText<ContentView: View>: View {
     @Environment(\.styleSheet)
     var styleSheet: StyleSheet
     
-    private let verbatim: String
+    /// The localized string key to display.
+    private let key: LocalizedStringKey
     
+    /// The bundle for string localization. Defaults to nil (main bundle).
+    private let bundle: Bundle?
+    
+    /// Visual style for the text view.
     private let style: TextStyle
     
+    /// Closure to customize the Text view (e.g., alignment, line limit).
     private let textModifier: (Text) -> ContentView
     
+    /// Initializes LegoText with a plain `String`. For simple, non-localized text.
     public init(
         _ text: String,
         style: TextStyle,
         textModifier: @escaping (Text) -> ContentView = { $0 }
     ) {
-        self.verbatim = text
-        
+        self.key = LocalizedStringKey(text)
+        self.bundle = nil
         self.style = style
-        
         self.textModifier = textModifier
     }
     
+    /// Initializes LegoText with a `LocalizedStringKey` and optional bundle. Use for localization support.
+    public init(
+        _ text: LocalizedStringKey,
+        bundle: Bundle? = nil,
+        style: TextStyle,
+        textModifier: @escaping (Text) -> ContentView = { $0 }
+    ) {
+        self.key = text
+        self.bundle = bundle
+        self.style = style
+        self.textModifier = textModifier
+    }
+    
+    /// Composes and styles the SwiftUI text view, applying any modifier closure.
     public var body: some View {
-        textModifier(Text(verbatim))
+        textModifier(Text(key, bundle: bundle))
             .font(style.textFont)
             .foregroundColor(style.textColor)
     }

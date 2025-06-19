@@ -21,19 +21,23 @@ public struct LoginFeatureView: View {
 
 private extension LoginFeatureView {
     
+    // Localized: "Periscope"
     var titleView: some View {
         LegoText(
-            "Periscope",
+            LocalizedStringKey("Periscope"),
+            bundle: .module,
             style: styleSheet.text(.largeTitle)
         ) { text in
             text.foregroundColor(.white)
         }
     }
 
+    // Localized: "Sign in"
     var signInButton: some View {
         LegoButton(
             style: styleSheet.button(.primary),
-            text: "Sign in",
+            key: LocalizedStringKey("Sign in"),
+            bundle: .module,
             textStyle: styleSheet.text(.title),
             onTap: {},
             buttonModifier: { button in

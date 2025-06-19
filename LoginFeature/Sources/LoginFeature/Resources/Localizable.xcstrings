@@ -1,0 +1,20 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Periscope" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Periscope"
+          }
+        }
+      }
+    },
+    "Sign in" : {
+      "extractionState" : "manual"
+    }
+  },
+  "version" : "1.1"
+}

@@ -25,7 +25,6 @@ public struct LegoButton<Label: View, ContentView: View>: View {
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
 
-
     private let style: ButtonStyle
 
     private let label: () -> Label
@@ -96,6 +95,33 @@ public struct LegoButton<Label: View, ContentView: View>: View {
         self.init(
             style: style,
             label: { LegoText(text, style: textStyle) { $0.foregroundColor(.white) } },
+            onTap: onTap,
+            buttonModifier: buttonModifier
+        )
+    }
+    
+    /// Creates a LegoButton with localized text as its label.
+    ///
+    /// Use this initializer to display a localized string in a themed button, optionally specifying a bundle for lookup and applying a custom modifier to the Button view.
+    ///
+    /// - Parameters:
+    ///   - style: The button's visual style for consistent theming.
+    ///   - key: The localized string key for the button's label.
+    ///   - bundle: The bundle in which to search for the localized string key. Defaults to `nil` (main bundle).
+    ///   - textStyle: The text style for the label.
+    ///   - onTap: Action performed when the button is tapped.
+    ///   - buttonModifier: Closure to further modify the underlying Button. Defaults to the identity function (no extra modification).
+    public init(
+        style: ButtonStyle,
+        key: LocalizedStringKey,
+        bundle: Bundle? = nil,
+        textStyle: LegoText<Text>.TextStyle,
+        onTap: @escaping () -> Void,
+        buttonModifier: @escaping (Button<LegoText<Text>>) -> ContentView = { $0 }
+    ) where Label == LegoText<Text> {
+        self.init(
+            style: style,
+            label: { LegoText(key, bundle: bundle, style: textStyle) { $0.foregroundColor(.white) } },
             onTap: onTap,
             buttonModifier: buttonModifier
         )
@@ -229,4 +255,5 @@ public extension StyleSheet {
         onTap: {}
     )
 }
+
 
