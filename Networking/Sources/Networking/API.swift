@@ -28,6 +28,9 @@ public protocol API {
     
     /// The body to attach to the request (for POST, PUT, etc.)
     var body: Data? { get }
+    
+    /// The headers to attach to the request
+    var headers: [String: String] { get }
 }
 
 // MARK: - Optional conformance
@@ -38,6 +41,8 @@ public extension API {
     }
     
     var body: Data? { nil }
+    
+    var headers: [String: String] { [:] }
 }
 
 public extension API {
@@ -66,6 +71,11 @@ public extension API {
         
         urlRequest.httpMethod = method.rawValue
         urlRequest.httpBody = body
+        
+        for (headerField, headerValue) in headers {
+            urlRequest.setValue(headerValue, forHTTPHeaderField: headerField)
+        }
+        
         return urlRequest
     }
 }

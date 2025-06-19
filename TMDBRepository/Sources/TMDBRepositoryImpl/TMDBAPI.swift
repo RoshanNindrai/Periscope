@@ -19,9 +19,8 @@ enum TMDBAPI: API {
             return "/movie/popular"
         case .requestToken:
             return "/authentication/token/new"
-        case .authorizeToken:
-            // TODO: TMDB uses a web URL for user authorization, this path is a placeholder
-            return "/authenticate/{requestToken}"
+        case .authorizeToken(let requestToken):
+            return "/authenticate/\(requestToken)"
         case .createSession:
             return "/authentication/session/new"
         }
@@ -34,7 +33,6 @@ enum TMDBAPI: API {
         case .requestToken:
             return .get
         case .authorizeToken:
-            // TODO: This is generally a web GET request for user authorization, stubbed as .get here
             return .get
         case .createSession:
             return .post
@@ -53,6 +51,13 @@ enum TMDBAPI: API {
         case .popularMovies, .requestToken, .authorizeToken, .createSession:
             return 30
         }
+    }
+    
+    var headers: [String: String] {
+        return [
+            "Authorization": "Bearer \(Secrets.TMDB_API_KEY)", 
+            "Content-Type": "application/json;charset=utf-8"
+        ]
     }
     
     var queryParameters: [String : String] {

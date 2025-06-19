@@ -1,3 +1,9 @@
-public struct SessionToken: Codable {
-    public let token: String
+public struct SessionToken {
+    public let success: Bool
+    public let sessionId: String
+    
+    public init(success: Bool, sessionId: String) {
+        self.success = success
+        self.sessionId = sessionId
+    }
 }
