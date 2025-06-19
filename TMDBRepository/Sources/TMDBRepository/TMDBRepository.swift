@@ -5,7 +5,7 @@ public enum TMDBRepositoryError: Error {
     case authenticationError(Error)
 }
 
-public typealias TMDBRepository = TMDBAuthenticationRepository
+public typealias TMDBRepositoryProtocol = TMDBAuthenticationRepository
 
 /// Defines the contract for interacting with TMDB Authentication endpoints.
 public protocol TMDBAuthenticationRepository {

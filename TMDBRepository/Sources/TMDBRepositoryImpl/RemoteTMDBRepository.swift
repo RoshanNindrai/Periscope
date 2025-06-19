@@ -2,7 +2,7 @@ import AuthenticationServices
 import TMDBRepository
 import Networking
 
-public struct RemoteTMDBRepository: TMDBRepository {
+public struct RemoteTMDBRepository: TMDBRepositoryProtocol {
     private let networkService: NetworkService
     
     public init(networkService: NetworkService) {
@@ -26,7 +26,7 @@ public struct RemoteTMDBRepository: TMDBRepository {
         let callbackURLScheme = "yourapp"
 
         // Bridge callback-based API to async/await
-        let returnedURL: URL = try await withCheckedThrowingContinuation { continuation in
+        let _: URL = try await withCheckedThrowingContinuation { continuation in
             let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: callbackURLScheme) { callbackURL, error in
                 if let error = error {
                     continuation.resume(throwing: error)
