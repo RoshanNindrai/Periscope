@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */ = {isa = PBXBuildFile; productRef = 442CF78F2DFDBCD900A7E8DC /* Lego */; };
+		44609D8E2E04558E003DBAC6 /* LoginFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 44609D8D2E04558E003DBAC6 /* LoginFeature */; };
+		44609D902E04558E003DBAC6 /* NetworkingImpl in Frameworks */ = {isa = PBXBuildFile; productRef = 44609D8F2E04558E003DBAC6 /* NetworkingImpl */; };
+		44609D922E04558E003DBAC6 /* TMDBRepositoryImpl in Frameworks */ = {isa = PBXBuildFile; productRef = 44609D912E04558E003DBAC6 /* TMDBRepositoryImpl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -18,9 +21,22 @@
 		4495F77C2E0033140037D598 /* LoginFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginFeature; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		44609D942E0459E0003DBAC6 /* Exceptions for "Periscope" folder in "Periscope" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 442CF7602DFDBBFA00A7E8DC /* Periscope */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		442CF7632DFDBBFA00A7E8DC /* Periscope */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				44609D942E0459E0003DBAC6 /* Exceptions for "Periscope" folder in "Periscope" target */,
+			);
 			path = Periscope;
 			sourceTree = "<group>";
 		};
@@ -31,7 +47,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44609D902E04558E003DBAC6 /* NetworkingImpl in Frameworks */,
 				442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */,
+				44609D8E2E04558E003DBAC6 /* LoginFeature in Frameworks */,
+				44609D922E04558E003DBAC6 /* TMDBRepositoryImpl in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +65,7 @@
 				442CF7912DFDC11500A7E8DC /* Networking */,
 				442CF78D2DFDBC2400A7E8DC /* Lego */,
 				442CF7632DFDBBFA00A7E8DC /* Periscope */,
+				44609D8C2E04558E003DBAC6 /* Frameworks */,
 				442CF7622DFDBBFA00A7E8DC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +76,13 @@
 				442CF7612DFDBBFA00A7E8DC /* Periscope.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		44609D8C2E04558E003DBAC6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -79,6 +106,9 @@
 			name = Periscope;
 			packageProductDependencies = (
 				442CF78F2DFDBCD900A7E8DC /* Lego */,
+				44609D8D2E04558E003DBAC6 /* LoginFeature */,
+				44609D8F2E04558E003DBAC6 /* NetworkingImpl */,
+				44609D912E04558E003DBAC6 /* TMDBRepositoryImpl */,
 			);
 			productName = Periscope;
 			productReference = 442CF7612DFDBBFA00A7E8DC /* Periscope.app */;
@@ -275,6 +305,7 @@
 				DEVELOPMENT_TEAM = W2MHQ39N9M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Periscope/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -308,6 +339,7 @@
 				DEVELOPMENT_TEAM = W2MHQ39N9M;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Periscope/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -363,6 +395,18 @@
 		442CF78F2DFDBCD900A7E8DC /* Lego */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Lego;
+		};
+		44609D8D2E04558E003DBAC6 /* LoginFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoginFeature;
+		};
+		44609D8F2E04558E003DBAC6 /* NetworkingImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = NetworkingImpl;
+		};
+		44609D912E04558E003DBAC6 /* TMDBRepositoryImpl */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = TMDBRepositoryImpl;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

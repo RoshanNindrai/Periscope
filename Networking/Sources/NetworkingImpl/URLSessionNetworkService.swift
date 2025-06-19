@@ -105,4 +105,3 @@ private extension URLSessionNetworkService {
         return Date().addingTimeInterval(maxAgeSeconds)
     }
 }
-

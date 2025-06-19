@@ -8,32 +8,38 @@ public struct LoginFeatureView: View {
     public var body: some View {
         VStack {
             Spacer()
-            
-            LegoText(
-                "Periscope",
-                style: styleSheet.text(.largeTitle)
-            ) { text in
-                text.foregroundColor(.white)
-            }
-
+            titleView
             Spacer()
-
-            LegoButton(
-                style: styleSheet.button(.primary),
-                text: "Sign in",
-                textStyle: styleSheet.text(.title),
-                onTap: {
-                    print("Sign in tapped")
-                },
-                buttonModifier: { button in
-                    button.frame(maxWidth: .infinity)
-                }
-            )
+            signInButton
         }
         .padding(.horizontal, styleSheet.spacing.spacing300)
         .background {
             CinematicBackgroundView()
         }
+    }
+}
+
+private extension LoginFeatureView {
+    
+    var titleView: some View {
+        LegoText(
+            "Periscope",
+            style: styleSheet.text(.largeTitle)
+        ) { text in
+            text.foregroundColor(.white)
+        }
+    }
+
+    var signInButton: some View {
+        LegoButton(
+            style: styleSheet.button(.primary),
+            text: "Sign in",
+            textStyle: styleSheet.text(.title),
+            onTap: {},
+            buttonModifier: { button in
+                button.frame(maxWidth: .infinity)
+            }
+        )
     }
 }
 

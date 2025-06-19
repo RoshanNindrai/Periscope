@@ -1,6 +1,6 @@
 import Foundation
 
-struct SessionResponse: Codable {
+struct SessionTokenResponse: Decodable {
     let success: Bool
     let sessionId: String
 

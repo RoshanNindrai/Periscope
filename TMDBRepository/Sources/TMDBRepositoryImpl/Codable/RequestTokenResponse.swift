@@ -1,6 +1,6 @@
 import Foundation
 
-struct RequestTokenResponse: Codable {
+struct RequestTokenResponse: Decodable {
     let success: Bool
     let expiresAt: String
     let requestToken: String

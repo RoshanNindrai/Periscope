@@ -1,4 +1,6 @@
-public struct SessionToken {
+import Foundation
+
+public struct SessionToken: Sendable {
     public let success: Bool
     public let sessionId: String
     

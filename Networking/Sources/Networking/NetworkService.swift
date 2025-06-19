@@ -18,7 +18,7 @@ public enum NetworkServiceError: Error {
 }
 
 /// Network service responsible for dispatching API request
-public protocol NetworkService {
+public protocol NetworkService: Sendable {
 
     /// Dispatches a Network DataRequest for a given API request.
     /// - Parameters:

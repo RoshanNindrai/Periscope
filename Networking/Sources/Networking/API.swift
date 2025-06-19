@@ -7,7 +7,7 @@ public enum HTTPMethod: String {
 }
 
 /// Protocol defining the necessary properties for an API endpoint.
-public protocol API {
+public protocol API: Sendable {
     /// The base URL of the API.
     var baseURL: URL { get }
     
@@ -27,7 +27,7 @@ public protocol API {
     var queryParameters: [String: String] { get }
     
     /// The body to attach to the request (for POST, PUT, etc.)
-    var body: Data? { get }
+    var body: [String: Any]? { get }
     
     /// The headers to attach to the request
     var headers: [String: String] { get }
@@ -40,9 +40,13 @@ public extension API {
         [:]
     }
     
-    var body: Data? { nil }
+    var body: [String: Any]? {
+        nil
+    }
     
-    var headers: [String: String] { [:] }
+    var headers: [String: String] {
+        [:]
+    }
 }
 
 public extension API {
@@ -55,7 +59,6 @@ public extension API {
         var components = URLComponents(url: urlWithPath, resolvingAgainstBaseURL: false)
         
         if !queryParameters.isEmpty {
-            // We don't want the trailling `?`
             components?.queryItems = queryParameters.map(URLQueryItem.init)
         }
         
@@ -70,7 +73,14 @@ public extension API {
         )
         
         urlRequest.httpMethod = method.rawValue
-        urlRequest.httpBody = body
+        
+        if let body = body {
+            do {
+                urlRequest.httpBody = try JSONSerialization.data(withJSONObject: body)
+            } catch {
+                fatalError("Failed to serialize body to JSON: \(error)")
+            }
+        }
         
         for (headerField, headerValue) in headers {
             urlRequest.setValue(headerValue, forHTTPHeaderField: headerField)

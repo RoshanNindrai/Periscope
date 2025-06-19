@@ -10,7 +10,12 @@ enum TMDBAPI: API {
     case popularMovies
 
     var baseURL: URL {
-        return URL(string: "https://api.themoviedb.org/3")!
+        switch self {
+        case .requestToken, .createSession, .popularMovies:
+            return URL(string: "https://api.themoviedb.org/3")!
+        case .authorizeToken:
+            return URL(string: "https://www.themoviedb.org")!
+        }
     }
     
     var path: String {
@@ -28,11 +33,7 @@ enum TMDBAPI: API {
     
     var method: HTTPMethod {
         switch self {
-        case .popularMovies:
-            return .get
-        case .requestToken:
-            return .get
-        case .authorizeToken:
+        case .popularMovies, .requestToken, .authorizeToken:
             return .get
         case .createSession:
             return .post
@@ -65,9 +66,18 @@ enum TMDBAPI: API {
         case .popularMovies, .requestToken:
             return [:]
         case .authorizeToken:
-            return [:]
+            return ["redirect_to": "periscope://auth-callback"]
         case .createSession:
             return [:]
+        }
+    }
+    
+    var body: [String: Any]? {
+        switch self {
+        case .createSession(let requestToken):
+            return ["request_token": requestToken]
+        case .requestToken, .authorizeToken, .popularMovies:
+            return nil
         }
     }
 }
