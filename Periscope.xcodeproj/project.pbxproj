@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */ = {isa = PBXBuildFile; productRef = 442CF78F2DFDBCD900A7E8DC /* Lego */; };
-		44609D8E2E04558E003DBAC6 /* LoginFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 44609D8D2E04558E003DBAC6 /* LoginFeature */; };
-		44609D902E04558E003DBAC6 /* NetworkingImpl in Frameworks */ = {isa = PBXBuildFile; productRef = 44609D8F2E04558E003DBAC6 /* NetworkingImpl */; };
-		44609D922E04558E003DBAC6 /* TMDBRepositoryImpl in Frameworks */ = {isa = PBXBuildFile; productRef = 44609D912E04558E003DBAC6 /* TMDBRepositoryImpl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -47,10 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44609D902E04558E003DBAC6 /* NetworkingImpl in Frameworks */,
 				442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */,
-				44609D8E2E04558E003DBAC6 /* LoginFeature in Frameworks */,
-				44609D922E04558E003DBAC6 /* TMDBRepositoryImpl in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,9 +100,6 @@
 			name = Periscope;
 			packageProductDependencies = (
 				442CF78F2DFDBCD900A7E8DC /* Lego */,
-				44609D8D2E04558E003DBAC6 /* LoginFeature */,
-				44609D8F2E04558E003DBAC6 /* NetworkingImpl */,
-				44609D912E04558E003DBAC6 /* TMDBRepositoryImpl */,
 			);
 			productName = Periscope;
 			productReference = 442CF7612DFDBBFA00A7E8DC /* Periscope.app */;
@@ -395,18 +386,6 @@
 		442CF78F2DFDBCD900A7E8DC /* Lego */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Lego;
-		};
-		44609D8D2E04558E003DBAC6 /* LoginFeature */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LoginFeature;
-		};
-		44609D8F2E04558E003DBAC6 /* NetworkingImpl */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = NetworkingImpl;
-		};
-		44609D912E04558E003DBAC6 /* TMDBRepositoryImpl */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TMDBRepositoryImpl;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -16,7 +16,7 @@ public struct LegoProgressView: View {
     
     private let type: ProgressViewType
     
-    init(type: ProgressViewType = .medium) {
+    public init(type: ProgressViewType = .medium) {
         self.type = type
     }
     

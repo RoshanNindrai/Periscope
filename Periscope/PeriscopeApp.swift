@@ -8,8 +8,6 @@
 import SwiftUI
 import SwiftData
 import LoginFeature
-import NetworkingImpl
-import TMDBRepositoryImpl
 
 @main
 struct PeriscopeApp: App {
