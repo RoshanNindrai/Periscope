@@ -1,9 +1,24 @@
+# macOS & Xcode
 .DS_Store
-/.build
-/Packages
 xcuserdata/
 DerivedData/
-Secrets/*
+
+# Swift Package Manager
+/.build
+/Packages
+.swiftpm/
 .swiftpm/configuration/registries.json
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+
+# Secrets
+**/Secrets/
+**/Secrets.swift
+keys.xcconfig
+Generated/
+
+# Credentials
 .netrc
+
+# Xcode project noise
+*.xcworkspace/xcuserdata/
+*.xcuserstate
