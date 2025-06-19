@@ -39,7 +39,7 @@ private extension LoginFeatureView {
             key: LocalizedStringKey("Sign in"),
             bundle: .module,
             textStyle: styleSheet.text(.title),
-            onTap: {},
+            onTap: { },
             buttonModifier: { button in
                 button.frame(maxWidth: .infinity)
             }

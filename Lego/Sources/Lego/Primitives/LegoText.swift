@@ -16,8 +16,7 @@ import SwiftUI
 /// ```
 public struct LegoText<ContentView: View>: View {
     
-    @Environment(\.styleSheet)
-    var styleSheet: StyleSheet
+    @Environment(\.styleSheet) var styleSheet: StyleSheet
     
     /// The localized string key to display.
     private let key: LocalizedStringKey
@@ -65,6 +64,7 @@ public struct LegoText<ContentView: View>: View {
 }
 
 extension LegoText {
+    
     public enum TextType {
         case largeTitle
         case title
@@ -76,7 +76,6 @@ extension LegoText {
     
     public struct TextStyle {
         let textColor: SwiftUI.Color
-        
         let textFont: Font
     }
 }
@@ -86,27 +85,45 @@ public extension StyleSheet {
     func text<Content: View>(_ style: LegoText<Content>.TextType) -> LegoText<Content>.TextStyle {
         switch style {
         case .largeTitle:
-            return LegoText<Content>.TextStyle(textColor: colors.textPrimary, textFont: typography.largeTitle)
+            return LegoText<Content>.TextStyle(
+                textColor: colors.textPrimary,
+                textFont: typography.largeTitle
+            )
+            
         case .title:
-            return LegoText<Content>.TextStyle(textColor: colors.textPrimary, textFont: typography.title)
+            return LegoText<Content>.TextStyle(
+                textColor: colors.textPrimary,
+                textFont: typography.title
+            )
             
         case .subtitle:
-            return LegoText<Content>.TextStyle(textColor: colors.textSecondary, textFont: typography.subtitle)
+            return LegoText<Content>.TextStyle(
+                textColor: colors.textSecondary,
+                textFont: typography.subtitle
+            )
             
         case .body:
-            return LegoText<Content>.TextStyle(textColor: colors.textPrimary, textFont: typography.body)
+            return LegoText<Content>.TextStyle(
+                textColor: colors.textPrimary,
+                textFont: typography.body
+            )
             
         case .callout:
-            return LegoText<Content>.TextStyle(textColor: colors.textSecondary, textFont: typography.callout)
+            return LegoText<Content>.TextStyle(
+                textColor: colors.textSecondary,
+                textFont: typography.callout
+            )
             
         case .caption:
-            return LegoText<Content>.TextStyle(textColor: colors.textSecondary, textFont: typography.caption)
+            return LegoText<Content>.TextStyle(
+                textColor: colors.textSecondary,
+                textFont: typography.caption
+            )
         }
     }
 }
 
 #Preview {
-    
     let styleSheet = LegoStyleSheet()
     
     LegoText("Welcome to the Galactic Library", style: styleSheet.text(.largeTitle)) {

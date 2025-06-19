@@ -9,14 +9,12 @@ import SwiftUI
 import SwiftData
 import Lego
 
-
 struct ContentView: View {
     
     @Environment(\.modelContext) private var modelContext
     
     @Query private var items: [Item]
     
-
     var body: some View {
         NavigationSplitView {
             List {
@@ -46,7 +44,6 @@ struct ContentView: View {
         }
     }
     
-
     private func addItem() {
         withAnimation {
             let newItem = Item(timestamp: Date())
@@ -54,7 +51,6 @@ struct ContentView: View {
         }
     }
     
-
     private func deleteItems(offsets: IndexSet) {
         withAnimation {
             for index in offsets {
@@ -69,4 +65,3 @@ struct ContentView: View {
     ContentView()
         .modelContainer(for: Item.self, inMemory: true)
 }
-

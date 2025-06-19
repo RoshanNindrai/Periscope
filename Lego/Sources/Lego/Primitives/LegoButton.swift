@@ -2,16 +2,16 @@ import SwiftUI
 
 
 /// A customizable button component supporting multiple styles and content, designed for use with consistent theming.
-/// 
+///
 /// `LegoButton` allows you to inject a label view, custom button content, and an optional modifier for additional customization.
-/// 
+///
 /// The preferred way to style a `LegoButton` is by passing a `ButtonStyle` instance, which can be obtained from your theme's `StyleSheet` via the `.button(_:)` method.
 /// This approach ensures consistent theming across your app.
 ///
 /// - Parameters:
 ///   - Label: The type of view used for the button's label.
 ///   - ContentView: The type of the view returned from the button modifier, usually just the button itself.
-/// 
+///
 /// Example usage:
 /// ```swift
 /// LegoButton(
@@ -77,6 +77,7 @@ public struct LegoButton<Label: View, ContentView: View>: View {
         )
     }
 
+
     /// Convenience initializer for a text-only LegoButton with style, onTap, and buttonModifier.
     ///
     /// - Parameters:
@@ -127,6 +128,7 @@ public struct LegoButton<Label: View, ContentView: View>: View {
         )
     }
 
+
     /// The content and layout of the button.
     public var body: some View {
         let button = Button<Label> {
@@ -146,6 +148,7 @@ public struct LegoButton<Label: View, ContentView: View>: View {
 
 /// A stylable button view for consistent appearance, based on the application's StyleSheet.
 extension LegoButton {
+
     /// Predefined roles for button styles, indicating the common use cases for each style.
     ///
     /// Use `.primary` for the main call-to-action buttons, `.secondary` for less prominent actions, and `.error` for destructive or error-related actions.
@@ -169,6 +172,7 @@ extension LegoButton {
         let cornerRadius: CGFloat
     }
 }
+
 
 public extension StyleSheet {
 
@@ -203,6 +207,7 @@ public extension StyleSheet {
         }
     }
 }
+
 
 #Preview {
 
@@ -255,5 +260,3 @@ public extension StyleSheet {
         onTap: {}
     )
 }
-
-
