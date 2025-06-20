@@ -2,8 +2,15 @@ import Lego
 import SwiftUI
 
 public struct LoginFeatureView: View {
+    
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
+    
+    private let viewModel: LoginFeatureViewModel
+    
+    public init(viewModel: LoginFeatureViewModel) {
+        self.viewModel = viewModel
+    }
 
     public var body: some View {
         VStack {
@@ -15,6 +22,9 @@ public struct LoginFeatureView: View {
         .padding(.horizontal, styleSheet.spacing.spacing300)
         .background {
             CinematicBackgroundView()
+        }
+        .task {
+            await viewModel.reduce(.fetchRequestToken)
         }
     }
 }
@@ -39,14 +49,14 @@ private extension LoginFeatureView {
             key: LocalizedStringKey("Sign in"),
             bundle: .module,
             textStyle: styleSheet.text(.title),
-            onTap: { },
+            onTap: {
+                Task {
+                    await viewModel.reduce(.signInButtonTapped)
+                }
+            },
             buttonModifier: { button in
                 button.frame(maxWidth: .infinity)
             }
         )
     }
-}
-
-#Preview {
-    LoginFeatureView()
 }

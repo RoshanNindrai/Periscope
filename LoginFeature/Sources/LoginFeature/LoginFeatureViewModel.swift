@@ -41,7 +41,7 @@ public final class LoginFeatureViewModel {
         /// Triggered when the sign-in button is tapped.
         case signInButtonTapped
         /// Fetches the access token using a request token.
-        case fetchAccessToken(requestToken: String)
+        case fetchAccessToken(RequestToken)
     }
     
     /// The current state of the login feature.
@@ -64,12 +64,12 @@ public final class LoginFeatureViewModel {
                 }
                 // Update state carrying the token and present authentication web.
                 state = .requestingUserPermissions(requestToken)
-                await presentAuthenticationWeb(for: requestToken.requestToken)
+                await presentAuthenticationWeb(for: requestToken)
                 
             case .fetchAccessToken(let requestToken):
                 state = .fetchingAccessToken
                 _ = try await authenticationService.sessionToken(
-                    requestToken: requestToken
+                    requestToken: requestToken.requestToken
                 )
                 state = .fetchedAccessToken
             }
@@ -88,8 +88,8 @@ private extension LoginFeatureViewModel {
     ///
     /// - Parameter requestToken: The request token to be authorized.
     @MainActor
-    func presentAuthenticationWeb(for requestToken: String) async {
-        let authURL = authenticationService.authorizationURL(for: requestToken)
+    func presentAuthenticationWeb(for requestToken: RequestToken) async {
+        let authURL = authenticationService.authorizationURL(for: requestToken.requestToken)
         let callbackURLScheme = "periscope"
         
         webAuthenticationSession = ASWebAuthenticationSession(
@@ -97,15 +97,32 @@ private extension LoginFeatureViewModel {
             callbackURLScheme: callbackURLScheme
         ) { [weak self] callbackURL, error in
             defer { self?.webAuthenticationSession = nil }
-            if let error = error {
-                // If the authentication session fails, update the state accordingly.
-                self?.state = .failed(error)
+            
+            // Handle error first
+            if error != nil {
+                self?.state = .fetchedRequestToken(requestToken)
+                return
+            }
+
+            guard let callbackURL = callbackURL,
+                  let components = URLComponents(url: callbackURL, resolvingAgainstBaseURL: false),
+                  let queryItems = components.queryItems else {
+                // Unexpected URL, treat as cancellation
+                self?.state = .fetchedRequestToken(requestToken)
                 return
             }
             
-            // Use a Task to asynchronously process fetching the access token without blocking.
+            // Check if the user denied permission
+            if queryItems.contains(where: { $0.name == "denied" && $0.value == "true" }) {
+                Task { [weak self] in
+                    await self?.reduce(.fetchRequestToken)
+                }
+                return
+            }
+
+            // All good, proceed to fetch access token
             Task { [weak self] in
-                await self?.reduce(.fetchAccessToken(requestToken: requestToken))
+                await self?.reduce(.fetchAccessToken(requestToken))
             }
         }
 

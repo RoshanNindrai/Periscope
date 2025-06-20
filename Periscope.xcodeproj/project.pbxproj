@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */ = {isa = PBXBuildFile; productRef = 442CF78F2DFDBCD900A7E8DC /* Lego */; };
 		44E578612E058B2C00C16D91 /* AppSetup in Frameworks */ = {isa = PBXBuildFile; productRef = 44E578602E058B2C00C16D91 /* AppSetup */; };
+		44E578632E058F9D00C16D91 /* LoginFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 44E578622E058F9D00C16D91 /* LoginFeature */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E578632E058F9D00C16D91 /* LoginFeature in Frameworks */,
 				44E578612E058B2C00C16D91 /* AppSetup in Frameworks */,
 				442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */,
 			);
@@ -105,6 +107,7 @@
 			packageProductDependencies = (
 				442CF78F2DFDBCD900A7E8DC /* Lego */,
 				44E578602E058B2C00C16D91 /* AppSetup */,
+				44E578622E058F9D00C16D91 /* LoginFeature */,
 			);
 			productName = Periscope;
 			productReference = 442CF7612DFDBBFA00A7E8DC /* Periscope.app */;
@@ -395,6 +398,10 @@
 		44E578602E058B2C00C16D91 /* AppSetup */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppSetup;
+		};
+		44E578622E058F9D00C16D91 /* LoginFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoginFeature;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -1,13 +1,8 @@
-//
-//  PeriscopeApp.swift
-//  Periscope
-//
-//  Created by Roshan Nindrai on 6/14/25.
-//
-
+import AppSetup
+import LoginFeature
 import SwiftUI
 import SwiftData
-import LoginFeature
+import TMDBRepository
 
 @main
 struct PeriscopeApp: App {
@@ -23,10 +18,17 @@ struct PeriscopeApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    @Environment(\.appSetup.serviceContainer.tmdbRAuthenticationService)
+    private var authenticationService: TMDBAuthenticationService
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginFeatureView(
+                viewModel: LoginFeatureViewModel(
+                    authenticationService: authenticationService
+                )
+            )
         }
         .modelContainer(sharedModelContainer)
     }
