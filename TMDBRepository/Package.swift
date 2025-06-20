@@ -14,6 +14,10 @@ let package = Package(
             targets: ["TMDBRepository"]
         ),
         .library(
+            name: "TMDBRepositoryFactory",
+            targets: ["TMDBRepositoryFactory"]
+        ),
+        .library(
             name: "TMDBRepositoryImpl",
             targets: ["TMDBRepositoryImpl"]
         ),
@@ -28,6 +32,10 @@ let package = Package(
         .target(
             name: "TMDBRepositoryImpl",
             dependencies: ["TMDBRepository", "Networking"]
+        ),
+        .target(
+            name: "TMDBRepositoryFactory",
+            dependencies: ["TMDBRepository", "Networking", "TMDBRepositoryImpl"]
         ),
         .testTarget(
             name: "TMDBRepositoryTests",

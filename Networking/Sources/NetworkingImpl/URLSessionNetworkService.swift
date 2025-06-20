@@ -28,7 +28,7 @@ public struct URLSessionNetworkService: NetworkService {
     }
     
     /// Initializes the service with a custom URLSession. Intended for dependency injection and testing.
-    init(session: URLSession) {
+    public init(session: URLSession) {
         self.session = session
     }
     
