@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-public struct Color: Sendable {
+public struct Color: Equatable, Sendable {
     let primary = SwiftUI.Color("Primary", bundle: .module)
     let background = SwiftUI.Color("Background", bundle: .module)
     let surface = SwiftUI.Color("Surface", bundle: .module)

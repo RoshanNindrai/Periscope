@@ -15,8 +15,12 @@ public struct SignInFeatureView: View {
     public var body: some View {
         VStack {
             Spacer()
+            
             titleView
+            subtitleView
+            
             Spacer()
+            
             signInButton
         }
         .padding(.horizontal, styleSheet.spacing.spacing300)
@@ -37,6 +41,17 @@ private extension SignInFeatureView {
             LocalizedStringKey("Periscope"),
             bundle: .module,
             style: styleSheet.text(.largeTitle)
+        ) { text in
+            text.foregroundColor(.white)
+        }
+    }
+    
+    // Localized: "Periscope"
+    var subtitleView: some View {
+        LegoText(
+            LocalizedStringKey("Powered by TMDB"),
+            bundle: .module,
+            style: styleSheet.text(.caption)
         ) { text in
             text.foregroundColor(.white)
         }

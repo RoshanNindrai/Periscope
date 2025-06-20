@@ -1,6 +1,6 @@
 import SwiftUI
 
-public struct Typography: Sendable {
+public struct Typography: Equatable, Sendable {
     public let largeTitle = Font.system(.largeTitle, design: .default).weight(.bold)
     public let title = Font.system(.title2, design: .default).weight(.semibold)
     public let subtitle = Font.system(.subheadline, design: .default).weight(.medium)

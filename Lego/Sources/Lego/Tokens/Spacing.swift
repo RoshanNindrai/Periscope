@@ -1,6 +1,6 @@
 import CoreGraphics
 
-public struct Spacing: Sendable {
+public struct Spacing: Equatable, Sendable {
     public let spacing25: CGFloat = 2.0
     public let spacing50: CGFloat = 4.0
     public let spacing100: CGFloat = 8.0
