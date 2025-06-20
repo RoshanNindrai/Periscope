@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */ = {isa = PBXBuildFile; productRef = 442CF78F2DFDBCD900A7E8DC /* Lego */; };
+		44E578612E058B2C00C16D91 /* AppSetup in Frameworks */ = {isa = PBXBuildFile; productRef = 44E578602E058B2C00C16D91 /* AppSetup */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -16,6 +17,7 @@
 		442CF7912DFDC11500A7E8DC /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Networking; sourceTree = "<group>"; };
 		442CF7932DFDCDA400A7E8DC /* TMDBRepository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TMDBRepository; sourceTree = "<group>"; };
 		4495F77C2E0033140037D598 /* LoginFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = LoginFeature; sourceTree = "<group>"; };
+		44E5785F2E0585CB00C16D91 /* AppSetup */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppSetup; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -44,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44E578612E058B2C00C16D91 /* AppSetup in Frameworks */,
 				442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,6 +57,7 @@
 		442CF7582DFDBBFA00A7E8DC = {
 			isa = PBXGroup;
 			children = (
+				44E5785F2E0585CB00C16D91 /* AppSetup */,
 				4495F77C2E0033140037D598 /* LoginFeature */,
 				442CF7932DFDCDA400A7E8DC /* TMDBRepository */,
 				442CF7912DFDC11500A7E8DC /* Networking */,
@@ -100,6 +104,7 @@
 			name = Periscope;
 			packageProductDependencies = (
 				442CF78F2DFDBCD900A7E8DC /* Lego */,
+				44E578602E058B2C00C16D91 /* AppSetup */,
 			);
 			productName = Periscope;
 			productReference = 442CF7612DFDBBFA00A7E8DC /* Periscope.app */;
@@ -386,6 +391,10 @@
 		442CF78F2DFDBCD900A7E8DC /* Lego */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Lego;
+		};
+		44E578602E058B2C00C16D91 /* AppSetup */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AppSetup;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

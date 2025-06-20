@@ -6,4 +6,6 @@ public struct DefaultNetworkServiceFactory: NetworkServiceFactory {
     public func makeNetworkService() -> any NetworkService {
         URLSessionNetworkService()
     }
+    
+    public init() {}
 }

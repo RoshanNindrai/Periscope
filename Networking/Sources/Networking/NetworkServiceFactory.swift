@@ -1,6 +1,5 @@
 import Foundation
 
-@MainActor
-public protocol NetworkServiceFactory {
+public protocol NetworkServiceFactory: Sendable {
     func makeNetworkService() -> NetworkService
 }

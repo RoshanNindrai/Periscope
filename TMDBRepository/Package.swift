@@ -27,7 +27,8 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "TMDBRepository"
+            name: "TMDBRepository",
+            dependencies: ["Networking"]
         ),
         .target(
             name: "TMDBRepositoryImpl",
