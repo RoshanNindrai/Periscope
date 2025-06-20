@@ -1,5 +1,5 @@
 import AppSetup
-import LoginFeature
+import SignInFeature
 import SwiftUI
 import SwiftData
 import TMDBRepository
@@ -24,8 +24,8 @@ struct PeriscopeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            LoginFeatureView(
-                viewModel: LoginFeatureViewModel(
+            SignInFeatureView(
+                viewModel: SignInFeatureViewModel(
                     authenticationService: authenticationService
                 )
             )

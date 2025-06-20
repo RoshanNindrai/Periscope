@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "LoginFeature",
+    name: "SignInFeature",
     platforms: [
         .iOS(.v26)
     ],
@@ -12,8 +12,8 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "LoginFeature",
-            targets: ["LoginFeature"]
+            name: "SignInFeature",
+            targets: ["SignInFeature"]
         ),
     ],
 
@@ -26,7 +26,7 @@ let package = Package(
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "LoginFeature",
+            name: "SignInFeature",
             dependencies: ["TMDBRepository", "Lego"],
             resources: [
                 .process("Resources")
@@ -34,8 +34,8 @@ let package = Package(
         ),
 
         .testTarget(
-            name: "LoginFeatureTests",
-            dependencies: ["LoginFeature"]
+            name: "SignInFeatureTests",
+            dependencies: ["SignInFeature"]
         ),
     ]
 )

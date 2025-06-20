@@ -1,14 +1,14 @@
 import Lego
 import SwiftUI
 
-public struct LoginFeatureView: View {
+public struct SignInFeatureView: View {
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     
-    private let viewModel: LoginFeatureViewModel
+    private let viewModel: SignInFeatureViewModel
     
-    public init(viewModel: LoginFeatureViewModel) {
+    public init(viewModel: SignInFeatureViewModel) {
         self.viewModel = viewModel
     }
 
@@ -29,7 +29,7 @@ public struct LoginFeatureView: View {
     }
 }
 
-private extension LoginFeatureView {
+private extension SignInFeatureView {
     
     // Localized: "Periscope"
     var titleView: some View {

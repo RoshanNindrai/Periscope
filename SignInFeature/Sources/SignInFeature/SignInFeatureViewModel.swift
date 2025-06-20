@@ -4,7 +4,7 @@ import Combine
 import AuthenticationServices
 
 @MainActor @Observable
-public final class LoginFeatureViewModel {
+public final class SignInFeatureViewModel {
     
     private let authenticationService: TMDBAuthenticationService
     private var webAuthenticationSession: ASWebAuthenticationSession?
@@ -16,7 +16,7 @@ public final class LoginFeatureViewModel {
         self.authenticationService = authenticationService
     }
 
-    /// Represents the current authentication state of the login feature.
+    /// Represents the current authentication state of the sign-in feature.
     public enum State {
         /// Initial, no actions performed yet.
         case initialized
@@ -34,7 +34,7 @@ public final class LoginFeatureViewModel {
         case failed(Error)
     }
     
-    /// Represents the actions that can be performed in the login feature.
+    /// Represents the actions that can be performed in the sign-in feature.
     public enum Action {
         /// Starts fetching the request token.
         case fetchRequestToken
@@ -44,7 +44,7 @@ public final class LoginFeatureViewModel {
         case fetchAccessToken(RequestToken)
     }
     
-    /// The current state of the login feature.
+    /// The current state of the sign-in feature.
     private(set) var state: State = .initialized
 
     /// Processes an action and updates the state accordingly.
@@ -79,7 +79,7 @@ public final class LoginFeatureViewModel {
     }
 }
 
-private extension LoginFeatureViewModel {
+private extension SignInFeatureViewModel {
     /// Presents the web authentication session for the given request token and waits for user authentication.
     ///
     /// This method initiates an `ASWebAuthenticationSession` to allow the user to authorize the request token.
