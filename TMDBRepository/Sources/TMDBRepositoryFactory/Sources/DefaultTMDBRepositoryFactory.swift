@@ -22,4 +22,8 @@ public struct DefaultTMDBRepositoryFactory: TMDBRepositoryFactory {
             networkService: dependencies.networkService
         )
     }
+    
+    public func makeRepository() -> any TMDBRepository {
+        DefaultTMDBRepository(networkService: dependencies.networkService)
+    }
 }

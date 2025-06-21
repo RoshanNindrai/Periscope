@@ -20,6 +20,7 @@ let package = Package(
     dependencies: [
         .package(path: "../TMDBRepository"),
         .package(path: "../Lego"),
+        .package(path: "../Utils"),
     ],
 
     targets: [
@@ -27,7 +28,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "SignInFeature",
-            dependencies: ["TMDBRepository", "Lego"],
+            dependencies: ["TMDBRepository", "Lego", "Utils"],
             resources: [
                 .process("Resources")
             ]

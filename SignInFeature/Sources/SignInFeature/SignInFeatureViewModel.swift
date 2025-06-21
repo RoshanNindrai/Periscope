@@ -2,6 +2,7 @@ import TMDBRepository
 import SwiftUI
 import Combine
 import AuthenticationServices
+import Utils
 
 @MainActor @Observable
 public final class SignInFeatureViewModel {
@@ -9,11 +10,13 @@ public final class SignInFeatureViewModel {
     private let authenticationService: TMDBAuthenticationService
     private var webAuthenticationSession: ASWebAuthenticationSession?
     private let webPresentationContextProvider = DefaultWebPresentationContextProvider()
+    private let keychainStore: KeychainStore
 
     /// Initializes the view model with the provided authentication service.
     /// - Parameter authenticationService: The service responsible for TMDB authentication operations.
-    public init(authenticationService: TMDBAuthenticationService) {
+    public init(authenticationService: TMDBAuthenticationService, keychainStore: KeychainStore) {
         self.authenticationService = authenticationService
+        self.keychainStore = keychainStore
     }
 
     /// Represents the current authentication state of the sign-in feature.
@@ -68,8 +71,12 @@ public final class SignInFeatureViewModel {
                 
             case .fetchAccessToken(let requestToken):
                 state = .fetchingAccessToken
-                _ = try await authenticationService.sessionToken(
+                let sessionToken = try await authenticationService.sessionToken(
                     requestToken: requestToken.requestToken
+                )
+                keychainStore.set(
+                    sessionToken.sessionId,
+                    forKey: SignInFeatureConsts.sessionIdKey
                 )
                 state = .fetchedAccessToken
             }

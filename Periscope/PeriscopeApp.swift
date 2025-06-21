@@ -1,8 +1,10 @@
 import AppSetup
 import SignInFeature
+import HomeFeature
 import SwiftUI
 import SwiftData
 import TMDBRepository
+import Utils
 
 @main
 struct PeriscopeApp: App {
@@ -21,14 +23,29 @@ struct PeriscopeApp: App {
     
     @Environment(\.appSetup.serviceContainer.tmdbRAuthenticationService)
     private var authenticationService: TMDBAuthenticationService
+    
+    @Environment(\.appSetup.repositoryContainer.tmdbRepository)
+    private var tmdbRepository: TMDBRepository
+    
+    @Environment(\.appSetup.keychainStore)
+    private var keychainStore: KeychainStore
 
     var body: some Scene {
         WindowGroup {
-            SignInFeatureView(
-                viewModel: SignInFeatureViewModel(
-                    authenticationService: authenticationService
+            if let sessionId = keychainStore.string(forKey: SignInFeatureConsts.sessionIdKey) {
+                HomeFeatureView(
+                    viewModel: HomeFeatureViewModel(
+                        repository: tmdbRepository
+                    )
                 )
-            )
+            } else {
+                SignInFeatureView(
+                    viewModel: SignInFeatureViewModel(
+                        authenticationService: authenticationService,
+                        keychainStore: keychainStore
+                    )
+                )
+            }
         }
         .modelContainer(sharedModelContainer)
     }

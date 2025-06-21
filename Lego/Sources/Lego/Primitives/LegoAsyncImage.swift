@@ -44,9 +44,11 @@ public struct LegoAsyncImage<Placeholder: View, ContentView: View>: View {
     @State
     private var state: LegoAsyncImageState = .init()
     
-    init(
+    public init(
         url: URL,
-        placeholder: @escaping () -> Placeholder = { EmptyView() },
+        placeholder: @escaping () -> Placeholder = {
+            LegoProgressView(type: .small)
+        },
         imageViewBuilder: @escaping (Image) -> ContentView = { $0 }
     ) {
         self.url = url

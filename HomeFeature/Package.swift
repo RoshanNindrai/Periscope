@@ -4,36 +4,28 @@
 import PackageDescription
 
 let package = Package(
-    name: "AppSetup",
+    name: "HomeFeature",
     platforms: [
         .iOS(.v26)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "AppSetup",
-            targets: ["AppSetup"]
+            name: "HomeFeature",
+            targets: ["HomeFeature"]
         ),
     ],
-
     dependencies: [
-        .package(path: "../TMDBRepository"),
-        .package(path: "../Networking"),
-        .package(path: "../Utils"),
+        .package(path: "../Lego"),
+        .package(path: "../TMDBRepository")
     ],
-
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "AppSetup",
-            dependencies: [
-                "Networking",
-                .product(name: "NetworkingFactory", package: "Networking"),
-                "TMDBRepository",
-                .product(name: "TMDBRepositoryFactory", package: "TMDBRepository"),
-                "Utils"
-            ]
+            name: "HomeFeature",
+            dependencies: ["Lego", "TMDBRepository"]
         ),
+
     ]
 )

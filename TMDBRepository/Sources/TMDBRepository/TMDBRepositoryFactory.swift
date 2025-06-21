@@ -6,4 +6,5 @@ public protocol TMDBRepositoryFactoryDependencies: Sendable  {
 
 public protocol TMDBRepositoryFactory: Sendable  {
     func makeAuthenticationService() -> TMDBAuthenticationService
+    func makeRepository() -> TMDBRepository
 }

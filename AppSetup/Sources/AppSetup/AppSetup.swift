@@ -3,6 +3,7 @@ import NetworkingFactory
 import SwiftUI
 import TMDBRepository
 import TMDBRepositoryFactory
+import Utils
 
 public struct AppSetupDependencies: Sendable {
     let networkServiceFactory: NetworkServiceFactory
@@ -18,15 +19,29 @@ public struct AppSetupDependencies: Sendable {
     }
 }
 
+public struct RepositoryContainer: Sendable {
+    public let tmdbRepository: TMDBRepository
+    
+    public init(tmdbRepository: TMDBRepository) {
+        self.tmdbRepository = tmdbRepository
+    }
+}
+
 public struct PeriscopeAppSetup: Sendable  {
     public let serviceContainer: AppServiceContainer
+    public let repositoryContainer: RepositoryContainer
+    public let keychainStore: KeychainStore
     private let dependencies: AppSetupDependencies
     
     public init(dependencies: AppSetupDependencies) {
         self.dependencies = dependencies
+        keychainStore = KeychainStore(service: "com.periscope.keychain")
         serviceContainer = AppServiceContainer(
             tmdbRAuthenticationService: dependencies.tmdbRepositoryFactory.makeAuthenticationService(),
             networkService: dependencies.networkServiceFactory.makeNetworkService()
+        )
+        repositoryContainer = RepositoryContainer(
+            tmdbRepository: dependencies.tmdbRepositoryFactory.makeRepository()
         )
     }
 }
