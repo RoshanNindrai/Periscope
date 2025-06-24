@@ -1,6 +1,6 @@
 import Foundation
 
-public struct RequestToken: Sendable {
+public struct RequestToken: Equatable, Sendable {
     public let success: Bool
     public let expiresAt: String
     public let requestToken: String
