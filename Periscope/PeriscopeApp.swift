@@ -32,7 +32,7 @@ struct PeriscopeApp: App {
 
     var body: some Scene {
         WindowGroup {
-            if let sessionId = keychainStore.string(forKey: SignInFeatureConsts.sessionIdKey) {
+            if let _ = keychainStore.string(forKey: SignInFeatureConsts.sessionIdKey) {
                 HomeFeatureView(
                     viewModel: HomeFeatureViewModel(
                         repository: tmdbRepository

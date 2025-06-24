@@ -16,7 +16,8 @@ import SwiftUI
 /// ```
 public struct LegoText<ContentView: View>: View {
     
-    @Environment(\.styleSheet) var styleSheet: StyleSheet
+    @Environment(\.styleSheet)
+    private var styleSheet: StyleSheet
     
     /// The localized string key to display.
     private let key: LocalizedStringKey

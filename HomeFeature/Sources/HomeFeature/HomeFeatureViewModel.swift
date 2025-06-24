@@ -58,10 +58,10 @@ public final class HomeFeatureViewModel {
         switch action {
         case .fetchLatest:
             do {
-                async let popularMovies = try await repository.popularMovies()
-                async let upcomingMovies = try await repository.upcomingMovies()
-                async let topRatedMovies = try await repository.topRatedMovies()
-                async let nowPlayingMovies = try await repository.nowPlayingMovies()
+                async let popularMovies = try repository.popularMovies()
+                async let upcomingMovies = try repository.upcomingMovies()
+                async let topRatedMovies = try repository.topRatedMovies()
+                async let nowPlayingMovies = try repository.nowPlayingMovies()
                 
                 let result: [MovieCategory] = try await [
                     .nowPlaying(nowPlayingMovies),
