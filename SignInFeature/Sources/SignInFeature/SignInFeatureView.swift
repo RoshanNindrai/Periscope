@@ -7,10 +7,11 @@ public struct SignInFeatureView: View {
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     
+    @State
+    private var isPresentingWebAuth = false
+    
     private let viewModel: SignInFeatureViewModel
-    
-    @State private var isPresentingWebAuth = false
-    
+
     public init(viewModel: SignInFeatureViewModel) {
         self.viewModel = viewModel
     }
@@ -33,7 +34,6 @@ public struct SignInFeatureView: View {
         .task {
             await viewModel.reduce(.fetchRequestToken)
         }
-        // Observe viewModel.state for auth URL to trigger Web Authentication Session
         .onChange(of: viewModel.state) { _, newState in
             if case .requestingUserPermissions = newState {
                 isPresentingWebAuth = true
@@ -168,4 +168,3 @@ private struct WebAuthSessionPresenter: UIViewControllerRepresentable {
         }
     }
 }
-
