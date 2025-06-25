@@ -41,21 +41,23 @@ public struct SignInFeatureView: View {
         }
         .fullScreenCover(isPresented: $isPresentingWebAuth) {
             if case let .requestingUserPermissions(requestToken, authURL) = viewModel.state {
-                WebAuthSessionPresenter(
-                    authURL: authURL,
-                    callbackScheme: "periscope",
-                    onCompletion: { result in
-                        isPresentingWebAuth = false
-                        Task {
-                            switch result {
-                            case .success(let callbackURL):
-                                await viewModel.reduce(.userDidAuthenticate(requestToken, callbackURL))
-                            case .failure:
-                                await viewModel.reduce(.userDidCancelAuthentication(requestToken))
-                            }
+                WebAuthenticationSessionViewController(
+                    authenticationURL: authURL,
+                    callbackURLScheme: "periscope"
+                ) { result in
+                    Task { @MainActor in
+                        
+                        // At this point it's safe to say we've dismissed the authentication session vc
+                        isPresentingWebAuth.toggle()
+                        
+                        switch result {
+                        case .success(let callBackURL):
+                            await viewModel.reduce(.userDidAuthenticate(requestToken, callBackURL))
+                        case .failure:
+                            await viewModel.reduce(.userDidCancelAuthentication(requestToken))
                         }
                     }
-                )
+                }
             }
         }
     }
@@ -101,70 +103,5 @@ private extension SignInFeatureView {
                 button.frame(maxWidth: .infinity)
             }
         )
-    }
-}
-
-/// A SwiftUI wrapper view that presents an ASWebAuthenticationSession
-private struct WebAuthSessionPresenter: UIViewControllerRepresentable {
-    let authURL: URL
-    let callbackScheme: String
-    let onCompletion: (Result<URL, Error>) -> Void
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(onCompletion: onCompletion)
-    }
-
-    func makeUIViewController(context: Context) -> UIViewController {
-        let controller = UIViewController()
-        controller.view.backgroundColor = .clear
-        
-        // Start ASWebAuthenticationSession when the view appears
-        context.coordinator.startSession(authURL: authURL, callbackScheme: callbackScheme)
-        
-        return controller
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
-
-    class Coordinator: NSObject, ASWebAuthenticationPresentationContextProviding {
-        private var session: ASWebAuthenticationSession?
-        private let onCompletion: (Result<URL, Error>) -> Void
-
-        init(onCompletion: @escaping (Result<URL, Error>) -> Void) {
-            self.onCompletion = onCompletion
-        }
-
-        func startSession(authURL: URL, callbackScheme: String) {
-            session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: callbackScheme) { callbackURL, error in
-                if let url = callbackURL {
-                    self.onCompletion(.success(url))
-                } else if let error = error {
-                    self.onCompletion(.failure(error))
-                } else {
-                    self.onCompletion(.failure(NSError(domain: NSURLErrorDomain, code: NSURLErrorCancelled, userInfo: nil)))
-                }
-            }
-            session?.presentationContextProvider = self
-            session?.start()
-        }
-
-        func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
-            // Return the first available key window from an active UIWindowScene
-            if let windowScene = UIApplication.shared.connectedScenes
-                .compactMap({ $0 as? UIWindowScene })
-                .first,
-               let keyWindow = windowScene.windows.first(where: { $0.isKeyWindow }) {
-                return keyWindow
-            }
-            // Fallback: Return any window from any windowScene
-            if let window = UIApplication.shared.connectedScenes
-                .compactMap({ $0 as? UIWindowScene })
-                .flatMap({ $0.windows })
-                .first {
-                return window
-            }
-            // As a last resort, fatalError (should never occur in a live app)
-            fatalError("No window available for ASWebAuthenticationSession presentation.")
-        }
     }
 }
