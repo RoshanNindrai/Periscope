@@ -1,12 +1,17 @@
-import TMDBRepository
 import Networking
+import TMDBRepository
 import UIKit
+import Utils
 
 public struct RemoteTMDBAuthenticationService: TMDBAuthenticationService {
     private let networkService: NetworkService
+    private let keychainStore: KeychainStore
     
-    public init(networkService: NetworkService) {
+    private let sessionIdKeychainKey = "TMDBAuthenticationService.sessionIdKey"
+    
+    public init(networkService: NetworkService, keychainStore: KeychainStore) {
         self.networkService = networkService
+        self.keychainStore = keychainStore
     }
     
     public func requestToken() async throws -> RequestToken {
@@ -31,10 +36,22 @@ public struct RemoteTMDBAuthenticationService: TMDBAuthenticationService {
             let response: NetworkResponse<SessionTokenResponse> = try await networkService.perform(
                 apiRequest: TMDBAPI.createSession(requestToken: requestToken)
             )
-            return response.resource.toDomainModel()
+            
+            let sessionToken =  response.resource.toDomainModel()
+            
+            keychainStore.set(
+                sessionToken.sessionId,
+                forKey: sessionIdKeychainKey
+            )
+            
+            return sessionToken
         } catch {
             throw TMDBRepositoryError.authenticationError(error)
         }
+    }
+    
+    public func haveAnActiveSession() -> Bool {
+        keychainStore.string(forKey: sessionIdKeychainKey) != nil
     }
 }
 
@@ -55,3 +72,4 @@ private extension SessionTokenResponse {
         .init(success: success, sessionId: sessionId)
     }
 }
+

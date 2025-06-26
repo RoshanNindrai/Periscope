@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */ = {isa = PBXBuildFile; productRef = 442CF78F2DFDBCD900A7E8DC /* Lego */; };
+		443354012E0CBF3D00E68A6D /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 443354002E0CBF3D00E68A6D /* Routes */; };
 		44BE54552E0597840088BE59 /* SignInFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 44BE54542E0597840088BE59 /* SignInFeature */; };
 		44BE54582E05BC960088BE59 /* Utils in Frameworks */ = {isa = PBXBuildFile; productRef = 44BE54572E05BC960088BE59 /* Utils */; };
 		44BE54652E075AD10088BE59 /* HomeFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 44BE54642E075AD10088BE59 /* HomeFeature */; };
@@ -19,6 +20,7 @@
 		442CF78D2DFDBC2400A7E8DC /* Lego */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Lego; sourceTree = "<group>"; };
 		442CF7912DFDC11500A7E8DC /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Networking; sourceTree = "<group>"; };
 		442CF7932DFDCDA400A7E8DC /* TMDBRepository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TMDBRepository; sourceTree = "<group>"; };
+		443353FF2E0CBE0C00E68A6D /* Routes */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Routes; sourceTree = "<group>"; };
 		44A5634B2E0596FC00682AEE /* SignInFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SignInFeature; sourceTree = "<group>"; };
 		44BE54562E05B72F0088BE59 /* Utils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Utils; sourceTree = "<group>"; };
 		44BE54632E07485F0088BE59 /* HomeFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = HomeFeature; sourceTree = "<group>"; };
@@ -51,6 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				443354012E0CBF3D00E68A6D /* Routes in Frameworks */,
 				44E578612E058B2C00C16D91 /* AppSetup in Frameworks */,
 				442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */,
 				44BE54652E075AD10088BE59 /* HomeFeature in Frameworks */,
@@ -65,6 +68,7 @@
 		442CF7582DFDBBFA00A7E8DC = {
 			isa = PBXGroup;
 			children = (
+				443353FF2E0CBE0C00E68A6D /* Routes */,
 				44BE54632E07485F0088BE59 /* HomeFeature */,
 				44BE54562E05B72F0088BE59 /* Utils */,
 				44A5634B2E0596FC00682AEE /* SignInFeature */,
@@ -118,6 +122,7 @@
 				44BE54542E0597840088BE59 /* SignInFeature */,
 				44BE54572E05BC960088BE59 /* Utils */,
 				44BE54642E075AD10088BE59 /* HomeFeature */,
+				443354002E0CBF3D00E68A6D /* Routes */,
 			);
 			productName = Periscope;
 			productReference = 442CF7612DFDBBFA00A7E8DC /* Periscope.app */;
@@ -404,6 +409,10 @@
 		442CF78F2DFDBCD900A7E8DC /* Lego */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Lego;
+		};
+		443354002E0CBF3D00E68A6D /* Routes */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Routes;
 		};
 		44BE54542E0597840088BE59 /* SignInFeature */ = {
 			isa = XCSwiftPackageProductDependency;

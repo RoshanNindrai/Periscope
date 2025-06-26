@@ -11,9 +11,14 @@ public struct SignInFeatureView: View {
     private var isPresentingWebAuth = false
     
     private let viewModel: SignInFeatureViewModel
+    private let onOutput: (SignInFeatureViewModel.Output) -> Void
 
-    public init(viewModel: SignInFeatureViewModel) {
+    public init(
+        viewModel: SignInFeatureViewModel,
+        onOutput: @escaping (SignInFeatureViewModel.Output) -> Void
+    ) {
         self.viewModel = viewModel
+        self.onOutput = onOutput
     }
 
     public var body: some View {
@@ -35,8 +40,13 @@ public struct SignInFeatureView: View {
             await viewModel.reduce(.fetchRequestToken)
         }
         .onChange(of: viewModel.state) { _, newState in
-            if case .requestingUserPermissions = newState {
+            switch newState {
+            case .requestingUserPermissions:
                 isPresentingWebAuth = true
+            case .fetchedSessionToken:
+                onOutput(.navigateToHome)
+            default:
+                break
             }
         }
         .fullScreenCover(isPresented: $isPresentingWebAuth) {
@@ -46,16 +56,15 @@ public struct SignInFeatureView: View {
                     callbackURLScheme: "periscope"
                 ) { result in
                     Task { @MainActor in
-                        
-                        // At this point it's safe to say we've dismissed the authentication session vc
-                        isPresentingWebAuth.toggle()
-                        
                         switch result {
                         case .success(let callBackURL):
                             await viewModel.reduce(.userDidAuthenticate(requestToken, callBackURL))
                         case .failure:
                             await viewModel.reduce(.userDidCancelAuthentication(requestToken))
                         }
+                        
+                        // At this point it's safe to say we've dismissed the authentication session vc
+                        isPresentingWebAuth.toggle()
                     }
                 }
             }

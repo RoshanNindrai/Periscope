@@ -1,7 +1,7 @@
 import TMDBRepository
 import Networking
 
-public struct DefaultTMDBRepository: TMDBRepository {
+public struct RemoteTMDBRepository: TMDBRepository {
 
     private let networkService: NetworkService
     

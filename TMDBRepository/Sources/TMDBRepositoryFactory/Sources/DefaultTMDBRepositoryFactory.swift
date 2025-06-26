@@ -1,12 +1,15 @@
 import Networking
 import TMDBRepository
 import TMDBRepositoryImpl
+import Utils
 
 public struct DefaultTMDBRepositoryFactoryDependencies: TMDBRepositoryFactoryDependencies {
     public let networkService: NetworkService
+    public let keychainStore: KeychainStore
     
-    public init(networkService: NetworkService) {
+    public init(networkService: NetworkService, keychainStore: KeychainStore) {
         self.networkService = networkService
+        self.keychainStore = keychainStore
     }
 }
 
@@ -19,11 +22,13 @@ public struct DefaultTMDBRepositoryFactory: TMDBRepositoryFactory {
     
     public func makeAuthenticationService() -> any TMDBAuthenticationService {
         RemoteTMDBAuthenticationService(
-            networkService: dependencies.networkService
+            networkService: dependencies.networkService,
+            keychainStore: dependencies.keychainStore
         )
     }
     
     public func makeRepository() -> any TMDBRepository {
-        DefaultTMDBRepository(networkService: dependencies.networkService)
+        RemoteTMDBRepository(networkService: dependencies.networkService)
     }
 }
+

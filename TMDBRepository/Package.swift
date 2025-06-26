@@ -24,6 +24,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: "../Networking"),
+        .package(path: "../Utils"),
     ],
     targets: [
         .target(
@@ -32,11 +33,11 @@ let package = Package(
         ),
         .target(
             name: "TMDBRepositoryImpl",
-            dependencies: ["TMDBRepository", "Networking"]
+            dependencies: ["TMDBRepository", "Networking", "Utils"]
         ),
         .target(
             name: "TMDBRepositoryFactory",
-            dependencies: ["TMDBRepository", "Networking", "TMDBRepositoryImpl"]
+            dependencies: ["TMDBRepository", "Networking", "TMDBRepositoryImpl", "Utils"]
         ),
         .testTarget(
             name: "TMDBRepositoryTests",

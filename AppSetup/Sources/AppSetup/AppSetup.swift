@@ -8,12 +8,15 @@ import Utils
 public struct AppSetupDependencies: Sendable {
     let networkServiceFactory: NetworkServiceFactory
     let tmdbRepositoryFactory: TMDBRepositoryFactory
+    let keychainStore = KeychainStore(service: "com.periscope.keychain")
     
-    fileprivate init() {
+    public init() {
         networkServiceFactory = DefaultNetworkServiceFactory()
+        
         tmdbRepositoryFactory = DefaultTMDBRepositoryFactory(
             dependencies: DefaultTMDBRepositoryFactoryDependencies(
-                networkService: networkServiceFactory.makeNetworkService()
+                networkService: networkServiceFactory.makeNetworkService(),
+                keychainStore: keychainStore
             )
         )
     }
@@ -31,15 +34,19 @@ public struct PeriscopeAppSetup: Sendable  {
     public let serviceContainer: AppServiceContainer
     public let repositoryContainer: RepositoryContainer
     public let keychainStore: KeychainStore
+    
     private let dependencies: AppSetupDependencies
     
     public init(dependencies: AppSetupDependencies) {
         self.dependencies = dependencies
-        keychainStore = KeychainStore(service: "com.periscope.keychain")
+        
+        keychainStore = dependencies.keychainStore
+        
         serviceContainer = AppServiceContainer(
             tmdbRAuthenticationService: dependencies.tmdbRepositoryFactory.makeAuthenticationService(),
             networkService: dependencies.networkServiceFactory.makeNetworkService()
         )
+        
         repositoryContainer = RepositoryContainer(
             tmdbRepository: dependencies.tmdbRepositoryFactory.makeRepository()
         )
@@ -61,3 +68,4 @@ public extension EnvironmentValues {
         }
     }
 }
+
