@@ -64,10 +64,7 @@ struct PeriscopeApp: App {
             case .signIn:
                 SignInFeatureView(
                     viewModel: signInFeatureViewModel
-                ) { _ in
-                    router.navigate(to: .home)
-                }
-                
+                )
             case .none:
                 // Initial loading state with a progress view.
                 // Checks if there's an active authenticated session and routes accordingly.

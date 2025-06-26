@@ -1,24 +1,23 @@
-import Lego
-import SwiftUI
 import AuthenticationServices
+import Lego
+import Routes
+import SwiftUI
 
 public struct SignInFeatureView: View {
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     
+    @Environment(\.appRouter)
+    private var appRouter: AppRouter?
+    
     @State
     private var isPresentingWebAuth = false
     
     private let viewModel: SignInFeatureViewModel
-    private let onOutput: (SignInFeatureViewModel.Output) -> Void
 
-    public init(
-        viewModel: SignInFeatureViewModel,
-        onOutput: @escaping (SignInFeatureViewModel.Output) -> Void
-    ) {
+    public init(viewModel: SignInFeatureViewModel) {
         self.viewModel = viewModel
-        self.onOutput = onOutput
     }
 
     public var body: some View {
@@ -44,7 +43,7 @@ public struct SignInFeatureView: View {
             case .requestingUserPermissions:
                 isPresentingWebAuth = true
             case .fetchedSessionToken:
-                onOutput(.navigateToHome)
+                appRouter?.navigate(to: .home)
             default:
                 break
             }

@@ -14,6 +14,7 @@ public struct HomeFeatureView: View {
     
     private var contentView: some View {
         ScrollView {}
+            .background(.green)
         .task {
             await viewModel.reduce(.fetchLatest)
         }
