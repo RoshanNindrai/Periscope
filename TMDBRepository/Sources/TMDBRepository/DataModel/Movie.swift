@@ -48,3 +48,26 @@ public struct Movie: Sendable {
         self.voteCount = voteCount
     }
 }
+
+// MARK: Helpers
+
+public extension Movie {
+    
+    private static let baseImageURLString = "https://image.tmdb.org/t/p/"
+    
+    // THIS IS UGLY!!!!
+    
+    func posterURL(size: String = "w200") -> URL {
+        guard let posterPath = posterPath else {
+            return URL(string: "")!
+        }
+        return URL(string: "\(Movie.baseImageURLString)\(size)\(posterPath)")!
+    }
+    
+    func backDropURL(size: String = "w500") -> URL {
+        guard let posterPath = backdropPath else {
+            return URL(string: "")!
+        }
+        return URL(string: "\(Movie.baseImageURLString)\(size)\(posterPath)")!
+    }
+}

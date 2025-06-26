@@ -11,18 +11,24 @@ public struct HomeFeatureView: View {
     public init(viewModel: HomeFeatureViewModel) {
         self.viewModel = viewModel
     }
-    
-    private var contentView: some View {
-        ScrollView {}
-            .background(.green)
-        .task {
-            await viewModel.reduce(.fetchLatest)
-        }
-    }
-    
+
     public var body: some View {
         ScrollView {
-            contentView
+            switch viewModel.output {
+            case .loading:
+                LegoProgressView()
+            case .fetched(let movieCategories):
+                LazyVStack {
+                    ForEach(movieCategories) {
+                        MovieCategoryView(movieCategory: $0)
+                    }
+                }
+            case .failed(let error):
+                LegoText(error.localizedDescription, style: styleSheet.text(.caption))
+            }
+        }
+        .task {
+            await viewModel.reduce(.fetchLatest)
         }
     }
 }
