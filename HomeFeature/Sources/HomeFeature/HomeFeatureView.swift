@@ -13,19 +13,27 @@ public struct HomeFeatureView: View {
     }
 
     public var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             switch viewModel.output {
             case .loading:
                 LegoProgressView()
             case .fetched(let movieCategories):
                 LazyVStack {
                     ForEach(movieCategories) {
-                        MovieCategoryView(movieCategory: $0)
+                        MovieCategoryView(
+                            movieCategory: $0
+                        )
                     }
                 }
             case .failed(let error):
-                LegoText(error.localizedDescription, style: styleSheet.text(.caption))
+                LegoText(
+                    error.localizedDescription,
+                    style: styleSheet.text(.caption)
+                )
             }
+        }
+        .refreshable {
+            await viewModel.reduce(.fetchLatest)
         }
         .task {
             await viewModel.reduce(.fetchLatest)

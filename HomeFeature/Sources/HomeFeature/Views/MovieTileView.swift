@@ -17,17 +17,26 @@ struct MovieTileView: View {
             LegoAsyncImage(
                 url: movie.posterURL(),
                 placeholder: {
-                    Rectangle()
-                        .fill(styleSheet.colors.background)
+                    LegoText(
+                        movie.title,
+                        style: styleSheet.text(.caption)
+                    ) { text in
+                        text.multilineTextAlignment(.center)
+                    }
                 }) { image in
                     image.resizable()
                         .scaledToFit()
                 }
-        }.cornerRadius(styleSheet.spacing.spacing100)
+        }.cornerRadius(
+            styleSheet.spacing.spacing100
+        )
         .frame(
             width: 140,
             height: 210
-        )
+        ).background {
+            Rectangle()
+                .fill(styleSheet.colors.background)
+        }
     }
 }
 

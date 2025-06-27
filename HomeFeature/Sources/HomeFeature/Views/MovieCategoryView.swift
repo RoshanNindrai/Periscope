@@ -5,12 +5,17 @@ import TMDBRepository
 struct MovieCategoryView: View {
     
     private let movieCategory: MovieCategory
+    private let onSelection: (Movie) -> Void
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     
-    init(movieCategory: MovieCategory) {
+    init(
+        movieCategory: MovieCategory,
+        onSelection: @escaping (Movie) -> Void = { _ in }
+    ) {
         self.movieCategory = movieCategory
+        self.onSelection = onSelection
     }
     
     var body: some View {
@@ -38,6 +43,9 @@ struct MovieCategoryView: View {
                         MovieTileView(
                             movie: movie
                         )
+                        .onTapGesture {
+                            onSelection(movie)
+                        }
                         .padding(
                             .leading, rowIndex == .zero ? styleSheet.spacing.spacing100 : .zero
                         )

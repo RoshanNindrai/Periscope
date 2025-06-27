@@ -26,6 +26,9 @@ struct PeriscopeApp: App {
     private let homeFeatureViewModel: HomeFeatureViewModel
     private let signInFeatureViewModel: SignInFeatureViewModel
     
+    @Environment(\.styleSheet)
+    private var styleSheet: StyleSheet
+    
     // MARK: - Routing
     
     @State private var router: AppRouter = .init()
@@ -55,29 +58,39 @@ struct PeriscopeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            switch router.currentRoute {
-            case .home:
-                HomeFeatureView(
-                    viewModel: homeFeatureViewModel
-                )
-                
-            case .signIn:
-                SignInFeatureView(
-                    viewModel: signInFeatureViewModel
-                )
-            case .none:
-                // Initial loading state with a progress view.
-                // Checks if there's an active authenticated session and routes accordingly.
-                LegoProgressView()
-                    .task {
-                        // Secure session validation logic for navigation
-                        if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
-                            router.navigate(to: .home)
-                        } else {
-                            router.navigate(to: .signIn)
+            Group {
+                switch router.currentRoute {
+                case .home:
+                    TabView {
+                        Tab("Home", systemImage: "house") {
+                            NavigationView {
+                                HomeFeatureView(
+                                    viewModel: homeFeatureViewModel
+                                )
+                                .navigationTitle("Home")
+                                .navigationBarTitleDisplayMode(.inline)
+                            }
                         }
                     }
+                case .signIn:
+                    SignInFeatureView(
+                        viewModel: signInFeatureViewModel
+                    )
+                case .none:
+                    // Initial loading state with a progress view.
+                    // Checks if there's an active authenticated session and routes accordingly.
+                    LegoProgressView()
+                        .task {
+                            // Secure session validation logic for navigation
+                            if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
+                                router.navigate(to: .home)
+                            } else {
+                                router.navigate(to: .signIn)
+                            }
+                    }
+                }
             }
+            .tint(styleSheet.colors.primary)
         }
         .environment(\.appRouter, router)
     }
