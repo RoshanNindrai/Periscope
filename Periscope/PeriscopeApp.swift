@@ -31,7 +31,8 @@ struct PeriscopeApp: App {
     
     // MARK: - Routing
     
-    @State private var router: AppRouter = .init()
+    @State
+    private var router: AppRouter = .init()
     
     // MARK: - Initialization
     
@@ -63,7 +64,7 @@ struct PeriscopeApp: App {
                 case .home:
                     TabView {
                         Tab("Home", systemImage: "house") {
-                            NavigationView {
+                            NavigationStack {
                                 HomeFeatureView(
                                     viewModel: homeFeatureViewModel
                                 )
