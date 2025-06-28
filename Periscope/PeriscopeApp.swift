@@ -34,6 +34,12 @@ struct PeriscopeApp: App {
     @State
     private var router: AppRouter = .init()
     
+    @State
+    private var selectedMediaInfo: Media?
+    
+    @Namespace
+    private var namespace: Namespace.ID
+    
     // MARK: - Initialization
     
     init() {
@@ -66,13 +72,28 @@ struct PeriscopeApp: App {
                         Tab("Home", systemImage: "house") {
                             NavigationStack {
                                 HomeFeatureView(
-                                    viewModel: homeFeatureViewModel
+                                    viewModel: homeFeatureViewModel,
+                                    selectedMediaInfo: $selectedMediaInfo,
+                                    namespace: namespace
                                 )
                                 .navigationTitle("Home")
-                                .navigationBarTitleDisplayMode(.inline)
+                                .navigationDestination(
+                                    isPresented: Binding<Bool>(
+                                        get: { selectedMediaInfo != nil },
+                                        set: { newValue in
+                                            if !newValue { selectedMediaInfo = nil }
+                                        }
+                                    )
+                                ) {
+                                    if let selected = selectedMediaInfo {
+                                        Text(selected.title)
+                                            .navigationTransition(.zoom(sourceID: selected.id, in: namespace))
+                                    }
+                                }
                             }
                         }
                     }
+                    .ignoresSafeArea()
                 case .signIn:
                     SignInFeatureView(
                         viewModel: signInFeatureViewModel

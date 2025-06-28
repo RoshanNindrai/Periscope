@@ -1,18 +1,18 @@
 import Foundation
 
-public struct MovieList: Sendable {
-    public let movies: [Movie]
+public struct MediaList: Sendable {
+    public let items: [Media]
     public let page: Int
     public let totalPages: Int
     public let totalResults: Int
     
     public init(
-        movies: [Movie],
+        movies: [Media],
         page: Int,
         totalPages: Int,
         totalResults: Int
     ) {
-        self.movies = movies
+        self.items = movies
         self.page = page
         self.totalPages = totalPages
         self.totalResults = totalResults

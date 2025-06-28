@@ -2,20 +2,22 @@ import Lego
 import SwiftUI
 import TMDBRepository
 
-struct MovieTileView: View {
-    private let movie: Movie
+struct MediaTileView: View {
+    private let movie: Media
+    private let assetQuality: Media.AssetQuality
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     
-    init(movie: Movie) {
+    init(movie: Media, assetQuality: Media.AssetQuality = .small) {
         self.movie = movie
+        self.assetQuality = assetQuality
     }
     
     var body: some View {
         VStack {
             LegoAsyncImage(
-                url: movie.posterURL(),
+                url: movie.posterURL(quality: assetQuality),
                 placeholder: {
                     LegoText(
                         movie.title,
@@ -27,21 +29,19 @@ struct MovieTileView: View {
                     image.resizable()
                         .scaledToFit()
                 }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            Rectangle()
+                .fill(styleSheet.colors.background)
         }.cornerRadius(
             styleSheet.spacing.spacing100
         )
-        .frame(
-            width: 140,
-            height: 210
-        ).background {
-            Rectangle()
-                .fill(styleSheet.colors.background)
-        }
     }
 }
 
 #Preview {
-    MovieTileView(
+    MediaTileView(
         movie: .init(
             adult: false,
             backdropPath: "/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg",

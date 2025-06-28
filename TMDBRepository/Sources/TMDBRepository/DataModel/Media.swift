@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Movie: Sendable {
+public struct Media: Hashable, Sendable {
     public let adult: Bool
     public let backdropPath: String?
     public let genreIds: [Int]
@@ -51,23 +51,46 @@ public struct Movie: Sendable {
 
 // MARK: Helpers
 
-public extension Movie {
+public extension Media {
+    
+    enum AssetQuality: String {
+        case small = "w200"
+        case medium = "w400"
+        case large = "w500"
+    }
     
     private static let baseImageURLString = "https://image.tmdb.org/t/p/"
     
     // THIS IS UGLY!!!!
     
-    func posterURL(size: String = "w200") -> URL {
+    func posterURL(quality: AssetQuality = .small) -> URL {
         guard let posterPath = posterPath else {
             return URL(string: "")!
         }
-        return URL(string: "\(Movie.baseImageURLString)\(size)\(posterPath)")!
+        return URL(string: "\(Media.baseImageURLString)\(quality.rawValue)\(posterPath)")!
     }
     
-    func backDropURL(size: String = "w500") -> URL {
+    func backDropURL(quality: AssetQuality = .medium) -> URL {
         guard let posterPath = backdropPath else {
             return URL(string: "")!
         }
-        return URL(string: "\(Movie.baseImageURLString)\(size)\(posterPath)")!
+        return URL(string: "\(Media.baseImageURLString)\(quality.rawValue)\(posterPath)")!
     }
+    
+    static let example = Media(
+        adult: false,
+        backdropPath: "/exampleBackdrop.jpg",
+        genreIds: [12, 18],
+        id: 1,
+        originalLanguage: "en",
+        originalTitle: "Example Movie",
+        overview: "An example movie used for previews and initializations.",
+        popularity: 123.45,
+        posterPath: "/examplePoster.jpg",
+        releaseDate: "2025-01-01",
+        title: "Example Movie",
+        video: false,
+        voteAverage: 7.0,
+        voteCount: 100
+    )
 }

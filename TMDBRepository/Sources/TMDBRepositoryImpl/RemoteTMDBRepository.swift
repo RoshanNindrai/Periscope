@@ -9,23 +9,23 @@ public struct RemoteTMDBRepository: TMDBRepository {
         self.networkService = networkService
     }
     
-    public func nowPlayingMovies() async throws -> MovieList {
+    public func nowPlayingMovies() async throws -> MediaList {
         try await fetchMovies(for: .nowPlayingMovies)
     }
     
-    public func popularMovies() async throws -> MovieList {
+    public func popularMovies() async throws -> MediaList {
         try await fetchMovies(for: .popularMovies)
     }
     
-    public func topRatedMovies() async throws -> MovieList {
+    public func topRatedMovies() async throws -> MediaList {
         try await fetchMovies(for: .topRatedMovies)
     }
     
-    public func upcomingMovies() async throws -> MovieList {
+    public func upcomingMovies() async throws -> MediaList {
         try await fetchMovies(for: .upcomingMovies)
     }
     
-    private func fetchMovies(for request: TMDBAPI) async throws -> MovieList {
+    private func fetchMovies(for request: TMDBAPI) async throws -> MediaList {
         let movieList: NetworkResponse<MovieListResponse> = try await networkService.perform(apiRequest: request)
         return movieList.resource.toDomainModel()
     }
@@ -34,7 +34,7 @@ public struct RemoteTMDBRepository: TMDBRepository {
 // MARK: - helpers
 
 extension MovieListResponse {
-    func toDomainModel() -> MovieList {
+    func toDomainModel() -> MediaList {
         .init(
             movies: results.map { $0.toDomainModel() },
             page: page,
@@ -45,8 +45,8 @@ extension MovieListResponse {
 }
 
 extension MovieResponse {
-    func toDomainModel() -> Movie {
-        Movie(
+    func toDomainModel() -> Media {
+        Media(
             adult: adult,
             backdropPath: backdropPath,
             genreIds: genreIds,

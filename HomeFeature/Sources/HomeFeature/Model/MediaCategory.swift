@@ -1,10 +1,10 @@
 import TMDBRepository
 
-enum MovieCategory: Identifiable {
-    case popular(MovieList)
-    case nowPlaying(MovieList)
-    case upcoming(MovieList)
-    case topRated(MovieList)
+enum MediaCategory: Identifiable {
+    case popular(MediaList)
+    case nowPlaying(MediaList)
+    case upcoming(MediaList)
+    case topRated(MediaList)
     
     var id: String {
         switch self {
@@ -19,7 +19,7 @@ enum MovieCategory: Identifiable {
         }
     }
     
-    var movieList: MovieList {
+    var mediaList: MediaList {
         switch self {
         case .popular(let list):
             return list

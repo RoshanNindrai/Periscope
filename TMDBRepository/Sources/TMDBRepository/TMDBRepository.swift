@@ -5,8 +5,8 @@ public enum TMDBRepositoryError: Error {
 }
 
 public protocol TMDBRepository: Sendable {
-    func nowPlayingMovies() async throws -> MovieList
-    func popularMovies() async throws -> MovieList
-    func topRatedMovies() async throws -> MovieList
-    func upcomingMovies() async throws -> MovieList
+    func nowPlayingMovies() async throws -> MediaList
+    func popularMovies() async throws -> MediaList
+    func topRatedMovies() async throws -> MediaList
+    func upcomingMovies() async throws -> MediaList
 }
