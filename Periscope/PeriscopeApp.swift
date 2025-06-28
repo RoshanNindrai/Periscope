@@ -26,7 +26,8 @@ struct PeriscopeApp: App {
     private let homeFeatureViewModel: HomeFeatureViewModel
     private let signInFeatureViewModel: SignInFeatureViewModel
     
-    @Environment(\.styleSheet) private var styleSheet: StyleSheet
+    @Environment(\.styleSheet)
+    private var styleSheet: StyleSheet
     
     // MARK: - Routing
     
@@ -87,7 +88,6 @@ struct PeriscopeApp: App {
                         }
                     }
                 }
-                .ignoresSafeArea()
                 .opacity(router.currentRoute == .home ? 1 : 0)
                 
                 SignInFeatureView(

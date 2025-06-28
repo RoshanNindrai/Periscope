@@ -48,11 +48,14 @@ struct HorizontalSectionView: View {
                             MediaTileView(
                                 movie: movie
                             )
-                            .matchedTransitionSource(id: movie.id, in: namespace)
                             .padding(
                                 .leading, rowIndex == .zero ? styleSheet.spacing.spacing100 : .zero
                             )
                             .buttonStyle(PlainButtonStyle())
+                        }
+                        .matchedTransitionSource(id: movie.id, in: namespace)
+                        .onDisappear {
+                            print("DIS \(movie.title)")
                         }
                     }
                 }
