@@ -1,23 +1,24 @@
+import Routes
 import Lego
 import SwiftUI
 import TMDBRepository
 
 public struct HomeFeatureView: View {
     
+    private let viewModel: HomeFeatureViewModel
+    
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     
-    private let namespace: Namespace.ID
+    @Environment(\.namespace)
+    private var namespace: Namespace.ID!
     
     @Binding
     private var selectedMediaInfo: Media?
     
-    private let viewModel: HomeFeatureViewModel
-    
-    public init(viewModel: HomeFeatureViewModel, selectedMediaInfo: Binding<Media?>, namespace: Namespace.ID) {
+    public init(viewModel: HomeFeatureViewModel, selectedMediaInfo: Binding<Media?>) {
         self.viewModel = viewModel
         self._selectedMediaInfo = selectedMediaInfo
-        self.namespace = namespace
     }
 
     public var body: some View {
@@ -31,8 +32,7 @@ public struct HomeFeatureView: View {
                         switch movieCategory {
                         case .nowPlaying(let mediaList):
                             HeroBannerView(
-                                items: mediaList.items,
-                                namespace: namespace
+                                items: mediaList.items
                             ) {
                                 selectedMediaInfo = $0
                             }
@@ -44,8 +44,7 @@ public struct HomeFeatureView: View {
                             .ignoresSafeArea()
                         case .popular, .topRated, .upcoming:
                             HorizontalSectionView(
-                                movieCategory: movieCategory,
-                                namespace: namespace
+                                movieCategory: movieCategory
                             ) {
                                 selectedMediaInfo = $0
                             }

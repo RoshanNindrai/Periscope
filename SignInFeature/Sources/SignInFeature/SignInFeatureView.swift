@@ -5,6 +5,8 @@ import SwiftUI
 
 public struct SignInFeatureView: View {
     
+    private let viewModel: SignInFeatureViewModel
+    
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     
@@ -13,8 +15,6 @@ public struct SignInFeatureView: View {
     
     @State
     private var isPresentingWebAuth = false
-    
-    private let viewModel: SignInFeatureViewModel
 
     public init(viewModel: SignInFeatureViewModel) {
         self.viewModel = viewModel

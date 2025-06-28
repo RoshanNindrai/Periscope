@@ -26,8 +26,7 @@ struct PeriscopeApp: App {
     private let homeFeatureViewModel: HomeFeatureViewModel
     private let signInFeatureViewModel: SignInFeatureViewModel
     
-    @Environment(\.styleSheet)
-    private var styleSheet: StyleSheet
+    @Environment(\.styleSheet) private var styleSheet: StyleSheet
     
     // MARK: - Routing
     
@@ -73,16 +72,13 @@ struct PeriscopeApp: App {
                             NavigationStack {
                                 HomeFeatureView(
                                     viewModel: homeFeatureViewModel,
-                                    selectedMediaInfo: $selectedMediaInfo,
-                                    namespace: namespace
+                                    selectedMediaInfo: $selectedMediaInfo
                                 )
                                 .navigationTitle("Home")
                                 .navigationDestination(
                                     isPresented: Binding<Bool>(
                                         get: { selectedMediaInfo != nil },
-                                        set: { newValue in
-                                            if !newValue { selectedMediaInfo = nil }
-                                        }
+                                        set: { selectedMediaInfo = $0 ? selectedMediaInfo : nil }
                                     )
                                 ) {
                                     if let selected = selectedMediaInfo {
@@ -114,6 +110,7 @@ struct PeriscopeApp: App {
             }
             .tint(styleSheet.colors.primary)
         }
+        .environment(\.namespace, namespace)
         .environment(\.appRouter, router)
     }
 }

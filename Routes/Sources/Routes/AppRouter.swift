@@ -50,3 +50,17 @@ public extension EnvironmentValues {
         set { self[AppRouterEnvironmentKey.self] = newValue }
     }
 }
+
+
+public struct NamespaceEnvironmentKey: EnvironmentKey {
+    public static let defaultValue: Namespace.ID? = nil
+}
+
+public extension EnvironmentValues {
+    /// Accessor for the namespace from the SwiftUI environment.
+    /// A Namespace may or may not be injected from a parent view; this value is optional.
+    var namespace: Namespace.ID? {
+        get { self[NamespaceEnvironmentKey.self] }
+        set { self[NamespaceEnvironmentKey.self] = newValue }
+    }
+}
