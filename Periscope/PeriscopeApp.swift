@@ -64,49 +64,45 @@ struct PeriscopeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            Group {
-                switch router.currentRoute {
-                case .home:
-                    TabView {
-                        Tab("Home", systemImage: "house") {
-                            NavigationStack {
-                                HomeFeatureView(
-                                    viewModel: homeFeatureViewModel,
-                                    selectedMediaInfo: $selectedMediaInfo
+            ZStack {
+                TabView {
+                    Tab("Home", systemImage: "house") {
+                        NavigationStack {
+                            HomeFeatureView(
+                                viewModel: homeFeatureViewModel,
+                                selectedMediaInfo: $selectedMediaInfo
+                            )
+                            .navigationTitle("Home")
+                            .navigationDestination(
+                                isPresented: Binding<Bool>(
+                                    get: { selectedMediaInfo != nil },
+                                    set: { selectedMediaInfo = $0 ? selectedMediaInfo : nil }
                                 )
-                                .navigationTitle("Home")
-                                .navigationDestination(
-                                    isPresented: Binding<Bool>(
-                                        get: { selectedMediaInfo != nil },
-                                        set: { selectedMediaInfo = $0 ? selectedMediaInfo : nil }
-                                    )
-                                ) {
-                                    if let selected = selectedMediaInfo {
-                                        Text(selected.title)
-                                            .navigationTransition(.zoom(sourceID: selected.id, in: namespace))
-                                    }
+                            ) {
+                                if let selected = selectedMediaInfo {
+                                    Text(selected.title)
+                                        .navigationTransition(.zoom(sourceID: selected.id, in: namespace))
                                 }
                             }
                         }
                     }
-                    .ignoresSafeArea()
-                case .signIn:
-                    SignInFeatureView(
-                        viewModel: signInFeatureViewModel
-                    )
-                case .none:
-                    // Initial loading state with a progress view.
-                    // Checks if there's an active authenticated session and routes accordingly.
-                    LegoProgressView()
-                        .task {
-                            // Secure session validation logic for navigation
-                            if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
-                                router.navigate(to: .home)
-                            } else {
-                                router.navigate(to: .signIn)
-                            }
-                    }
                 }
+                .ignoresSafeArea()
+                .opacity(router.currentRoute == .home ? 1 : 0)
+                
+                SignInFeatureView(
+                    viewModel: signInFeatureViewModel
+                ).opacity(router.currentRoute == .signIn ? 1 : 0)
+                    
+                LegoProgressView()
+                    .task {
+                        // Secure session validation logic for navigation
+                        if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
+                            router.navigate(to: .home)
+                        } else {
+                            router.navigate(to: .signIn)
+                        }
+                }.opacity(router.currentRoute == .none ? 1 : 0)
             }
             .tint(styleSheet.colors.primary)
         }
