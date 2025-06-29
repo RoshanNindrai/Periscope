@@ -6,7 +6,6 @@ import TMDBRepository
 struct HeroBannerView: View {
     
     private let items: [Media]
-    private let onSelect: ((Media) -> Void)?
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
@@ -17,28 +16,37 @@ struct HeroBannerView: View {
     @State
     private var selectedItemIndex: Int = 0
     
-    init(items: [Media], onSelect: ((Media) -> Void)? = nil) {
+    @Binding
+    private var selectedMediaInfo: MediaSelection<Media>?
+    
+    init(items: [Media], selectedMediaInfo: Binding<MediaSelection<Media>?>) {
         self.items = items
-        self.onSelect = onSelect
+        self._selectedMediaInfo = selectedMediaInfo
     }
     
     var body: some View {
         TabView(selection: $selectedItemIndex) {
             ForEach(Array(items.enumerated()), id: \.element.id) { index, media in
                 Button {
-                    onSelect?(media)
+                    selectedMediaInfo = MediaSelection(
+                        media: media,
+                        key: "Hero-\(media.id)"
+                    )
                 } label: {
                     MediaTileView(
-                        movie: media,
+                        media: media,
                         assetQuality: .medium
                     )
-                    .tag(index)
                     .scaledToFit()
                     .matchedTransitionSource(
-                        id: media.id,
+                        id: MediaSelection(
+                            media: media,
+                            key: "Hero-\(media.id)"
+                        ),
                         in: namespace
                     )
                 }
+                .tag(index)
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
@@ -47,8 +55,9 @@ struct HeroBannerView: View {
 }
 
 #Preview {
-    HeroBannerView(
-        items: [Media(
+    
+    let items = [
+        Media(
             adult: false,
             backdropPath: "",
             genreIds: [],
@@ -62,7 +71,12 @@ struct HeroBannerView: View {
             title: "Title",
             video: false,
             voteAverage: 8.0,
-            voteCount: 100)],
-        onSelect: nil
+            voteCount: 100
+        )
+    ]
+    
+    HeroBannerView(
+        items: items,
+        selectedMediaInfo: .constant(MediaSelection(media: items.first!, key: ""))
     )
 }

@@ -35,7 +35,7 @@ struct PeriscopeApp: App {
     private var router: AppRouter = .init()
     
     @State
-    private var selectedMediaInfo: Media?
+    private var selectedMediaInfo: MediaSelection<Media>?
     
     @Namespace
     private var namespace: Namespace.ID
@@ -75,14 +75,11 @@ struct PeriscopeApp: App {
                             )
                             .navigationTitle("Home")
                             .navigationDestination(
-                                isPresented: Binding<Bool>(
-                                    get: { selectedMediaInfo != nil },
-                                    set: { selectedMediaInfo = $0 ? selectedMediaInfo : nil }
-                                )
+                                isPresented: isPresented
                             ) {
                                 if let selected = selectedMediaInfo {
-                                    Text(selected.title)
-                                        .navigationTransition(.zoom(sourceID: selected.id, in: namespace))
+                                    Text(selected.media.title)
+                                        .navigationTransition(.zoom(sourceID: selected, in: namespace))
                                 }
                             }
                         }
@@ -105,9 +102,18 @@ struct PeriscopeApp: App {
                 }.opacity(router.currentRoute == .none ? 1 : 0)
             }
             .tint(styleSheet.colors.primary)
+            .environment(\.colorScheme, .dark)
         }
         .environment(\.namespace, namespace)
         .environment(\.appRouter, router)
+    }
+    
+    private var isPresented: Binding<Bool> {
+        Binding {
+            selectedMediaInfo != nil
+        } set: { flag in
+            if !flag { selectedMediaInfo = nil }
+        }
     }
 }
 

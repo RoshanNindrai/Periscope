@@ -3,24 +3,24 @@ import SwiftUI
 import TMDBRepository
 
 struct MediaTileView: View {
-    private let movie: Media
+    private let media: Media
     private let assetQuality: Media.AssetQuality
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     
-    init(movie: Media, assetQuality: Media.AssetQuality = .small) {
-        self.movie = movie
+    init(media: Media, assetQuality: Media.AssetQuality = .small) {
+        self.media = media
         self.assetQuality = assetQuality
     }
     
     var body: some View {
         VStack {
             LegoAsyncImage(
-                url: movie.posterURL(quality: assetQuality),
+                url: media.posterURL(quality: assetQuality),
                 placeholder: {
                     LegoText(
-                        movie.title,
+                        media.title,
                         style: styleSheet.text(.caption)
                     ) { text in
                         text.multilineTextAlignment(.center)
@@ -42,7 +42,7 @@ struct MediaTileView: View {
 
 #Preview {
     MediaTileView(
-        movie: .init(
+        media: .init(
             adult: false,
             backdropPath: "/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg",
             genreIds: [28, 12, 878],

@@ -14,9 +14,12 @@ public struct HomeFeatureView: View {
     private var namespace: Namespace.ID!
     
     @Binding
-    private var selectedMediaInfo: Media?
+    private var selectedMediaInfo: MediaSelection<Media>?
     
-    public init(viewModel: HomeFeatureViewModel, selectedMediaInfo: Binding<Media?>) {
+    public init(
+        viewModel: HomeFeatureViewModel,
+        selectedMediaInfo: Binding<MediaSelection<Media>?>
+    ) {
         self.viewModel = viewModel
         self._selectedMediaInfo = selectedMediaInfo
     }
@@ -26,16 +29,15 @@ public struct HomeFeatureView: View {
             switch viewModel.output {
             case .loading:
                 LegoProgressView()
-            case .fetched(let movieCategories):
+            case .fetched(let mediaCategories):
                 LazyVStack {
-                    ForEach(movieCategories) { movieCategory in
-                        switch movieCategory {
+                    ForEach(mediaCategories) { mediaCategory in
+                        switch mediaCategory {
                         case .nowPlaying(let mediaList):
                             HeroBannerView(
-                                items: mediaList.items
-                            ) {
-                                selectedMediaInfo = $0
-                            }
+                                items: mediaList.items,
+                                selectedMediaInfo: $selectedMediaInfo
+                            )
                             .frame(
                                 maxWidth: .infinity
                             ).frame(
@@ -44,10 +46,9 @@ public struct HomeFeatureView: View {
                             .ignoresSafeArea()
                         case .popular, .topRated, .upcoming:
                             HorizontalSectionView(
-                                movieCategory: movieCategory
-                            ) {
-                                selectedMediaInfo = $0
-                            }
+                                mediaCategory: mediaCategory,
+                                selectedMediaInfo: $selectedMediaInfo
+                            )
                         }
                     }
                 }

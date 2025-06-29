@@ -1,14 +1,14 @@
 import Foundation
 import TMDBRepository
 
-struct MovieListResponse: Decodable {
+struct MediaListResponse: Decodable {
     struct Dates: Codable {
         let maximum: String
         let minimum: String
     }
     let dates: Dates?
     let page: Int
-    let results: [MovieResponse]
+    let results: [MediaResponse]
     let totalPages: Int
     let totalResults: Int
     
@@ -21,7 +21,7 @@ struct MovieListResponse: Decodable {
     }
 }
 
-struct MovieResponse: Decodable {
+struct MediaResponse: Decodable {
     let adult: Bool
     let backdropPath: String?
     let genreIds: [Int]

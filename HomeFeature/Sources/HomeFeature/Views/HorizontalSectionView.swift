@@ -5,7 +5,7 @@ import TMDBRepository
 
 struct HorizontalSectionView: View {
     
-    private let movieCategory: MediaCategory
+    private let mediaCategory: MediaCategory
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
@@ -13,83 +13,116 @@ struct HorizontalSectionView: View {
     @Environment(\.namespace)
     private var namespace: Namespace.ID!
     
-    private let onSelect: (Media) -> Void
+    @Binding
+    private var selectedMediaInfo: MediaSelection<Media>?
     
     init(
-        movieCategory: MediaCategory,
-        onSelect: @escaping (Media) -> Void
+        mediaCategory: MediaCategory,
+        selectedMediaInfo: Binding<MediaSelection<Media>?>
     ) {
-        self.movieCategory = movieCategory
-        self.onSelect = onSelect
+        self.mediaCategory = mediaCategory
+        self._selectedMediaInfo = selectedMediaInfo
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing50) {
+        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
             
             HStack(spacing: styleSheet.spacing.spacing50) {
                 LegoText(
-                    movieCategory.title, style: styleSheet.text(.title)
+                    mediaCategory.title, style: styleSheet.text(.title)
                 )
                 
                 Image(
                     systemName: "chevron.right"
                 ).font(
-                    styleSheet.typography.subtitle
+                    styleSheet.typography.subtitle.weight(.bold)
                 )
             }
             .padding(.leading, styleSheet.spacing.spacing100)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: styleSheet.spacing.spacing100) {
-                    ForEach(Array(movieCategory.mediaList.items.enumerated()), id: \.offset) { rowIndex, movie in
+                    ForEach(Array(mediaCategory.mediaList.items.enumerated()), id: \.offset) { rowIndex, media in
                         Button(action: {
-                            onSelect(movie)
+                            selectedMediaInfo = MediaSelection(
+                                media: media,
+                                key: "\(mediaCategory.title)-\(media.id)"
+                            )
                         }) {
                             MediaTileView(
-                                movie: movie
+                                media: media
                             )
                             .padding(
                                 .leading, rowIndex == .zero ? styleSheet.spacing.spacing100 : .zero
                             )
                             .buttonStyle(PlainButtonStyle())
                         }
-                        .matchedTransitionSource(id: movie.id, in: namespace)
-                        .onDisappear {
-                            print("DIS \(movie.title)")
-                        }
+                        .matchedTransitionSource(
+                            id: MediaSelection(
+                                media: media,
+                                key: "\(mediaCategory.title)-\(media.id)"
+                            ),
+                            in: namespace
+                        )
+                        
                     }
                 }
             }
             .frame(height: 250)
         }
+        .padding(
+            .vertical,
+            styleSheet.spacing.spacing100
+        )
     }
 }
 
 #Preview {
+    
+    let items = [
+        Media(
+            adult: false,
+            backdropPath: "/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg",
+            genreIds: [28, 12, 878],
+            id: 505642,
+            originalLanguage: "en",
+            originalTitle: "Black Panther: Wakanda Forever",
+            overview: "Queen Ramonda, Shuri, M’Baku and the Dora Milaje fight to protect Wakanda from intervening world powers in the wake of King T’Challa’s death.",
+            popularity: 1234.56,
+            posterPath: "/sv1xJUazXeYqALzczSZ3O6nkH75.jpg",
+            releaseDate: "2022-11-11",
+            title: "Black Panther: Wakanda Forever",
+            video: false,
+            voteAverage: 7.3,
+            voteCount: 1892
+        ),
+        Media(
+            adult: false,
+            backdropPath: "/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg",
+            genreIds: [28, 12, 878],
+            id: 505642,
+            originalLanguage: "en",
+            originalTitle: "Black Panther: Wakanda Forever",
+            overview: "Queen Ramonda, Shuri, M’Baku and the Dora Milaje fight to protect Wakanda from intervening world powers in the wake of King T’Challa’s death.",
+            popularity: 1234.56,
+            posterPath: "/sv1xJUazXeYqALzczSZ3O6nkH75.jpg",
+            releaseDate: "2022-11-11",
+            title: "Black Panther: Wakanda Forever",
+            video: false,
+            voteAverage: 7.3,
+            voteCount: 1892
+        )
+    ]
+    
     HorizontalSectionView(
-        movieCategory: .popular(
+        mediaCategory: .popular(
             .init(
-                movies: [Media(
-                    adult: false,
-                    backdropPath: "",
-                    genreIds: [],
-                    id: 1,
-                    originalLanguage: "en",
-                    originalTitle: "Title",
-                    overview: "Overview...",
-                    popularity: 1,
-                    posterPath: "",
-                    releaseDate: "2025-01-01",
-                    title: "Title",
-                    video: false,
-                    voteAverage: 8.0,
-                    voteCount: 100
-                )],
+                medias: items,
                 page: 1,
                 totalPages: 1,
                 totalResults: 1
             )
         ),
-        onSelect: { _ in }
+        selectedMediaInfo: .constant(MediaSelection(media: items.first!, key: ""))
     )
 }

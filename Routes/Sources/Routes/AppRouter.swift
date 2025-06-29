@@ -51,11 +51,13 @@ public extension EnvironmentValues {
     }
 }
 
-
+/// Environment key for injecting an optional SwiftUI Namespace.ID into the environment.
 public struct NamespaceEnvironmentKey: EnvironmentKey {
+    /// Default value for the namespace environment key is `nil` (no namespace injected).
     public static let defaultValue: Namespace.ID? = nil
 }
 
+/// Extension to provide convenient access to the namespace environment value.
 public extension EnvironmentValues {
     /// Accessor for the namespace from the SwiftUI environment.
     /// A Namespace may or may not be injected from a parent view; this value is optional.

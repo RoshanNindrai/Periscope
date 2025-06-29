@@ -7,12 +7,12 @@ public struct MediaList: Sendable {
     public let totalResults: Int
     
     public init(
-        movies: [Media],
+        medias: [Media],
         page: Int,
         totalPages: Int,
         totalResults: Int
     ) {
-        self.items = movies
+        self.items = medias
         self.page = page
         self.totalPages = totalPages
         self.totalResults = totalResults

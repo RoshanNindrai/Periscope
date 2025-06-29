@@ -26,17 +26,17 @@ public struct RemoteTMDBRepository: TMDBRepository {
     }
     
     private func fetchMovies(for request: TMDBAPI) async throws -> MediaList {
-        let movieList: NetworkResponse<MovieListResponse> = try await networkService.perform(apiRequest: request)
-        return movieList.resource.toDomainModel()
+        let mediaList: NetworkResponse<MediaListResponse> = try await networkService.perform(apiRequest: request)
+        return mediaList.resource.toDomainModel()
     }
 }
 
 // MARK: - helpers
 
-extension MovieListResponse {
+extension MediaListResponse {
     func toDomainModel() -> MediaList {
         .init(
-            movies: results.map { $0.toDomainModel() },
+            medias: results.map { $0.toDomainModel() },
             page: page,
             totalPages: totalPages,
             totalResults: totalResults
@@ -44,7 +44,7 @@ extension MovieListResponse {
     }
 }
 
-extension MovieResponse {
+extension MediaResponse {
     func toDomainModel() -> Media {
         Media(
             adult: adult,
