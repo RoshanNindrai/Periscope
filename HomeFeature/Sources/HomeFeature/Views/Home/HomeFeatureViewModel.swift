@@ -24,14 +24,18 @@ public final class HomeFeatureViewModel {
     func reduce(_ action: Action) async {
         switch action {
         case .fetchLatest:
-            async let popularMovies: MediaCategory? = try? .popular(repository.popularMovies())
+            async let popularMovies: MediaCategory? = try? .popularMovies(repository.popularMovies())
+            async let trendingToday: MediaCategory? = try? .trendingToday(repository.trendingToday())
             async let upcomingMovies: MediaCategory? = try? .upcoming(repository.upcomingMovies())
+            async let popularTVShows: MediaCategory? = try! .popularTVShows(repository.popularTvShows())
             async let topRatedMovies: MediaCategory? = try? .topRated(repository.topRatedMovies())
             async let nowPlayingMovies: MediaCategory? = try? .nowPlaying(repository.nowPlayingMovies())
             
             let result: [MediaCategory] = await [
+                trendingToday,
                 nowPlayingMovies,
                 upcomingMovies,
+                popularTVShows,
                 popularMovies,
                 topRatedMovies
             ].compactMap { $0 }

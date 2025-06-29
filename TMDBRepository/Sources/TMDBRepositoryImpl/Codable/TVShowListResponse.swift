@@ -1,19 +1,13 @@
 import Foundation
 import TMDBRepository
 
-struct MovieListResponse: Decodable {
-    struct Dates: Codable {
-        let maximum: String
-        let minimum: String
-    }
-    let dates: Dates?
+struct TVShowListResponse: Decodable {
     let page: Int
-    let results: [MovieResponse]
+    let results: [TVShowResponse]
     let totalPages: Int
     let totalResults: Int
-    
+
     enum CodingKeys: String, CodingKey {
-        case dates
         case page
         case results
         case totalPages = "total_pages"
@@ -21,19 +15,19 @@ struct MovieListResponse: Decodable {
     }
 }
 
-struct MovieResponse: Decodable {
+struct TVShowResponse: Decodable {
     let adult: Bool
     let backdropPath: String?
     let genreIds: [Int]
     let id: Int
+    let originCountry: [String]
     let originalLanguage: String
-    let originalTitle: String
+    let originalName: String
     let overview: String
     let popularity: Double
     let posterPath: String?
-    let releaseDate: String
-    let title: String
-    let video: Bool
+    let firstAirDate: String
+    let name: String
     let voteAverage: Double
     let voteCount: Int
 
@@ -42,20 +36,20 @@ struct MovieResponse: Decodable {
         case backdropPath = "backdrop_path"
         case genreIds = "genre_ids"
         case id
+        case originCountry = "origin_country"
         case originalLanguage = "original_language"
-        case originalTitle = "original_title"
+        case originalName = "original_name"
         case overview
         case popularity
         case posterPath = "poster_path"
-        case releaseDate = "release_date"
-        case title
-        case video
+        case firstAirDate = "first_air_date"
+        case name
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
 }
 
-extension MovieListResponse {
+extension TVShowListResponse {
     func toDomainModel() -> MediaList {
         .init(
             medias: results.map { $0.toDomainModel() },
@@ -66,21 +60,21 @@ extension MovieListResponse {
     }
 }
 
-extension MovieResponse {
-    func toDomainModel() -> Movie {
-        Movie(
+extension TVShowResponse {
+    func toDomainModel() -> TVShow {
+        TVShow(
             adult: adult,
             backdropPath: backdropPath,
             genreIds: genreIds,
             id: id,
+            originCountry: originCountry,
             originalLanguage: originalLanguage,
-            originalTitle: originalTitle,
+            originalName: originalName,
             overview: overview,
             popularity: popularity,
             posterPath: posterPath,
-            releaseDate: releaseDate,
-            title: title,
-            video: video,
+            firstAirDate: firstAirDate,
+            name: name,
             voteAverage: voteAverage,
             voteCount: voteCount
         )

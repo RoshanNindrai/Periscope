@@ -1,19 +1,14 @@
 import Foundation
 
-public struct MediaList: Sendable {
-    public let items: [any Media]
+public struct TrendingList: Sendable {
     public let page: Int
+    public let items: [TrendingItem]
     public let totalPages: Int
     public let totalResults: Int
     
-    public init(
-        medias: [any Media],
-        page: Int,
-        totalPages: Int,
-        totalResults: Int
-    ) {
-        self.items = medias
+    public init(page: Int, items: [TrendingItem], totalPages: Int, totalResults: Int) {
         self.page = page
+        self.items = items
         self.totalPages = totalPages
         self.totalResults = totalResults
     }

@@ -2,6 +2,7 @@ import Networking
 import Foundation
 
 enum TMDBAPI: API {
+    case configuration
     // MARK: - Authentication
     case requestToken
     case authorizeToken(requestToken: String)
@@ -10,11 +11,13 @@ enum TMDBAPI: API {
     case nowPlayingMovies
     case popularMovies
     case topRatedMovies
+    case popularTVShows
     case upcomingMovies
+    case trendingToday
 
     var baseURL: URL {
         switch self {
-        case .requestToken, .createSession, .popularMovies, .topRatedMovies, .upcomingMovies, .nowPlayingMovies:
+        case .configuration, .requestToken, .createSession, .popularMovies, .topRatedMovies, .popularTVShows, .upcomingMovies, .nowPlayingMovies, .trendingToday:
             return URL(string: "https://api.themoviedb.org/3")!
         case .authorizeToken:
             return URL(string: "https://www.themoviedb.org")!
@@ -23,8 +26,12 @@ enum TMDBAPI: API {
     
     var path: String {
         switch self {
+        case .configuration:
+            return "/configuration"
         case .popularMovies:
             return "/movie/popular"
+        case .popularTVShows:
+            return "/tv/popular"
         case .requestToken:
             return "/authentication/token/new"
         case .authorizeToken(let requestToken):
@@ -37,12 +44,14 @@ enum TMDBAPI: API {
             return "/movie/upcoming"
         case .nowPlayingMovies:
             return "/movie/now_playing"
+        case .trendingToday:
+            return "/trending/all/day"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .popularMovies, .requestToken, .authorizeToken, .topRatedMovies, .upcomingMovies, .nowPlayingMovies:
+        case .configuration, .popularMovies, .requestToken, .authorizeToken, .topRatedMovies, .popularTVShows, .upcomingMovies, .nowPlayingMovies, .trendingToday:
             return .get
         case .createSession:
             return .post
@@ -66,7 +75,7 @@ enum TMDBAPI: API {
     
     var queryParameters: [String : String] {
         switch self {
-        case .popularMovies, .requestToken, .topRatedMovies, .upcomingMovies, .nowPlayingMovies:
+        case .configuration, .popularMovies, .requestToken, .topRatedMovies, .popularTVShows, .upcomingMovies, .nowPlayingMovies, .trendingToday:
             return [:]
         case .authorizeToken:
             return ["redirect_to": "periscope://auth-callback"]
@@ -79,7 +88,7 @@ enum TMDBAPI: API {
         switch self {
         case .createSession(let requestToken):
             return ["request_token": requestToken]
-        case .requestToken, .authorizeToken, .popularMovies, .topRatedMovies, .upcomingMovies, .nowPlayingMovies:
+        case .configuration, .requestToken, .authorizeToken, .popularMovies, .popularTVShows, .topRatedMovies, .upcomingMovies, .nowPlayingMovies, .trendingToday:
             return nil
         }
     }

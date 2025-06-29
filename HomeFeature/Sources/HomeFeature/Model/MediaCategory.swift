@@ -1,47 +1,61 @@
 import TMDBRepository
 
 enum MediaCategory: Identifiable {
-    case popular(MediaList)
+    case popularMovies(MediaList)
     case nowPlaying(MediaList)
     case upcoming(MediaList)
+    case popularTVShows(MediaList)
     case topRated(MediaList)
+    case trendingToday(TrendingList)
     
     var id: String {
         switch self {
-        case .popular:
-            "popular"
+        case .popularMovies:
+            "popularMovies"
         case .nowPlaying:
             "nowPlaying"
         case .upcoming:
             "upcoming"
+        case .popularTVShows:
+            "popularTVShows"
         case .topRated:
             "topRated"
+        case .trendingToday:
+            "trendingToday"
         }
     }
     
-    var mediaList: MediaList {
+    var mediaItems: [any Media] {
         switch self {
-        case .popular(let list):
-            return list
+        case .popularMovies(let list):
+            return list.items
         case .nowPlaying(let list):
-            return list
+            return list.items
         case .upcoming(let list):
-            return list
+            return list.items
+        case .popularTVShows(let list):
+            return list.items
         case .topRated(let list):
-            return list
+            return list.items
+        case .trendingToday(let list):
+            return list.items.map(\.media)
         }
     }
     
     var title: String {
         switch self {
-        case .popular:
-            "Popular"
+        case .popularMovies:
+            "Popular Movies"
         case .nowPlaying:
-            "Now Playing"
+            "In Theatres Now"
         case .upcoming:
-            "Upcoming"
+            "Upcoming Movies"
+        case .popularTVShows:
+            "Popular TV Shows"
         case .topRated:
-            "Top Rated"
+            "Top Rated Movies"
+        case .trendingToday:
+            "Trending Today"
         }
     }
 }

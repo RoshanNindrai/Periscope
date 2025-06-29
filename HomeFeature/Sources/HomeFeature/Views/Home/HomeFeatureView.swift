@@ -14,11 +14,11 @@ public struct HomeFeatureView: View {
     private var namespace: Namespace.ID!
     
     @Binding
-    private var selectedMediaInfo: MediaSelection<Media>?
+    private var selectedMediaInfo: MediaSelection?
     
     public init(
         viewModel: HomeFeatureViewModel,
-        selectedMediaInfo: Binding<MediaSelection<Media>?>
+        selectedMediaInfo: Binding<MediaSelection?>
     ) {
         self.viewModel = viewModel
         self._selectedMediaInfo = selectedMediaInfo
@@ -33,18 +33,15 @@ public struct HomeFeatureView: View {
                 LazyVStack {
                     ForEach(mediaCategories) { mediaCategory in
                         switch mediaCategory {
-                        case .nowPlaying(let mediaList):
+                        case .trendingToday:
                             HeroBannerView(
-                                items: mediaList.items,
+                                items: mediaCategory.mediaItems,
                                 selectedMediaInfo: $selectedMediaInfo
-                            )
-                            .frame(
-                                maxWidth: .infinity
                             ).frame(
-                                height: UIScreen.main.bounds.height * 0.5
+                                height: UIScreen.main.bounds.height * 0.66
                             )
                             .ignoresSafeArea()
-                        case .popular, .topRated, .upcoming:
+                        case .popularMovies, .popularTVShows, .topRated, .upcoming, .nowPlaying:
                             HorizontalSectionView(
                                 mediaCategory: mediaCategory,
                                 selectedMediaInfo: $selectedMediaInfo

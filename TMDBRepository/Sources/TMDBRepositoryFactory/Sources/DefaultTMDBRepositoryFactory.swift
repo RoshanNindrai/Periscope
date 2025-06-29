@@ -31,4 +31,3 @@ public struct DefaultTMDBRepositoryFactory: TMDBRepositoryFactory {
         RemoteTMDBRepository(networkService: dependencies.networkService)
     }
 }
-

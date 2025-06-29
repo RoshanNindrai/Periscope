@@ -1,10 +1,3 @@
-//
-//  PeriscopeApp.swift
-//  
-//  Entry point of the Periscope application.
-//  Manages app lifecycle, navigation, and core dependencies with a focus on secure authentication handling and modular architecture.
-//
-
 import AppSetup
 import HomeFeature
 import Lego
@@ -35,10 +28,13 @@ struct PeriscopeApp: App {
     private var router: AppRouter = .init()
     
     @State
-    private var selectedMediaInfo: MediaSelection<Media>?
+    private var selectedMediaInfo: MediaSelection?
     
     @Namespace
     private var namespace: Namespace.ID
+    
+    @State
+    private var tmdbImageURLBuilder: TMDBImageURLBuilder = .init(configuration: .default)
     
     // MARK: - Initialization
     
@@ -101,9 +97,13 @@ struct PeriscopeApp: App {
                         }
                 }.opacity(router.currentRoute == .none ? 1 : 0)
             }
+            .task {
+                tmdbImageURLBuilder = await appSetup.repositoryContainer.tmdbRepository.imageURLBuilder()
+            }
             .tint(styleSheet.colors.primary)
             .environment(\.colorScheme, .dark)
         }
+        .environment(\.tmdbImageURLBuilder, tmdbImageURLBuilder)
         .environment(\.namespace, namespace)
         .environment(\.appRouter, router)
     }
