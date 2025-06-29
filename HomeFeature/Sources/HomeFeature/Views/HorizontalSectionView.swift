@@ -7,20 +7,20 @@ struct HorizontalSectionView: View {
     
     enum Size {
         static let height: CGFloat = 150
-        static let width: CGFloat = height * (2/3)
+        static let width: CGFloat = height * (2 / 3)
     }
-    
+
     private let mediaCategory: MediaCategory
-    
+
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
-    
+
     @Environment(\.namespace)
     private var namespace: Namespace.ID!
-    
+
     @Binding
     private var selectedMediaInfo: MediaSelection?
-    
+
     init(
         mediaCategory: MediaCategory,
         selectedMediaInfo: Binding<MediaSelection?>
@@ -28,109 +28,46 @@ struct HorizontalSectionView: View {
         self.mediaCategory = mediaCategory
         self._selectedMediaInfo = selectedMediaInfo
     }
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
-            
-            HStack(spacing: styleSheet.spacing.spacing50) {
-                LegoText(
-                    mediaCategory.title, style: styleSheet.text(.title)
-                )
-                
-                Image(
-                    systemName: "chevron.right"
-                ).foregroundColor(
-                    styleSheet.colors.textSecondary
-                ).font(
-                    styleSheet.typography.subtitle.weight(.bold)
-                )
-            }
-            .padding(.leading, styleSheet.spacing.spacing100)
-            
+            header
+
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: styleSheet.spacing.spacing100) {
-                    ForEach(Array(mediaCategory.mediaItems.enumerated()), id: \.offset) { rowIndex, media in
-                        Button(action: {
-                            selectedMediaInfo = MediaSelection(
-                                media: media,
-                                key: "\(mediaCategory.title)-\(media.id)"
-                            )
-                        }) {
-                            MediaTileView(
-                                media: media
-                            )
-                            .buttonStyle(PlainButtonStyle())
-                            .frame(width: Size.width, height: Size.height)
-                            .padding(
-                                .leading, rowIndex == .zero ? styleSheet.spacing.spacing100 : .zero
-                            )
-                        }
-                        .matchedTransitionSource(
-                            id: MediaSelection(
-                                media: media,
-                                key: "\(mediaCategory.title)-\(media.id)"
-                            ),
-                            in: namespace
-                        )
+                    ForEach(mediaCategory.mediaItems.indices, id: \.self) { index in
+                        mediaTileButton(for: mediaCategory.mediaItems[index], index: index)
                     }
                 }
+                .padding(.leading, styleSheet.spacing.spacing100)
             }
             .frame(height: Size.height)
         }
-        .padding(
-            .vertical,
-            styleSheet.spacing.spacing100
-        )
+        .padding(.vertical, styleSheet.spacing.spacing100)
+    }
+
+    private var header: some View {
+        HStack(spacing: styleSheet.spacing.spacing50) {
+            LegoText(mediaCategory.title, style: styleSheet.text(.title))
+
+            Image(systemName: "chevron.right")
+                .foregroundColor(styleSheet.colors.textSecondary)
+                .font(styleSheet.typography.subtitle.weight(.bold))
+        }
+        .padding(.leading, styleSheet.spacing.spacing100)
+    }
+
+    @ViewBuilder
+    private func mediaTileButton(for media: any Media, index: Int) -> some View {
+        let mediaSelection = MediaSelection(media: media, key: "\(mediaCategory.title)-\(media.id)")
+
+        Button {
+            selectedMediaInfo = mediaSelection
+        } label: {
+            MediaTileView(media: media)
+                .buttonStyle(.plain)
+        }
+        .frame(width: Size.width, height: Size.height)
+        .matchedTransitionSource(id: mediaSelection, in: namespace)
     }
 }
-
-#Preview {
-    
-    let items = [
-        Movie(
-            adult: false,
-            backdropPath: "/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg",
-            genreIds: [28, 12, 878],
-            id: 505642,
-            originalLanguage: "en",
-            originalTitle: "Black Panther: Wakanda Forever",
-            overview: "Queen Ramonda, Shuri, M’Baku and the Dora Milaje fight to protect Wakanda from intervening world powers in the wake of King T’Challa’s death.",
-            popularity: 1234.56,
-            posterPath: "/sv1xJUazXeYqALzczSZ3O6nkH75",
-            releaseDate: "2022-11-11",
-            title: "Black Panther: Wakanda Forever",
-            video: false,
-            voteAverage: 7.3,
-            voteCount: 1892
-        ),
-        Movie(
-            adult: false,
-            backdropPath: "/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg",
-            genreIds: [28, 12, 878],
-            id: 505642,
-            originalLanguage: "en",
-            originalTitle: "Black Panther: Wakanda Forever",
-            overview: "Queen Ramonda, Shuri, M’Baku and the Dora Milaje fight to protect Wakanda from intervening world powers in the wake of King T’Challa’s death.",
-            popularity: 1234.56,
-            posterPath: "/sv1xJUazXeYqALzczSZ3O6nkH75.jpg",
-            releaseDate: "2022-11-11",
-            title: "Black Panther: Wakanda Forever",
-            video: false,
-            voteAverage: 7.3,
-            voteCount: 1892
-        )
-    ]
-    
-    HorizontalSectionView(
-        mediaCategory: .popularMovies(
-            .init(
-                medias: items,
-                page: 1,
-                totalPages: 1,
-                totalResults: 1
-            )
-        ),
-        selectedMediaInfo: .constant(MediaSelection(media: items.first!, key: ""))
-    )
-}
-

@@ -4,67 +4,66 @@ import SwiftUI
 import TMDBRepository
 
 struct HeroBannerView: View {
-    
+
     enum Size {
         static let height: CGFloat = 507
-        static let width: CGFloat = height * (2/3)
+        static let width: CGFloat = height * (2 / 3)
     }
-    
+
     private let items: [any Media]
-    
+
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
-    
+
     @Environment(\.namespace)
     private var namespace: Namespace.ID!
-    
+
     @State
     private var selectedItemIndex: Int = 0
-    
+
     @Binding
     private var selectedMediaInfo: MediaSelection?
-    
+
     init(items: [any Media], selectedMediaInfo: Binding<MediaSelection?>) {
         self.items = items
         self._selectedMediaInfo = selectedMediaInfo
     }
-    
+
     var body: some View {
         TabView(selection: $selectedItemIndex) {
-            ForEach(Array(items.enumerated()), id: \.element.id) { index, media in
-                Button {
-                    selectedMediaInfo = MediaSelection(
-                        media: media,
-                        key: "Hero-\(media.id)"
-                    )
-                } label: {
-                    MediaTileView(
-                        media: media,
-                        posterSize: .w780
-                    )
-                    .buttonStyle(PlainButtonStyle())
-                    .frame(width: Size.width, height: Size.height)
-                }
-                .matchedTransitionSource(
-                    id: MediaSelection(
-                        media: media,
-                        key: "Hero-\(media.id)"
-                    ),
-                    in: namespace
-                )
-                .tag(index)
+            ForEach(items.indices, id: \.self) { index in
+                mediaTileButton(for: items[index], index: index)
             }
-            .frame(width: Size.width, height: Size.height)
         }
-
+        .frame(height: Size.height)
         .scrollIndicators(.never)
         .tabViewStyle(.page(indexDisplayMode: .always))
         .ignoresSafeArea(edges: .top)
     }
+
+    @ViewBuilder
+    private func mediaTileButton(for media: any Media, index: Int) -> some View {
+        let mediaSelection = MediaSelection(media: media, key: "Hero-\(media.id)")
+
+        Button {
+            selectedMediaInfo = mediaSelection
+        } label: {
+            MediaTileView(
+                media: media,
+                posterSize: .w780
+            )
+            .buttonStyle(.plain)
+        }
+        .frame(width: Size.width, height: Size.height)
+        .matchedTransitionSource(
+            id: mediaSelection,
+            in: namespace
+        )
+        .tag(index)
+    }
 }
 
 #Preview {
-    
     let items = [
         Movie(
             adult: false,
@@ -99,10 +98,9 @@ struct HeroBannerView: View {
             voteCount: 1892
         ),
     ]
-    
+
     HeroBannerView(
         items: items,
         selectedMediaInfo: .constant(MediaSelection(media: items.first!, key: ""))
     )
 }
-

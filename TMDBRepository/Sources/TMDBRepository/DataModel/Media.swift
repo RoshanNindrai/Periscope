@@ -1,3 +1,4 @@
+import Foundation
 
 public protocol Media: Sendable, Equatable {
     var id: Int { get }

@@ -49,6 +49,6 @@ public struct TVShow: Media {
     }
     
     public var title: String {
-        originalName
+        name
     }
 }

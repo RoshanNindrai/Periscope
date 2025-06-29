@@ -5,47 +5,47 @@ import TMDBRepository
 struct MediaTileView: View {
     private let media: any Media
     private let posterSize: PosterSize
-    
+
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
-    
+
     @Environment(\.tmdbImageURLBuilder)
     private var tmdbImageURLBuilder: TMDBImageURLBuilder
-    
+
     init(media: any Media, posterSize: PosterSize = .w342) {
         self.media = media
         self.posterSize = posterSize
     }
-    
+
     var body: some View {
-        VStack {
-            LegoAsyncImage(
-                url: tmdbImageURLBuilder.posterImageURL(
-                    media: media,
-                    size: posterSize
-                ),
-                placeholder: {
+        LegoAsyncImage(
+            url: tmdbImageURLBuilder.posterImageURL(media: media, size: posterSize),
+            placeholder: {
+                ZStack {
+                    Rectangle()
+                        .fill(styleSheet.colors.background)
+
                     LegoText(
                         media.title,
                         style: styleSheet.text(.caption)
                     ) { text in
-                        text.multilineTextAlignment(.center)
+                        text
+                            .multilineTextAlignment(.center)
                     }
                     .padding(styleSheet.spacing.spacing200)
-                }) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
                 }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background {
-            Rectangle()
-                .fill(styleSheet.colors.background)
-        }
-        .cornerRadius(
-            styleSheet.spacing.spacing100
+            },
+            imageViewBuilder: { image in
+                image
+                    .resizable()
+                    .scaledToFill()
+                    .clipped()
+            }
         )
+        .aspectRatio(2/3, contentMode: .fit)
+        .background(styleSheet.colors.background)
+        .cornerRadius(styleSheet.spacing.spacing100)
+        .contentShape(RoundedRectangle(cornerRadius: styleSheet.spacing.spacing100))
     }
 }
 
