@@ -9,6 +9,11 @@ enum TMDBAPI: API {
     private static let apiBaseURL = URL(string: "https://api.themoviedb.org/3")!
     private static let authBaseURL = URL(string: "https://www.themoviedb.org")!
     
+    private static let defaultHeaders: [String: String] = [
+        "Authorization": "Bearer \(Secrets.TMDB_API_KEY)",
+        "Content-Type": "application/json;charset=utf-8"
+    ]
+    
     case configuration
     
     // MARK: - Authentication Endpoints
@@ -91,20 +96,25 @@ enum TMDBAPI: API {
     
     /// The cache policy to use for the URLRequest.
     var cachePolicy: URLRequest.CachePolicy {
-        return .reloadIgnoringLocalCacheData
+        switch self {
+        // Example: in future, you could set .returnCacheDataElseLoad for certain endpoints
+        default:
+            return .reloadIgnoringLocalCacheData
+        }
     }
     
     /// The timeout interval for the URLRequest.
     var timeout: TimeInterval {
-        return 30
+        switch self {
+        // Example: in future, you could use a different timeout per endpoint
+        default:
+            return 30
+        }
     }
     
     /// The HTTP headers to include in the request.
     var headers: [String: String] {
-        return [
-            "Authorization": "Bearer \(Secrets.TMDB_API_KEY)", 
-            "Content-Type": "application/json;charset=utf-8"
-        ]
+        return Self.defaultHeaders
     }
     
     /// The query parameters to include in the URL request.

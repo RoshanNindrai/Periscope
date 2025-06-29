@@ -1,5 +1,11 @@
 import Foundation
 
+/// Defines errors that can occur while creating a URLRequest from an API definition.
+public enum APIError: Error {
+    case invalidURL
+    case serializationError(Error)
+}
+
 /// Represents the supported HTTP methods for network requests.
 public enum HTTPMethod: String {
     case get = "GET"
@@ -51,8 +57,10 @@ public extension API {
 
 public extension API {
     /// Converts the API definition into a `URLRequest` object.
+    /// - Throws: `APIError.invalidURL` if the constructed URL is invalid.
+    ///           `APIError.serializationError` if the request body serialization fails.
     /// - Returns: A configured `URLRequest`.
-    func toURLRequest() -> URLRequest {
+    func toURLRequest() throws -> URLRequest {
         
         let urlWithPath = baseURL.appending(path: path)
         
@@ -63,7 +71,7 @@ public extension API {
         }
         
         guard let finalURL = components?.url else {
-            fatalError("Invalid URL") // TODO: Log to Bugsnag
+            throw APIError.invalidURL
         }
         
         var urlRequest = URLRequest(
@@ -78,7 +86,7 @@ public extension API {
             do {
                 urlRequest.httpBody = try JSONSerialization.data(withJSONObject: body)
             } catch {
-                fatalError("Failed to serialize body to JSON: \(error)")
+                throw APIError.serializationError(error)
             }
         }
         

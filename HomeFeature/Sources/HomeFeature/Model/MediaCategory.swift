@@ -1,6 +1,6 @@
 import TMDBRepository
 
-enum MediaCategory: Identifiable {
+enum MediaCategory: Identifiable, Equatable {
     case popularMovies(MediaList)
     case nowPlaying(MediaList)
     case upcoming(MediaList)
@@ -25,7 +25,7 @@ enum MediaCategory: Identifiable {
         }
     }
     
-    var pageableMediaList: PageableMediaList {
+    var pageableMediaList: any PageableMediaList {
         switch self {
         case .popularMovies(let list):
             return list
@@ -73,6 +73,25 @@ enum MediaCategory: Identifiable {
             "Top Rated Movies"
         case .trendingToday:
             "Trending Today"
+        }
+    }
+    
+    static func == (lhs: MediaCategory, rhs: MediaCategory) -> Bool {
+        switch (lhs, rhs) {
+        case let (.popularMovies(l), .popularMovies(r)):
+            return l == r
+        case let (.nowPlaying(l), .nowPlaying(r)):
+            return l == r
+        case let (.upcoming(l), .upcoming(r)):
+            return l == r
+        case let (.popularTVShows(l), .popularTVShows(r)):
+            return l == r
+        case let (.topRated(l), .topRated(r)):
+            return l == r
+        case let (.trendingToday(l), .trendingToday(r)):
+            return l == r
+        default:
+            return false
         }
     }
 }

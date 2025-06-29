@@ -6,7 +6,7 @@ import Foundation
 /// - items: The media items on this page.
 /// - page: The current page index (1-based).
 /// - totalPages: The total number of available pages.
-public protocol PageableMediaList {
+public protocol PageableMediaList: Equatable {
     var items: [any Media] { get }
     var page: Int { get }
     var totalPages: Int { get }
@@ -40,5 +40,15 @@ public struct MediaList: PageableMediaList, Sendable {
         self.page = page
         self.totalPages = totalPages
         self.totalResults = totalResults
+    }
+    
+    public static func == (lhs: MediaList, rhs: MediaList) -> Bool {
+        lhs.page == rhs.page &&
+        lhs.totalPages == rhs.totalPages &&
+        lhs.totalResults == rhs.totalResults &&
+        lhs.items.count == rhs.items.count &&
+        zip(lhs.items, rhs.items).allSatisfy { l, r in
+            l.id == r.id
+        }
     }
 }
