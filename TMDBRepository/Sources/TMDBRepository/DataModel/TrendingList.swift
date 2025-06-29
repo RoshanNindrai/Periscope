@@ -1,14 +1,14 @@
 import Foundation
 
-public struct TrendingList: Sendable {
+public struct TrendingList: PageableMediaList, Sendable {
     public let page: Int
-    public let items: [TrendingItem]
+    public let items: [any Media]
     public let totalPages: Int
     public let totalResults: Int
     
     public init(page: Int, items: [TrendingItem], totalPages: Int, totalResults: Int) {
         self.page = page
-        self.items = items
+        self.items = items.map(\.media)
         self.totalPages = totalPages
         self.totalResults = totalResults
     }

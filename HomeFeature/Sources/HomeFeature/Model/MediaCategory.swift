@@ -25,6 +25,23 @@ enum MediaCategory: Identifiable {
         }
     }
     
+    var pageableMediaList: PageableMediaList {
+        switch self {
+        case .popularMovies(let list):
+            return list
+        case .nowPlaying(let list):
+            return list
+        case .upcoming(let list):
+            return list
+        case .popularTVShows(let list):
+            return list
+        case .topRated(let list):
+            return list
+        case .trendingToday(let list):
+            return list
+        }
+    }
+    
     var mediaItems: [any Media] {
         switch self {
         case .popularMovies(let list):
@@ -38,7 +55,7 @@ enum MediaCategory: Identifiable {
         case .topRated(let list):
             return list.items
         case .trendingToday(let list):
-            return list.items.map(\.media)
+            return list.items
         }
     }
     

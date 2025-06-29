@@ -1,6 +1,12 @@
 import Foundation
 
-public struct MediaList: Sendable {
+public protocol PageableMediaList {
+    var items: [any Media] { get }
+    var page: Int { get }
+    var totalPages: Int { get }
+}
+
+public struct MediaList: PageableMediaList, Sendable {
     public let items: [any Media]
     public let page: Int
     public let totalPages: Int

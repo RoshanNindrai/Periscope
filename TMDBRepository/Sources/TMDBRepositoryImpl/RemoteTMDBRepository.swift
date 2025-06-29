@@ -27,6 +27,30 @@ public struct RemoteTMDBRepository: TMDBRepository {
         self.networkService = networkService
         self.configCache = TMDBConfigurationCache()
     }
+
+    public func nowPlayingMovies(page: Int = .zero) async throws -> MediaList {
+        try await fetchMovies(for: .nowPlayingMovies)
+    }
+    
+    public func popularMovies(page: Int = .zero) async throws -> MediaList {
+        try await fetchMovies(for: .popularMovies)
+    }
+    
+    public func popularTvShows(page: Int = .zero) async throws -> MediaList {
+        try await fetchTVShows(for: .popularTVShows)
+    }
+    
+    public func topRatedMovies(page: Int = .zero) async throws -> MediaList {
+        try await fetchMovies(for: .topRatedMovies)
+    }
+    
+    public func upcomingMovies(page: Int = .zero) async throws -> MediaList {
+        try await fetchMovies(for: .upcomingMovies)
+    }
+    
+    public func trendingToday(page: Int = .zero) async throws -> TrendingList {
+        try await fetchTrendingItems(for: .trendingToday)
+    }
     
     public func imageURLBuilder() async -> TMDBImageURLBuilder {
         let request = TMDBAPI.configuration
@@ -40,42 +64,23 @@ public struct RemoteTMDBRepository: TMDBRepository {
             return TMDBImageURLBuilder(configuration: .default)
         }
     }
-    
-    public func nowPlayingMovies() async throws -> MediaList {
-        try await fetchMovies(for: .nowPlayingMovies)
-    }
-    
-    public func popularMovies() async throws -> MediaList {
-        try await fetchMovies(for: .popularMovies)
-    }
-    
-    public func popularTvShows() async throws -> MediaList {
-        try await fetchTVShows(for: .popularTVShows)
-    }
-    
-    public func topRatedMovies() async throws -> MediaList {
-        try await fetchMovies(for: .topRatedMovies)
-    }
-    
-    public func upcomingMovies() async throws -> MediaList {
-        try await fetchMovies(for: .upcomingMovies)
-    }
-    
-    public func trendingToday() async throws -> TrendingList {
-        try await fetchTrendingItems(for: .trendingToday)
-    }
-    
-    private func fetchMovies(for request: TMDBAPI) async throws -> MediaList {
+}
+
+
+// MARK: - private helpers
+
+private extension RemoteTMDBRepository {
+    func fetchMovies(for request: TMDBAPI) async throws -> MediaList {
         let mediaList: NetworkResponse<MovieListResponse> = try await networkService.perform(apiRequest: request)
         return mediaList.resource.toDomainModel()
     }
 
-    private func fetchTVShows(for request: TMDBAPI) async throws -> MediaList {
+    func fetchTVShows(for request: TMDBAPI) async throws -> MediaList {
         let mediaList: NetworkResponse<TVShowListResponse> = try await networkService.perform(apiRequest: request)
         return mediaList.resource.toDomainModel()
     }
     
-    private func fetchTrendingItems(for request: TMDBAPI) async throws -> TrendingList {
+    func fetchTrendingItems(for request: TMDBAPI) async throws -> TrendingList {
         let mediaList: NetworkResponse<TrendingListResponse> = try await networkService.perform(apiRequest: request)
         return mediaList.resource.toDomainModel()
     }

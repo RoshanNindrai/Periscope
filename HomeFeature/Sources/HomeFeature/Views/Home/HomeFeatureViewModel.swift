@@ -24,12 +24,12 @@ public final class HomeFeatureViewModel {
     func reduce(_ action: Action) async {
         switch action {
         case .fetchLatest:
-            async let popularMovies: MediaCategory? = try? .popularMovies(repository.popularMovies())
-            async let trendingToday: MediaCategory? = try? .trendingToday(repository.trendingToday())
-            async let upcomingMovies: MediaCategory? = try? .upcoming(repository.upcomingMovies())
-            async let popularTVShows: MediaCategory? = try! .popularTVShows(repository.popularTvShows())
-            async let topRatedMovies: MediaCategory? = try? .topRated(repository.topRatedMovies())
-            async let nowPlayingMovies: MediaCategory? = try? .nowPlaying(repository.nowPlayingMovies())
+            async let popularMovies: MediaCategory? = try? .popularMovies(repository.popularMovies(page: .zero))
+            async let trendingToday: MediaCategory? = try? .trendingToday(repository.trendingToday(page: .zero))
+            async let upcomingMovies: MediaCategory? = try? .upcoming(repository.upcomingMovies(page: .zero))
+            async let popularTVShows: MediaCategory? = try? .popularTVShows(repository.popularTvShows(page: .zero))
+            async let topRatedMovies: MediaCategory? = try? .topRated(repository.topRatedMovies(page: .zero))
+            async let nowPlayingMovies: MediaCategory? = try? .nowPlaying(repository.nowPlayingMovies(page: .zero))
             
             let result: [MediaCategory] = await [
                 trendingToday,
