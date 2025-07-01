@@ -63,40 +63,42 @@ struct PeriscopeApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                TabView {
-                    Tab("Home", systemImage: "house") {
-                        NavigationStack {
-                            HomeFeatureView(
-                                viewModel: homeFeatureViewModel,
-                                selectedMediaInfo: $selectedMediaInfo
-                            )
-                            .navigationTitle("Home")
-                            .navigationDestination(
-                                isPresented: isPresented
-                            ) {
-                                if let selected = selectedMediaInfo {
-                                    Text(selected.media.title)
-                                        .navigationTransition(.zoom(sourceID: selected, in: namespace))
+                switch router.currentRoute {
+                    case .home:
+                        TabView {
+                            Tab("Home", systemImage: "house") {
+                                NavigationStack {
+                                    HomeFeatureView(
+                                        viewModel: homeFeatureViewModel,
+                                        selectedMediaInfo: $selectedMediaInfo
+                                    )
+                                    .navigationTitle("Home")
+                                    .navigationDestination(
+                                        isPresented: isPresented
+                                    ) {
+                                        if let selected = selectedMediaInfo {
+                                            Text(selected.media.title)
+                                                .navigationTransition(.zoom(sourceID: selected, in: namespace))
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
-                }
-                .opacity(router.currentRoute == .home ? 1 : 0)
-                
-                SignInFeatureView(
-                    viewModel: signInFeatureViewModel
-                ).opacity(router.currentRoute == .signIn ? 1 : 0)
-                    
-                LegoProgressView()
-                    .task {
-                        // Secure session validation logic for navigation
-                        if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
-                            router.navigate(to: .home)
-                        } else {
-                            router.navigate(to: .signIn)
+                    case .signIn:
+                        SignInFeatureView(
+                            viewModel: signInFeatureViewModel
+                        )
+                    case .none:
+                        LegoProgressView()
+                            .task {
+                                // Secure session validation logic for navigation
+                                if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
+                                    router.navigate(to: .home)
+                                } else {
+                                    router.navigate(to: .signIn)
+                                }
                         }
-                }.opacity(router.currentRoute == .none ? 1 : 0)
+                    }
             }
             .task {
                 tmdbImageURLBuilder = await appSetup.repositoryContainer.tmdbRepository.imageURLBuilder()
