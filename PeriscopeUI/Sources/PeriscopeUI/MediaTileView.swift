@@ -39,14 +39,11 @@ struct MediaTileView: View {
             imageViewBuilder: { image in
                 image
                     .resizable()
-                    .scaledToFill()
-                    .clipped()
+                    .aspectRatio(2/3, contentMode: .fit)
             }
         )
-        .aspectRatio(2/3, contentMode: .fit)
         .background(styleSheet.colors.background)
         .cornerRadius(styleSheet.spacing.spacing100)
-        .contentShape(RoundedRectangle(cornerRadius: styleSheet.spacing.spacing100))
     }
 }
 
