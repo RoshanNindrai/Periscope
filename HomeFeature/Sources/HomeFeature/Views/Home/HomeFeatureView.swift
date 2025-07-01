@@ -1,7 +1,8 @@
+import DataModel
 import Routes
 import Lego
 import SwiftUI
-import TMDBRepository
+import PeriscopeUI
 
 public struct HomeFeatureView: View {
     

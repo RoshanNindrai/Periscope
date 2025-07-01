@@ -44,6 +44,9 @@ public struct LegoAsyncImage<Placeholder: View, ContentView: View>: View {
     @State
     private var state: LegoAsyncImageState = .init()
     
+    @State
+    private var isImageVisible = false
+    
     public init(
         url: URL,
         placeholder: @escaping () -> Placeholder = {
@@ -60,10 +63,18 @@ public struct LegoAsyncImage<Placeholder: View, ContentView: View>: View {
         Group {
             if let uiimage = state.uiImage {
                 imageModifier(Image(uiImage: uiimage))
+                    .opacity(isImageVisible ? 1 : .zero)
+                    .animation(.easeIn(duration: 0.3), value: isImageVisible)
+                    .onAppear {
+                        withAnimation {
+                            isImageVisible = true
+                        }
+                    }
             } else {
                 placeholder()
             }
-        }.task(id: url) {
+        }
+        .task(id: url) {
             state.imageData = try? await imageLoader.fetchImageData(for: url)
         }
     }

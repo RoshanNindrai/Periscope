@@ -1,9 +1,9 @@
+import DataModel
 import Routes
 import Lego
 import SwiftUI
-import TMDBRepository
 
-struct HeroBannerView: View {
+public struct HeroBannerView: View {
 
     enum Size {
         static let height: CGFloat = 507
@@ -24,12 +24,12 @@ struct HeroBannerView: View {
     @Binding
     private var selectedMediaInfo: MediaSelection?
 
-    init(items: [any Media], selectedMediaInfo: Binding<MediaSelection?>) {
+    public init(items: [any Media], selectedMediaInfo: Binding<MediaSelection?>) {
         self.items = items
         self._selectedMediaInfo = selectedMediaInfo
     }
 
-    var body: some View {
+    public var body: some View {
         TabView(selection: $selectedItemIndex) {
             ForEach(items.indices, id: \.self) { index in
                 mediaTileButton(for: items[index], index: index)

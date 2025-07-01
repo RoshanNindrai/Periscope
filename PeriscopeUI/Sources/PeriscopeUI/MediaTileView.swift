@@ -1,5 +1,6 @@
 import Lego
 import SwiftUI
+import DataModel
 import TMDBRepository
 
 struct MediaTileView: View {

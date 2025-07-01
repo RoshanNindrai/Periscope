@@ -4,29 +4,22 @@
 import PackageDescription
 
 let package = Package(
-    name: "HomeFeature",
+    name: "DataModel",
     platforms: [
         .iOS(.v26)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "HomeFeature",
-            targets: ["HomeFeature"]
+            name: "DataModel",
+            targets: ["DataModel"]
         ),
-    ],
-    dependencies: [
-        .package(path: "../Lego"),
-        .package(path: "../PeriscopeUI"),
-        .package(path: "../Routes"),
-        .package(path: "../TMDBRepository")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "HomeFeature",
-            dependencies: ["Lego", "PeriscopeUI", "Routes", "TMDBRepository"]
+            name: "DataModel"
         ),
 
     ]

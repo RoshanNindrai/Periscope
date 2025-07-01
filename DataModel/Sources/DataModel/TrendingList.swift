@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TrendingList: PageableMediaList, Sendable, Equatable {
+public struct TrendingList: PageableMediaList, Equatable, Sendable {
     public let page: Int
     public let items: [any Media]
     public let totalPages: Int

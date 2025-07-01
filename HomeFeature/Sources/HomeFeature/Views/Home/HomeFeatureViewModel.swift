@@ -1,3 +1,4 @@
+import DataModel
 import SwiftUI
 import TMDBRepository
 

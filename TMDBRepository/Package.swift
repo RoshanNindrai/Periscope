@@ -23,17 +23,18 @@ let package = Package(
         ),
     ],
     dependencies: [
+        .package(path: "../DataModel"),
         .package(path: "../Networking"),
         .package(path: "../Utils"),
     ],
     targets: [
         .target(
             name: "TMDBRepository",
-            dependencies: ["Networking", "Utils"]
+            dependencies: ["DataModel", "Networking", "Utils"]
         ),
         .target(
             name: "TMDBRepositoryImpl",
-            dependencies: ["TMDBRepository", "Networking", "Utils"]
+            dependencies: ["DataModel", "TMDBRepository", "Networking", "Utils"]
         ),
         .target(
             name: "TMDBRepositoryFactory",

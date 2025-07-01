@@ -6,7 +6,7 @@ import Foundation
 /// - items: The media items on this page.
 /// - page: The current page index (1-based).
 /// - totalPages: The total number of available pages.
-public protocol PageableMediaList: Equatable {
+public protocol PageableMediaList: Equatable, Sendable {
     var items: [any Media] { get }
     var page: Int { get }
     var totalPages: Int { get }

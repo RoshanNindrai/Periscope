@@ -1,3 +1,4 @@
+import DataModel
 import Foundation
 
 public struct TMDBConfiguration: Sendable {

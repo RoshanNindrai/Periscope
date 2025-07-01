@@ -1,4 +1,4 @@
-import TMDBRepository
+import DataModel
 
 public struct MediaSelection: Hashable {
     public let media: any Media

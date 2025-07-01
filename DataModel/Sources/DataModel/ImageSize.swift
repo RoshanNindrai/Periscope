@@ -1,3 +1,5 @@
+import Foundation
+
 public enum ImageSize: String, CaseIterable, Sendable {
     case w45 = "w45"
     case w92 = "w92"

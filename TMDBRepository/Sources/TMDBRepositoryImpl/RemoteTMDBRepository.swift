@@ -1,3 +1,4 @@
+import DataModel
 import Foundation
 import Networking
 import TMDBRepository

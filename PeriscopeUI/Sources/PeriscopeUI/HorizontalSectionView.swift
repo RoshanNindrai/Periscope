@@ -1,12 +1,12 @@
+import DataModel
 import Routes
 import Lego
 import SwiftUI
-import TMDBRepository
 
-struct HorizontalSectionView: View {
+public struct HorizontalSectionView: View {
     
     enum Size {
-        static let height: CGFloat = 150
+        static let height: CGFloat = 156
         static let width: CGFloat = height * (2 / 3)
     }
 
@@ -21,7 +21,7 @@ struct HorizontalSectionView: View {
     @Binding
     private var selectedMediaInfo: MediaSelection?
 
-    init(
+    public init(
         mediaCategory: MediaCategory,
         selectedMediaInfo: Binding<MediaSelection?>
     ) {
@@ -29,7 +29,7 @@ struct HorizontalSectionView: View {
         self._selectedMediaInfo = selectedMediaInfo
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
             header
 

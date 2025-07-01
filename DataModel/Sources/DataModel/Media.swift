@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol Media: Sendable, Equatable {
+public protocol Media: Equatable, Sendable {
     var id: Int { get }
     var title: String { get }
     var posterPath: String? { get }

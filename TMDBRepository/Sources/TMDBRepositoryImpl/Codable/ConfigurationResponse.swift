@@ -1,3 +1,4 @@
+import DataModel
 import Foundation
 import TMDBRepository
 
@@ -51,8 +52,8 @@ extension TMDBImageConfigurationResponse {
     }
 }
 
-extension BackdropSize: Decodable {}
-extension LogoSize: Decodable {}
-extension PosterSize: Decodable {}
-extension ProfileSize: Decodable {}
-extension StillSize: Decodable {}
+extension BackdropSize: @retroactive Decodable {}
+extension LogoSize: @retroactive Decodable {}
+extension PosterSize: @retroactive Decodable {}
+extension ProfileSize: @retroactive Decodable {}
+extension StillSize: @retroactive Decodable {}

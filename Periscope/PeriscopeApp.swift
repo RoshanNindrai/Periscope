@@ -1,4 +1,5 @@
 import AppSetup
+import DataModel
 import HomeFeature
 import Lego
 import Routes
