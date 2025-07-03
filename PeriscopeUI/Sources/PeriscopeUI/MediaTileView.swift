@@ -1,7 +1,7 @@
 import Lego
 import SwiftUI
 import DataModel
-import TMDBRepository
+import TMDBService
 
 struct MediaTileView: View {
     private let media: any Media

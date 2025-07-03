@@ -1,7 +1,9 @@
 import AuthenticationServices
 import Combine
+import DataModel
 import SwiftUI
 import TMDBRepository
+import TMDBService
 import Utils
 
 /// ViewModel responsible for managing the sign-in feature's authentication flow with TMDB.

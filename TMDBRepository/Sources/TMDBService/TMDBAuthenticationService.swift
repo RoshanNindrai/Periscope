@@ -1,3 +1,4 @@
+import DataModel
 import Foundation
 
 /// Defines the contract for interacting with TMDB Authentication endpoints, without UI side-effects.

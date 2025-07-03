@@ -1,6 +1,6 @@
 import DataModel
 import Foundation
-import TMDBRepository
+import TMDBService
 
 struct TMDBConfigurationResponse: Decodable, Sendable {
     let changeKeys: [String]

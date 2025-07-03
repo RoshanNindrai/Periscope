@@ -1,4 +1,6 @@
+import DataModel
 import Networking
+import TMDBService
 import TMDBRepository
 import UIKit
 import Utils

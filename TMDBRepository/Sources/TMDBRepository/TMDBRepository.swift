@@ -1,4 +1,5 @@
 import DataModel
+import TMDBService
 import Foundation
 
 /// Represents errors that can occur when interacting with the TMDB repository.

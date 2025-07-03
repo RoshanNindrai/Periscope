@@ -21,6 +21,10 @@ let package = Package(
             name: "TMDBRepositoryImpl",
             targets: ["TMDBRepositoryImpl"]
         ),
+        .library(
+            name: "TMDBService",
+            targets: ["TMDBService"]
+        ),
     ],
     dependencies: [
         .package(path: "../DataModel"),
@@ -30,15 +34,19 @@ let package = Package(
     targets: [
         .target(
             name: "TMDBRepository",
-            dependencies: ["DataModel", "Networking", "Utils"]
+            dependencies: ["DataModel", "Networking", "TMDBService", "Utils"]
         ),
         .target(
             name: "TMDBRepositoryImpl",
-            dependencies: ["DataModel", "TMDBRepository", "Networking", "Utils"]
+            dependencies: ["DataModel", "TMDBRepository", "TMDBService", "Networking", "Utils"]
         ),
         .target(
             name: "TMDBRepositoryFactory",
             dependencies: ["TMDBRepository", "Networking", "TMDBRepositoryImpl", "Utils"]
+        ),
+        .target(
+            name: "TMDBService",
+            dependencies: ["DataModel"]
         ),
         .testTarget(
             name: "TMDBRepositoryTests",

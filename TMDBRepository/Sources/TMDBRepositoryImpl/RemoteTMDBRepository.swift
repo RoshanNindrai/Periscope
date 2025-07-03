@@ -2,6 +2,7 @@ import DataModel
 import Foundation
 import Networking
 import TMDBRepository
+import TMDBService
 
 actor TMDBConfigurationCache {
     private var config: TMDBConfiguration

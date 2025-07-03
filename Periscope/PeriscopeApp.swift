@@ -6,6 +6,7 @@ import Routes
 import SignInFeature
 import SwiftUI
 import TMDBRepository
+import TMDBService
 import Utils
 
 @MainActor

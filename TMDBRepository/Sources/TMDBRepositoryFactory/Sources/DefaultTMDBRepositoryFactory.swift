@@ -1,6 +1,7 @@
 import Networking
 import TMDBRepository
 import TMDBRepositoryImpl
+import TMDBService
 import Utils
 
 public struct DefaultTMDBRepositoryFactoryDependencies: TMDBRepositoryFactoryDependencies {

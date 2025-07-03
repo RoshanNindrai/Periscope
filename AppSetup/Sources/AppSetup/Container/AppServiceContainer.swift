@@ -1,5 +1,6 @@
 import Networking
 import TMDBRepository
+import TMDBService
 
 public struct AppServiceContainer: Sendable  {
     public let tmdbRAuthenticationService: TMDBAuthenticationService

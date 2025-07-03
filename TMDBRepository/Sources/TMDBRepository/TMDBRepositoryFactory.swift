@@ -1,4 +1,5 @@
 import Networking
+import TMDBService
 import Utils
 
 public protocol TMDBRepositoryFactoryDependencies: Sendable  {

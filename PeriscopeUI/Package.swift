@@ -18,6 +18,7 @@ let package = Package(
     dependencies: [
         .package(path: "../DataModel"),
         .package(path: "../Lego"),
+        .package(path: "../Routes"),
         .package(path: "../TMDBRepository")
     ],
     targets: [
@@ -25,7 +26,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "PeriscopeUI",
-            dependencies: ["Lego", "DataModel", "TMDBRepository"]
+            dependencies: ["Lego", "DataModel", "Routes", "TMDBRepository"]
         ),
 
     ]
