@@ -10,7 +10,7 @@ public struct DetailView: View {
     // MARK: - Size Constants
     
     enum Size {
-        static let height: CGFloat = 600
+        static let height: CGFloat = 580
         static let width: CGFloat = height * (2 / 3)
     }
     
@@ -74,7 +74,7 @@ public struct DetailView: View {
 
 private extension DetailView {
     private var parallaxOffset: CGFloat {
-        scrollOffset * 0.4
+        scrollOffset <= styleSheet.spacing.spacing100 ? scrollOffset * 0.4 : .zero
     }
     
     @ViewBuilder
@@ -94,7 +94,6 @@ private extension DetailView {
             }
         )
         .frame(height: Size.height)
-        .ignoresSafeArea()
         .clipped()
     }
     
