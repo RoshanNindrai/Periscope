@@ -1,5 +1,6 @@
 import AppSetup
 import DataModel
+import DetailFeature
 import HomeFeature
 import Lego
 import Routes
@@ -78,7 +79,7 @@ struct PeriscopeApp: App {
                                         isPresented: isPresented
                                     ) {
                                         if let selected = selectedMediaInfo {
-                                            Text(selected.media.title)
+                                            DetailView(media: selected.media)
                                                 .navigationTransition(.zoom(sourceID: selected, in: namespace))
                                         }
                                     }

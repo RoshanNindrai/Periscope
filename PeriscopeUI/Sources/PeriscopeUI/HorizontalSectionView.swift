@@ -6,7 +6,7 @@ import SwiftUI
 public struct HorizontalSectionView: View {
     
     enum Size {
-        static let height: CGFloat = 156
+        static let height: CGFloat = 180
         static let width: CGFloat = height * (2 / 3)
     }
 
@@ -37,6 +37,7 @@ public struct HorizontalSectionView: View {
                 LazyHStack(spacing: styleSheet.spacing.spacing100) {
                     ForEach(mediaCategory.mediaItems.indices, id: \.self) { index in
                         mediaTileButton(for: mediaCategory.mediaItems[index], index: index)
+                            .drawingGroup(opaque: true)
                     }
                 }
                 .padding(.leading, styleSheet.spacing.spacing100)

@@ -54,18 +54,18 @@ public struct Movie: Media, Hashable, Sendable {
 public extension Movie {
     static let example = Movie(
         adult: false,
-        backdropPath: "/exampleBackdrop.jpg",
-        genreIds: [12, 18],
-        id: 1,
+        backdropPath: "/xDMIl84Qo5Tsu62c9DGWhmPI67A.jpg",
+        genreIds: [28, 12, 878],
+        id: 505642,
         originalLanguage: "en",
-        originalTitle: "Example media",
-        overview: "An example media used for previews and initializations.",
-        popularity: 123.45,
-        posterPath: "/examplePoster.jpg",
-        releaseDate: "2025-01-01",
-        title: "Example media",
+        originalTitle: "Black Panther: Wakanda Forever",
+        overview: "Queen Ramonda, Shuri, M’Baku and the Dora Milaje fight to protect Wakanda from intervening world powers in the wake of King T’Challa’s death.",
+        popularity: 1234.56,
+        posterPath: "/sv1xJUazXeYqALzczSZ3O6nkH75.jpg",
+        releaseDate: "2022-11-11",
+        title: "Black Panther: Wakanda Forever",
         video: false,
-        voteAverage: 7.0,
-        voteCount: 100
+        voteAverage: 7.3,
+        voteCount: 1892
     )
 }

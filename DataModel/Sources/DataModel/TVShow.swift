@@ -51,4 +51,8 @@ public struct TVShow: Media, Equatable, Sendable {
     public var title: String {
         name
     }
+    
+    public var releaseDate: String {
+        firstAirDate
+    }
 }

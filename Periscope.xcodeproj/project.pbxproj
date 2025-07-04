@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */ = {isa = PBXBuildFile; productRef = 442CF78F2DFDBCD900A7E8DC /* Lego */; };
 		443354012E0CBF3D00E68A6D /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 443354002E0CBF3D00E68A6D /* Routes */; };
+		447F95C42E1610BE0074E647 /* DetailFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 447F95C32E1610BE0074E647 /* DetailFeature */; };
 		4494321E2E135948002AC4D0 /* DataModel in Frameworks */ = {isa = PBXBuildFile; productRef = 4494321D2E135948002AC4D0 /* DataModel */; };
 		44BE54552E0597840088BE59 /* SignInFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 44BE54542E0597840088BE59 /* SignInFeature */; };
 		44BE54582E05BC960088BE59 /* Utils in Frameworks */ = {isa = PBXBuildFile; productRef = 44BE54572E05BC960088BE59 /* Utils */; };
@@ -22,6 +23,7 @@
 		442CF7912DFDC11500A7E8DC /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Networking; sourceTree = "<group>"; };
 		442CF7932DFDCDA400A7E8DC /* TMDBRepository */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = TMDBRepository; sourceTree = "<group>"; };
 		443353FF2E0CBE0C00E68A6D /* Routes */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Routes; sourceTree = "<group>"; };
+		447F95C22E15FFEC0074E647 /* DetailFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DetailFeature; sourceTree = "<group>"; };
 		4494321C2E1357EB002AC4D0 /* DataModel */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DataModel; sourceTree = "<group>"; };
 		4494321F2E135B97002AC4D0 /* PeriscopeUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PeriscopeUI; sourceTree = "<group>"; };
 		44A5634B2E0596FC00682AEE /* SignInFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SignInFeature; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 				44E578612E058B2C00C16D91 /* AppSetup in Frameworks */,
 				442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */,
 				44BE54652E075AD10088BE59 /* HomeFeature in Frameworks */,
+				447F95C42E1610BE0074E647 /* DetailFeature in Frameworks */,
 				44BE54582E05BC960088BE59 /* Utils in Frameworks */,
 				44BE54552E0597840088BE59 /* SignInFeature in Frameworks */,
 				4494321E2E135948002AC4D0 /* DataModel in Frameworks */,
@@ -72,6 +75,7 @@
 		442CF7582DFDBBFA00A7E8DC = {
 			isa = PBXGroup;
 			children = (
+				447F95C22E15FFEC0074E647 /* DetailFeature */,
 				4494321F2E135B97002AC4D0 /* PeriscopeUI */,
 				4494321C2E1357EB002AC4D0 /* DataModel */,
 				443353FF2E0CBE0C00E68A6D /* Routes */,
@@ -130,6 +134,7 @@
 				44BE54642E075AD10088BE59 /* HomeFeature */,
 				443354002E0CBF3D00E68A6D /* Routes */,
 				4494321D2E135948002AC4D0 /* DataModel */,
+				447F95C32E1610BE0074E647 /* DetailFeature */,
 			);
 			productName = Periscope;
 			productReference = 442CF7612DFDBBFA00A7E8DC /* Periscope.app */;
@@ -418,6 +423,10 @@
 		443354002E0CBF3D00E68A6D /* Routes */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Routes;
+		};
+		447F95C32E1610BE0074E647 /* DetailFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DetailFeature;
 		};
 		4494321D2E135948002AC4D0 /* DataModel */ = {
 			isa = XCSwiftPackageProductDependency;
