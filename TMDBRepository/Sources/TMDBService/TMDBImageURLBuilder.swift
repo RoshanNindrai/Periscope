@@ -23,7 +23,7 @@ public struct TMDBImageURLBuilder: Sendable {
     
     public func backdropImageURL(media: any Media, size: BackdropSize) -> URL {
         guard let backdropPath = media.backdropPath else {
-            return URL(string: "")!
+            return posterImageURL(media: media, size: .w780)
         }
         
         return URL(
