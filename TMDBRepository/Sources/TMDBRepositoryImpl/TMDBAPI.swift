@@ -28,6 +28,7 @@ enum TMDBAPI: API {
     case popularTVShows
     case upcomingMovies
     case trendingToday
+    case relatedMovies(id: Int)
 
     /// The base URL for the selected TMDB endpoint.
     var baseURL: URL {
@@ -40,7 +41,8 @@ enum TMDBAPI: API {
              .popularTVShows, 
              .upcomingMovies, 
              .nowPlayingMovies, 
-             .trendingToday:
+             .trendingToday,
+             .relatedMovies:
             // All these endpoints share the same API base URL
             return Self.apiBaseURL
         case .authorizeToken:
@@ -73,6 +75,8 @@ enum TMDBAPI: API {
             return "/movie/now_playing"
         case .trendingToday:
             return "/trending/all/day"
+        case .relatedMovies(let id):
+            return "/movie/\(id)/similar"
         }
     }
     
@@ -87,7 +91,8 @@ enum TMDBAPI: API {
              .popularTVShows, 
              .upcomingMovies, 
              .nowPlayingMovies, 
-             .trendingToday:
+             .trendingToday,
+             .relatedMovies:
             return .get
         case .createSession:
             return .post
@@ -127,7 +132,8 @@ enum TMDBAPI: API {
              .popularTVShows, 
              .upcomingMovies, 
              .nowPlayingMovies, 
-             .trendingToday:
+             .trendingToday,
+             .relatedMovies:
             return [:] // No query parameters for these endpoints
         case .authorizeToken:
             // Redirect URL after authorization
@@ -151,7 +157,8 @@ enum TMDBAPI: API {
              .topRatedMovies, 
              .upcomingMovies, 
              .nowPlayingMovies, 
-             .trendingToday:
+             .trendingToday,
+             .relatedMovies:
             return nil
         }
     }

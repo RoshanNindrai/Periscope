@@ -47,6 +47,12 @@ public protocol TMDBRepository: Sendable {
     /// - Returns: A `TrendingList` of trending content.
     /// - Throws: `TMDBRepositoryError` on failure.
     func trendingToday(page: Int) async throws -> TrendingList
+    
+    /// Fetches a list of movies related to the specified movie.
+    /// - Parameter movieId: The identifier of the movie for which to find related movies.
+    /// - Returns: A `MediaList` containing movies related to the given movie.
+    /// - Throws: `TMDBRepositoryError` on failure.
+    func relatedMovies(for movieId: Int) async throws -> MediaList
 
     /// Provides a builder for constructing URLs to TMDB images (e.g., poster or backdrop images).
     /// - Returns: A `TMDBImageURLBuilder` instance for building image URLs.

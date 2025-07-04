@@ -55,6 +55,7 @@ public struct HeroBannerView: View {
             .buttonStyle(.plain)
         }
         .frame(width: Size.width, height: Size.height)
+        .matchedTransitionSource(id: mediaSelection, in: namespace)
         .tag(index)
     }
 }

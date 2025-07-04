@@ -79,6 +79,8 @@ public struct HomeFeatureView: View {
                 mediaCategory: mediaCategory,
                 selectedMediaInfo: $selectedMediaInfo
             )
+        case .relatedMovies:
+            EmptyView()
         }
     }
 }

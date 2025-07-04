@@ -54,6 +54,10 @@ public struct RemoteTMDBRepository: TMDBRepository {
         try await fetchTrendingItems(for: .trendingToday)
     }
     
+    public func relatedMovies(for movieId: Int) async throws -> MediaList {
+        try await fetchMovies(for: .relatedMovies(id: movieId))
+    }
+    
     public func imageURLBuilder() async -> TMDBImageURLBuilder {
         let request = TMDBAPI.configuration
         do {

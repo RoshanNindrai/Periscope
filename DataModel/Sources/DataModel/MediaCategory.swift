@@ -6,6 +6,7 @@ public enum MediaCategory: Identifiable, Equatable {
     case upcoming(MediaList)
     case popularTVShows(MediaList)
     case topRated(MediaList)
+    case relatedMovies(MediaList)
     case trendingToday(TrendingList)
     
     public var id: String {
@@ -20,6 +21,8 @@ public enum MediaCategory: Identifiable, Equatable {
             "popularTVShows"
         case .topRated:
             "topRated"
+        case .relatedMovies:
+            "relatedMovies"
         case .trendingToday:
             "trendingToday"
         }
@@ -36,6 +39,8 @@ public enum MediaCategory: Identifiable, Equatable {
         case .popularTVShows(let list):
             return list
         case .topRated(let list):
+            return list
+        case .relatedMovies(let list):
             return list
         case .trendingToday(let list):
             return list
@@ -54,6 +59,8 @@ public enum MediaCategory: Identifiable, Equatable {
             return list.items
         case .topRated(let list):
             return list.items
+        case .relatedMovies(let list):
+            return list.items
         case .trendingToday(let list):
             return list.items
         }
@@ -71,6 +78,8 @@ public enum MediaCategory: Identifiable, Equatable {
             "Popular TV Shows"
         case .topRated:
             "Top Rated Movies"
+        case .relatedMovies:
+            "Related Movies"
         case .trendingToday:
             "Trending Today"
         }
@@ -87,6 +96,8 @@ public enum MediaCategory: Identifiable, Equatable {
         case let (.popularTVShows(l), .popularTVShows(r)):
             return l == r
         case let (.topRated(l), .topRated(r)):
+            return l == r
+        case let (.relatedMovies(l), .relatedMovies(r)):
             return l == r
         case let (.trendingToday(l), .trendingToday(r)):
             return l == r

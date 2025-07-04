@@ -5,18 +5,19 @@ import TMDBRepository
 import TMDBService
 
 /// DetailView displays media details with parallax effect
-public struct DetailView: View {
+public struct DetailFeatureView: View {
     
     // MARK: - Size Constants
     
     enum Size {
-        static let height: CGFloat = 580
+        static let height: CGFloat = 506
         static let width: CGFloat = height * (2 / 3)
     }
     
     // MARK: - Properties
     
     private let media: any Media
+    private let viewModel: DetailFeatureViewModel
     
     @State
     private var scrollOffset: CGFloat = 0
@@ -31,8 +32,9 @@ public struct DetailView: View {
     
     // MARK: - Init
     
-    public init(media: any Media) {
+    public init(media: any Media, viewModel: DetailFeatureViewModel) {
         self.media = media
+        self.viewModel = viewModel
     }
     
     // MARK: - Body
@@ -43,27 +45,44 @@ public struct DetailView: View {
             
             ScrollView {
                 VStack(spacing: styleSheet.spacing.spacing100) {
+
+                    GeometryReader { reader in
+                        Color.clear
+                            .frame(height: .zero)
+                            .preference(
+                                key: ScrollOffsetPreferenceKey.self,
+                                value: reader.frame(in: .named("Scroll")).minY
+                            )
+                    }
+                    
                     Spacer()
                         .frame(height: spacerHeight)
                     
-                    titleSection
-                    
-                    Spacer()
-                        .frame(height: 900)
-                }
-                .background(
-                    GeometryReader { reader in
-                        Color.clear
-                            .preference(
-                                key: ScrollOffsetPreferenceKey.self,
-                                value: reader.frame(in: .global).minY
-                            )
+                    VStack {
+                        titleSection
+                        
+                        Spacer()
+                            .frame(height: spacerHeight)
                     }
-                )
+                    .background {
+                        ZStack {
+                            Color.clear.background(.ultraThinMaterial)
+                            LinearGradient(
+                                gradient: Gradient(colors: [Color.clear, Color.black.opacity(0.4)]),
+                                startPoint: .top, endPoint: .bottom
+                            )
+                        }
+                    }
+                }
             }
+            .coordinateSpace(name: "Scroll")
             .onPreferenceChange(ScrollOffsetPreferenceKey.self) { value in
                 scrollOffset = value
             }
+        }
+        .background(.thinMaterial)
+        .task(id: media.id) {
+            await viewModel.reduce(.loadOtherInformation(mediaId: media.id))
         }
         .ignoresSafeArea()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -72,7 +91,7 @@ public struct DetailView: View {
 
 // MARK: - Subviews and Helpers
 
-private extension DetailView {
+private extension DetailFeatureView {
     private var parallaxOffset: CGFloat {
         scrollOffset <= styleSheet.spacing.spacing100 ? scrollOffset * 0.4 : .zero
     }
@@ -80,9 +99,9 @@ private extension DetailView {
     @ViewBuilder
     var backdropImage: some View {
         LegoAsyncImage(
-            url: imageURLBuilder.backdropImageURL(
+            url: imageURLBuilder.posterImageURL(
                 media: media,
-                size: .w1280
+                size: .w780
             ),
             imageViewBuilder: { image in
                 image
@@ -94,7 +113,6 @@ private extension DetailView {
             }
         )
         .frame(height: Size.height)
-        .clipped()
     }
     
     private func clampScale(for offset: CGFloat) -> CGFloat {
@@ -104,14 +122,15 @@ private extension DetailView {
     
     @ViewBuilder
     var titleSection: some View {
-        VStack {
+        VStack(spacing: styleSheet.spacing.spacing100) {
             LegoText(media.title, style: styleSheet.text(.title)) { text in
                 text.foregroundColor(styleSheet.colors.textPrimary)
             }
-            LegoText(media.releaseDate, style: styleSheet.text(.subtitle)) { text in
-                text.foregroundColor(styleSheet.colors.textPrimary)
+            LegoText(media.overview, style: styleSheet.text(.subtitle)) { text in
+                text.multilineTextAlignment(.center)
             }
         }
+        .padding(styleSheet.spacing.spacing200)
         .frame(maxWidth: .infinity)
     }
 }
@@ -123,10 +142,4 @@ private struct ScrollOffsetPreferenceKey: PreferenceKey {
     static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
         value = nextValue()
     }
-}
-
-// MARK: - Preview
-
-#Preview {
-    DetailView(media: Movie.example)
 }

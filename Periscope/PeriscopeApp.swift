@@ -21,6 +21,7 @@ struct PeriscopeApp: App {
     
     private let homeFeatureViewModel: HomeFeatureViewModel
     private let signInFeatureViewModel: SignInFeatureViewModel
+    private let detailFeatureViewModel: DetailFeatureViewModel
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
@@ -58,6 +59,10 @@ struct PeriscopeApp: App {
             authenticationService: appSetup.serviceContainer.tmdbRAuthenticationService,
             keychainStore: keychainStore
         )
+        
+        detailFeatureViewModel = DetailFeatureViewModel(
+            repository: appSetup.repositoryContainer.tmdbRepository
+        )
     }
     
     // MARK: - Body
@@ -79,7 +84,7 @@ struct PeriscopeApp: App {
                                         isPresented: isPresented
                                     ) {
                                         if let selected = selectedMediaInfo {
-                                            DetailView(media: selected.media)
+                                            DetailFeatureView(media: selected.media, viewModel: detailFeatureViewModel)
                                                 .navigationTransition(.zoom(sourceID: selected, in: namespace))
                                         }
                                     }

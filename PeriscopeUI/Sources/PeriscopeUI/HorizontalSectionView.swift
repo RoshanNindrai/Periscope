@@ -37,7 +37,6 @@ public struct HorizontalSectionView: View {
                 LazyHStack(spacing: styleSheet.spacing.spacing100) {
                     ForEach(mediaCategory.mediaItems.indices, id: \.self) { index in
                         mediaTileButton(for: mediaCategory.mediaItems[index], index: index)
-                            .drawingGroup(opaque: true)
                     }
                 }
                 .padding(.leading, styleSheet.spacing.spacing100)
