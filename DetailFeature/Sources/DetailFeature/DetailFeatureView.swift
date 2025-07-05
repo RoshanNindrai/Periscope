@@ -30,8 +30,12 @@ public struct DetailFeatureView: View {
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     
+    
     @Environment(\.tmdbImageURLBuilder)
     private var imageURLBuilder: TMDBImageURLBuilder
+    
+    @Namespace
+    private var namespace: Namespace.ID
 
     private var spacerHeight: CGFloat { Size.height + 8 }
     private var parallaxOffset: CGFloat { scrollOffset * 0.4 }
@@ -57,24 +61,49 @@ public struct DetailFeatureView: View {
 
                     VStack {
                         titleSection
-
-                        if case .loadedRelatedMovies(let mediaList) = viewModel.state {
-                            HorizontalSectionView(
-                                mediaCategory: .relatedMovies(mediaList),
-                                selectedMediaInfo: $selectedMediaInfo
-                            )
-                            .padding(.vertical, styleSheet.spacing.spacing200)
+                        
+                        switch viewModel.output {
+                        case .fetched(let mediaDetailCategory):
+                            ForEach(mediaDetailCategory, id: \MediaDetailCategory.id) { detailCategory in
+                                switch detailCategory {
+                                case .castAndCrew(let castList):
+                                    castAndCrew(castList)
+                                case .relatedMedia(let mediaList):
+                                    relatedMedia(mediaList)
+                                case .mediaDetail(let detail):
+                                    mediaDetail(detail)
+                                @unknown default:
+                                    EmptyView()
+                                }
+                            }
+                        default:
+                            EmptyView()
                         }
                         
-                        
-                        
                     }
-                    .background(.ultraThinMaterial)
+                    .background(styleSheet.colors.background)
                 }
             }
         }
-        .ignoresSafeArea()
-        .background(.ultraThinMaterial)
+        .navigationDestination(isPresented: isPresented) {
+            if let selectedMediaInfo = selectedMediaInfo {
+                DetailFeatureView(
+                    media: selectedMediaInfo.media,
+                    viewModel: DetailFeatureViewModel(
+                        repository: viewModel.repository
+                    )
+                )
+                .onDisappear {
+                    self.selectedMediaInfo = nil
+                }
+                .navigationTitle(selectedMediaInfo.media.title)
+                .navigationBarTitleDisplayMode(.inline)
+                .navigationTransition(.zoom(sourceID: selectedMediaInfo, in: namespace))
+            }
+        }
+        .ignoresSafeArea(edges: .top)
+        .background(styleSheet.colors.background)
+        .environment(\.namespace, namespace)
         .task(id: media.id) {
             await viewModel.reduce(.loadOtherInformation(media))
         }
@@ -116,5 +145,30 @@ private extension DetailFeatureView {
         }
         .padding(styleSheet.spacing.spacing200)
         .frame(maxWidth: .infinity)
+    }
+    
+    func castAndCrew(_ castList: CastList) -> some View {
+        CastAndCrewHorizontalSectionView(castList: castList)
+    }
+    
+    func relatedMedia(_ media: MediaList) -> some View {
+        VStack {
+            HorizontalSectionView(
+                mediaDetailCategory: .relatedMedia(media),
+                selectedMediaInfo: $selectedMediaInfo
+            )
+        }
+    }
+    
+    func mediaDetail(_ mediaDetail: any MediaDetail) -> some View {
+        MediaDetailInformationView(detail: mediaDetail)
+    }
+    
+    private var isPresented: Binding<Bool> {
+        Binding {
+            selectedMediaInfo != nil
+        } set: { flag in
+            if !flag { selectedMediaInfo = nil }
+        }
     }
 }

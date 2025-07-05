@@ -32,6 +32,8 @@ enum TMDBAPI: API {
     case movieCredits(id: Int)
     case tvCredits(id: Int)
     case relatedTVShows(id: Int)
+    case movieDetails(id: Int)
+    case tvDetails(id: Int)
 
     /// The base URL for the selected TMDB endpoint.
     var baseURL: URL {
@@ -48,7 +50,9 @@ enum TMDBAPI: API {
              .relatedMovies,
              .relatedTVShows,
              .movieCredits,
-             .tvCredits:
+             .tvCredits,
+             .movieDetails,
+             .tvDetails:
             // All these endpoints share the same API base URL
             return Self.apiBaseURL
         case .authorizeToken:
@@ -89,6 +93,10 @@ enum TMDBAPI: API {
             return "/movie/\(id)/credits"
         case .tvCredits(let id):
             return "/tv/\(id)/credits"
+        case .movieDetails(let id):
+            return "/movie/\(id)"
+        case .tvDetails(let id):
+            return "/tv/\(id)"
         }
     }
     
@@ -107,7 +115,9 @@ enum TMDBAPI: API {
              .relatedMovies,
              .relatedTVShows,
              .movieCredits,
-             .tvCredits:
+             .tvCredits,
+             .movieDetails,
+             .tvDetails:
             return .get
         case .createSession:
             return .post
@@ -151,7 +161,9 @@ enum TMDBAPI: API {
              .relatedMovies,
              .relatedTVShows,
              .movieCredits,
-             .tvCredits:
+             .tvCredits,
+             .movieDetails,
+             .tvDetails:
             return [:] // No query parameters for these endpoints
         case .authorizeToken:
             // Redirect URL after authorization
@@ -179,7 +191,9 @@ enum TMDBAPI: API {
              .relatedMovies,
              .relatedTVShows,
              .movieCredits,
-             .tvCredits:
+             .tvCredits,
+             .movieDetails,
+             .tvDetails:
             return nil
         }
     }

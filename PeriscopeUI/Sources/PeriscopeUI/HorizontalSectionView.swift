@@ -10,7 +10,8 @@ public struct HorizontalSectionView: View {
         static let width: CGFloat = height * (2 / 3)
     }
 
-    private let mediaCategory: MediaCategory
+    private let title: String
+    private let mediaItems: [any Media]
 
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
@@ -25,30 +26,42 @@ public struct HorizontalSectionView: View {
         mediaCategory: MediaCategory,
         selectedMediaInfo: Binding<MediaSelection?>
     ) {
-        self.mediaCategory = mediaCategory
+        title = mediaCategory.title
+        mediaItems = mediaCategory.mediaItems
+        self._selectedMediaInfo = selectedMediaInfo
+    }
+    
+    public init(
+        mediaDetailCategory: MediaDetailCategory,
+        selectedMediaInfo: Binding<MediaSelection?>
+    ) {
+        title = mediaDetailCategory.title
+        mediaItems = mediaDetailCategory.mediaItems ?? []
         self._selectedMediaInfo = selectedMediaInfo
     }
 
     public var body: some View {
         VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
-            header
+            if !mediaItems.isEmpty {
+                header
 
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: styleSheet.spacing.spacing100) {
-                    ForEach(mediaCategory.mediaItems.indices, id: \.self) { index in
-                        mediaTileButton(for: mediaCategory.mediaItems[index], index: index)
+                ScrollView(.horizontal, showsIndicators: false) {
+                    LazyHStack(spacing: styleSheet.spacing.spacing100) {
+                        ForEach(mediaItems.indices, id: \.self) { index in
+                            mediaTileButton(for: mediaItems[index], index: index)
+                        }
                     }
+                    .padding(.leading, styleSheet.spacing.spacing100)
                 }
-                .padding(.leading, styleSheet.spacing.spacing100)
+                .frame(height: Size.height)
             }
-            .frame(height: Size.height)
         }
         .padding(.vertical, styleSheet.spacing.spacing100)
     }
 
     private var header: some View {
         HStack(spacing: styleSheet.spacing.spacing50) {
-            LegoText(mediaCategory.title, style: styleSheet.text(.title))
+            LegoText(title, style: styleSheet.text(.title))
 
             Image(systemName: "chevron.right")
                 .foregroundColor(styleSheet.colors.textSecondary)
@@ -59,7 +72,7 @@ public struct HorizontalSectionView: View {
 
     @ViewBuilder
     private func mediaTileButton(for media: any Media, index: Int) -> some View {
-        let mediaSelection = MediaSelection(media: media, key: "\(mediaCategory.title)-\(media.id)")
+        let mediaSelection = MediaSelection(media: media, key: "\(title)-\(media.id)")
 
         Button {
             selectedMediaInfo = mediaSelection

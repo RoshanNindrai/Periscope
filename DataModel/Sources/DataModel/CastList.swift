@@ -1,6 +1,11 @@
-// This file defines the CastList and supporting types for movie/TV cast and crew responses in TMDB-style JSON.
-
 import Foundation
+
+public protocol CastAndCrewMember: Equatable, Sendable {
+    var id: Int { get }
+    var name: String { get }
+    var role: String { get }
+    var profilePath: String? { get }
+}
 
 /// Represents a full cast and crew listing for a media item.
 public struct CastList: Equatable, Sendable {
@@ -13,10 +18,22 @@ public struct CastList: Equatable, Sendable {
         self.cast = cast
         self.crew = crew
     }
+    
+    public var castAndCrew: [any CastAndCrewMember] {
+        importantCast + importantCrew
+    }
+    
+    private var importantCast: [CastMember] {
+        Array(cast.prefix(min(cast.endIndex, 15)))
+    }
+    
+    private var importantCrew: [CrewMember] {
+        crew.filter { CrewMember.Department.displayableDepartment.contains($0.department) }
+    }
 }
 
 /// Represents a person in the cast for a media item (movie or show).
-public struct CastMember: Equatable, Sendable {
+public struct CastMember: CastAndCrewMember {
     public let adult: Bool
     public let gender: Int
     public let id: Int
@@ -57,10 +74,36 @@ public struct CastMember: Equatable, Sendable {
         self.creditID = creditID
         self.order = order
     }
+    
+    public var role: String {
+        character ?? name
+    }
 }
 
 /// Represents a person in the crew for a media item (movie or show).
-public struct CrewMember: Equatable, Sendable {
+public struct CrewMember: CastAndCrewMember {
+
+    public enum Department: String, Equatable, Sendable {
+        case production = "Production"
+        case art = "Art"
+        case camera = "Camera"
+        case costumeMakeUp = "Costume & Make-Up"
+        case crew = "Crew"
+        case directing = "Directing"
+        case editing = "Editing"
+        case lighting = "Lighting"
+        case sound = "Sound"
+        case visualEffects = "Visual Effects"
+        case writing = "Writing"
+        case acting = "Acting"
+        case creator = "Creator"
+        case other
+        
+        static let displayableDepartment: [Department] = {
+            [.acting, .creator, .directing]
+        }()
+    }
+
     public let adult: Bool
     public let gender: Int
     public let id: Int
@@ -70,7 +113,8 @@ public struct CrewMember: Equatable, Sendable {
     public let popularity: Double
     public let profilePath: String?
     public let creditID: String
-    public let department: String
+    /// The department the crew member belongs to, represented as a CrewDepartment enum.
+    public let department: Department
     public let job: String
     
     public init(
@@ -83,7 +127,7 @@ public struct CrewMember: Equatable, Sendable {
         popularity: Double,
         profilePath: String?,
         creditID: String,
-        department: String,
+        department: Department,
         job: String
     ) {
         self.adult = adult
@@ -99,4 +143,8 @@ public struct CrewMember: Equatable, Sendable {
         self.job = job
     }
     
+    public var role: String {
+        job
+    }
 }
+

@@ -65,6 +65,12 @@ public protocol TMDBRepository: Sendable {
     /// - Returns: A `CastList` containing the cast and crew details.
     /// - Throws: `TMDBRepositoryError` on failure.
     func castAndCrewList(for mediaItem: MediaItem) async throws -> CastList
+    
+    /// Fetches the detailed information for a specified media item (either a movie or TV show).
+    /// - Parameter mediaItem: The media item (movie or TV show) for which to retrieve detailed information.
+    /// - Returns: An object conforming to `MediaDetail` containing the detailed information.
+    /// - Throws: `TMDBRepositoryError` on failure.
+    func mediaDetail(for mediaItem: MediaItem) async throws -> any MediaDetail
 
     /// Provides a builder for constructing URLs to TMDB images (e.g., poster or backdrop images).
     /// - Returns: A `TMDBImageURLBuilder` instance for building image URLs.

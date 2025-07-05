@@ -11,9 +11,6 @@ public struct HomeFeatureView: View {
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
 
-    @Environment(\.namespace)
-    private var namespace: Namespace.ID!
-
     @Binding
     private var selectedMediaInfo: MediaSelection?
 
@@ -79,8 +76,6 @@ public struct HomeFeatureView: View {
                 mediaCategory: mediaCategory,
                 selectedMediaInfo: $selectedMediaInfo
             )
-        case .relatedMovies:
-            EmptyView()
         }
     }
 }

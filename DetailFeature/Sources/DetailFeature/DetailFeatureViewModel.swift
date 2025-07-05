@@ -6,10 +6,10 @@ import DataModel
 @Observable
 public final class DetailFeatureViewModel {
     
-    internal enum State {
+    internal enum Output {
         case idle
         case loading
-        case loadedRelatedMovies(MediaList)
+        case fetched([MediaDetailCategory])
         case failed(Error)
     }
     
@@ -17,8 +17,8 @@ public final class DetailFeatureViewModel {
         case loadOtherInformation(any Media)
     }
     
-    private let repository: TMDBRepository
-    private(set) var state: State = .idle
+    let repository: TMDBRepository
+    private(set) var output: Output = .idle
     
     public init(repository: TMDBRepository) {
         self.repository = repository
@@ -27,15 +27,19 @@ public final class DetailFeatureViewModel {
     func reduce(_ action: Action) async {
         switch action {
         case .loadOtherInformation(let media):
-            state = .loading
-            do {
-                let related = try await repository.relatedMedia(
-                    for: media.mediaItemRequest
-                )
-                state = .loadedRelatedMovies(related)
-            } catch {
-                state = .failed(error)
-            }
+            output = .loading
+            
+            async let mediaDetail: MediaDetailCategory? = try? .mediaDetail(repository.mediaDetail(for: media.mediaItemRequest))
+            async let relatedMedia: MediaDetailCategory? = try? .relatedMedia(repository.relatedMedia(for: media.mediaItemRequest))
+            async let castAndCrew: MediaDetailCategory? = try? .castAndCrew(repository.castAndCrewList(for: media.mediaItemRequest))
+            
+            let result: [MediaDetailCategory] = await [
+                castAndCrew,
+                relatedMedia,
+                mediaDetail
+            ].compactMap { $0 }
+
+            output = .fetched(result)
         }
     }
 }

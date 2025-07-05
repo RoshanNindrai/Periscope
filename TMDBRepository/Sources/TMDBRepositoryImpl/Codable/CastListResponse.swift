@@ -110,9 +110,8 @@ extension CrewMemberResponse {
             popularity: popularity,
             profilePath: profilePath,
             creditID: creditID,
-            department: department,
+            department: CrewMember.Department(rawValue: department) ?? .other,
             job: job
         )
     }
 }
-

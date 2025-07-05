@@ -32,6 +32,18 @@ public struct TMDBImageURLBuilder: Sendable {
                 .appending(backdropPath)
         )!
     }
+    
+    public func profileImageURL(cast: any CastAndCrewMember, size: ProfileSize) -> URL {
+        guard let profilePath = cast.profilePath else {
+            return URL(string: "htttps://www.google.com")!
+        }
+        
+        return URL(
+            string: configuration.images.secureBaseURL
+                .appending(size.rawValue)
+                .appending(profilePath)
+        )!
+    }
 }
 
 public struct TMDBImageURLBuilderEnvironmentKey: EnvironmentKey {

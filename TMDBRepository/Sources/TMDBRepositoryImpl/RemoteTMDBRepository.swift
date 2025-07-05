@@ -54,6 +54,15 @@ public struct RemoteTMDBRepository: TMDBRepository {
         try await fetchTrendingItems(for: .trendingToday)
     }
     
+    public func mediaDetail(for mediaItem: MediaItem) async throws -> any MediaDetail {
+        switch mediaItem {
+        case .movie(let id):
+            try await fetchMovieDetail(for: .movieDetails(id: id))
+        case .tvShow(let id):
+            try await fetchShowDetail(for: .tvDetails(id: id))
+        }
+    }
+    
     public func relatedMedia(for mediaItem: MediaItem) async throws -> MediaList {
         switch mediaItem {
         case .movie(let id):
@@ -108,5 +117,15 @@ private extension RemoteTMDBRepository {
     func fetchCastAndCrew(for request: TMDBAPI) async throws -> CastList {
         let mediaList: NetworkResponse<CastListResponse> = try await networkService.perform(apiRequest: request)
         return mediaList.resource.toDomainModel()
+    }
+    
+    func fetchMovieDetail(for request: TMDBAPI) async throws -> any MediaDetail {
+        let movieDetail: NetworkResponse<MovieDetailResponse> = try await networkService.perform(apiRequest: request)
+        return movieDetail.resource.toDomainModel()
+    }
+    
+    func fetchShowDetail(for request: TMDBAPI) async throws -> any MediaDetail {
+        let showDetail: NetworkResponse<ShowDetailResponse> = try await networkService.perform(apiRequest: request)
+        return showDetail.resource.toDomainModel()
     }
 }

@@ -35,7 +35,9 @@ struct OffsetReader: UIViewRepresentable {
         }
 
         func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            offset = 0 - scrollView.contentOffset.y
+            DispatchQueue.main.async {
+                self.offset = 0 - scrollView.contentOffset.y
+            }
         }
     }
 }
