@@ -100,8 +100,6 @@ public struct DetailFeatureView: View {
                 media: selectedMediaInfo.media,
                 viewModel: detailViewModel
             )
-            .navigationTitle(selectedMediaInfo.media.title)
-            .navigationBarTitleDisplayMode(.inline)
             .navigationTransition(.zoom(sourceID: selectedMediaInfo, in: namespace))
         }
         .ignoresSafeArea(edges: .top)
@@ -188,5 +186,6 @@ private extension DetailFeatureView {
     @ViewBuilder
     func mediaDetailView(_ mediaDetail: any MediaDetail) -> some View {
         MediaDetailInformationView(detail: mediaDetail)
+            .padding(styleSheet.spacing.spacing100)
     }
 }

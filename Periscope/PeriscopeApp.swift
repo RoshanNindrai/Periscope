@@ -84,8 +84,6 @@ struct PeriscopeApp: App {
                                         item: $selectedMediaInfo
                                     ) { selectedMediaInfo in
                                         DetailFeatureView(media: selectedMediaInfo.media, viewModel: detailFeatureViewModel)
-                                            .navigationTitle(selectedMediaInfo.media.title)
-                                            .navigationBarTitleDisplayMode(.inline)
                                             .navigationTransition(.zoom(sourceID: selectedMediaInfo, in: namespace))
                                     }
                                 }

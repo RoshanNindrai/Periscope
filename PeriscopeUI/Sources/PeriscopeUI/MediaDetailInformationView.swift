@@ -25,7 +25,8 @@ public struct MediaDetailInformationView: View {
             if hasAccessibilitySection {
                 accessibilitySection
             }
-        }.frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // MARK: - Sections
@@ -46,7 +47,7 @@ public struct MediaDetailInformationView: View {
                     value: detail.originCountry.joined(separator: ", ")
                 )
             }
-        }
+        }.padding(.vertical, styleSheet.spacing.spacing100)
     }
 
     private var languagesSection: some View {
