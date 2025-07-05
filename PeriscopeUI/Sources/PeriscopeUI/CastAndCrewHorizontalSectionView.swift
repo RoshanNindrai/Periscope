@@ -23,7 +23,7 @@ public struct CastAndCrewHorizontalSectionView: View {
             } else {
                 header
                 ScrollView(.horizontal, showsIndicators: false) {
-                    LazyHStack(spacing: styleSheet.spacing.spacing100) {
+                    LazyHStack(spacing: styleSheet.spacing.spacing300) {
                         ForEach(castList.castAndCrew, id: \.id) { member in
                             CastAndCrewTileView(member: member)
                         }
@@ -57,14 +57,21 @@ private struct CastAndCrewTileView: View {
     var body: some View {
         VStack(alignment: .center, spacing: styleSheet.spacing.spacing50) {
             profileImage
-            LegoText(member.name, style: styleSheet.text(.body))
-                .lineLimit(1)
-                .truncationMode(.tail)
+            LegoText(
+                member.name,
+                style: styleSheet.text(.caption),
+                textModifier: { text in
+                    text.lineLimit(1)
+                        .truncationMode(.tail)
+                        .foregroundColor(.white)
+                }
+            )
+                
             LegoText(member.role, style: styleSheet.text(.caption))
                 .lineLimit(1)
                 .truncationMode(.tail)
         }
-        .frame(width: 160)
+        .frame(width: 100)
     }
     
     private var profileImage: some View {
