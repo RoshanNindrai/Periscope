@@ -93,9 +93,6 @@ public struct DetailFeatureView: View {
                         repository: viewModel.repository
                     )
                 )
-                .onDisappear {
-                    self.selectedMediaInfo = nil
-                }
                 .navigationTitle(selectedMediaInfo.media.title)
                 .navigationBarTitleDisplayMode(.inline)
                 .navigationTransition(.zoom(sourceID: selectedMediaInfo, in: namespace))
