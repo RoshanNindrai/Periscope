@@ -14,7 +14,7 @@ public final class DetailFeatureViewModel {
     }
     
     internal enum Action {
-        case loadOtherInformation(mediaId: Int)
+        case loadOtherInformation(any Media)
     }
     
     private let repository: TMDBRepository
@@ -26,14 +26,27 @@ public final class DetailFeatureViewModel {
     
     func reduce(_ action: Action) async {
         switch action {
-        case .loadOtherInformation(let mediaId):
+        case .loadOtherInformation(let media):
             state = .loading
             do {
-                let related = try await repository.relatedMovies(for: mediaId)
+                let related = try await repository.relatedMedia(
+                    for: media.mediaItemRequest
+                )
                 state = .loadedRelatedMovies(related)
             } catch {
                 state = .failed(error)
             }
+        }
+    }
+}
+
+private extension Media {
+    var mediaItemRequest: MediaItem {
+        switch type {
+        case .movie:
+            .movie(id: id)
+        case .tvShow:
+            .tvShow(id: id)
         }
     }
 }

@@ -29,6 +29,9 @@ enum TMDBAPI: API {
     case upcomingMovies
     case trendingToday
     case relatedMovies(id: Int)
+    case movieCredits(id: Int)
+    case tvCredits(id: Int)
+    case relatedTVShows(id: Int)
 
     /// The base URL for the selected TMDB endpoint.
     var baseURL: URL {
@@ -42,7 +45,10 @@ enum TMDBAPI: API {
              .upcomingMovies, 
              .nowPlayingMovies, 
              .trendingToday,
-             .relatedMovies:
+             .relatedMovies,
+             .relatedTVShows,
+             .movieCredits,
+             .tvCredits:
             // All these endpoints share the same API base URL
             return Self.apiBaseURL
         case .authorizeToken:
@@ -77,6 +83,12 @@ enum TMDBAPI: API {
             return "/trending/all/day"
         case .relatedMovies(let id):
             return "/movie/\(id)/similar"
+        case .relatedTVShows(let id):
+            return "/tv/\(id)/similar"
+        case .movieCredits(let id):
+            return "/movie/\(id)/credits"
+        case .tvCredits(let id):
+            return "/tv/\(id)/credits"
         }
     }
     
@@ -92,7 +104,10 @@ enum TMDBAPI: API {
              .upcomingMovies, 
              .nowPlayingMovies, 
              .trendingToday,
-             .relatedMovies:
+             .relatedMovies,
+             .relatedTVShows,
+             .movieCredits,
+             .tvCredits:
             return .get
         case .createSession:
             return .post
@@ -133,7 +148,10 @@ enum TMDBAPI: API {
              .upcomingMovies, 
              .nowPlayingMovies, 
              .trendingToday,
-             .relatedMovies:
+             .relatedMovies,
+             .relatedTVShows,
+             .movieCredits,
+             .tvCredits:
             return [:] // No query parameters for these endpoints
         case .authorizeToken:
             // Redirect URL after authorization
@@ -158,7 +176,10 @@ enum TMDBAPI: API {
              .upcomingMovies, 
              .nowPlayingMovies, 
              .trendingToday,
-             .relatedMovies:
+             .relatedMovies,
+             .relatedTVShows,
+             .movieCredits,
+             .tvCredits:
             return nil
         }
     }

@@ -11,7 +11,7 @@ public struct TMDBImageURLBuilder: Sendable {
     
     public func posterImageURL(media: any Media, size: PosterSize) -> URL {
         guard let posterPath = media.posterPath else {
-            return URL(string: "")!
+            return URL(string: "htttps://www.google.com")!
         }
         
         return URL(

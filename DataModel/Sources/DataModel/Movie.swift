@@ -47,6 +47,10 @@ public struct Movie: Media, Hashable, Sendable {
         self.voteAverage = voteAverage
         self.voteCount = voteCount
     }
+    
+    public var type: MediaItemType {
+        .movie
+    }
 }
 
 // MARK: Helpers

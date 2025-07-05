@@ -79,7 +79,7 @@ public enum MediaCategory: Identifiable, Equatable {
         case .topRated:
             "Top Rated Movies"
         case .relatedMovies:
-            "Related Movies"
+            "Related"
         case .trendingToday:
             "Trending Today"
         }

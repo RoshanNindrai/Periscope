@@ -2,6 +2,12 @@ import DataModel
 import TMDBService
 import Foundation
 
+/// Represents either a Movie or TV Show, each carrying its unique identifier.
+public enum MediaItem: Sendable, Equatable {
+    case movie(id: Int)
+    case tvShow(id: Int)
+}
+
 /// Represents errors that can occur when interacting with the TMDB repository.
 public enum TMDBRepositoryError: Error {
     /// Indicates an error occurred during authentication.
@@ -52,9 +58,16 @@ public protocol TMDBRepository: Sendable {
     /// - Parameter movieId: The identifier of the movie for which to find related movies.
     /// - Returns: A `MediaList` containing movies related to the given movie.
     /// - Throws: `TMDBRepositoryError` on failure.
-    func relatedMovies(for movieId: Int) async throws -> MediaList
+    func relatedMedia(for mediaItem: MediaItem) async throws -> MediaList
+
+    /// Fetches the cast and crew information for a specified media item (either a movie or TV show).
+    /// - Parameter mediaItem: The media item (movie or TV show) for which to retrieve the cast and crew.
+    /// - Returns: A `CastList` containing the cast and crew details.
+    /// - Throws: `TMDBRepositoryError` on failure.
+    func castAndCrewList(for mediaItem: MediaItem) async throws -> CastList
 
     /// Provides a builder for constructing URLs to TMDB images (e.g., poster or backdrop images).
     /// - Returns: A `TMDBImageURLBuilder` instance for building image URLs.
     func imageURLBuilder() async -> TMDBImageURLBuilder
 }
+
