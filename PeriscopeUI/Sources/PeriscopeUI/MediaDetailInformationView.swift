@@ -13,13 +13,19 @@ public struct MediaDetailInformationView: View {
     }
 
     public var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
+        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
+            if hasInformationSection {
                 informationSection
+            }
+
+            if hasLanguagesSection {
                 languagesSection
+            }
+
+            if hasAccessibilitySection {
                 accessibilitySection
             }
-        }
+        }.frame(maxWidth: .infinity, alignment: .leading)
     }
 
     // MARK: - Sections
@@ -35,15 +41,20 @@ public struct MediaDetailInformationView: View {
             }
 
             if !detail.originCountry.isEmpty {
-                infoRow(title: "Region of Origin", value: detail.originCountry.joined(separator: ", "))
+                infoRow(
+                    title: "Region of Origin",
+                    value: detail.originCountry.joined(separator: ", ")
+                )
             }
         }
     }
 
     private var languagesSection: some View {
-        let audioLanguages = detail.spokenLanguages.map(\.name).joined(separator: ", ")
-        let subtitles = audioLanguages.isEmpty ? nil : audioLanguages + " (SDH)"
-        let originalAudio = detail.spokenLanguages.first?.englishName
+        let spokenLanguages = detail.spokenLanguages
+        let audioLanguages = spokenLanguages.map(\.name).filter { !$0.isEmpty }
+        let audioLanguagesText = audioLanguages.joined(separator: ", ")
+        let subtitles = audioLanguagesText.isEmpty ? nil : audioLanguagesText + " (SDH)"
+        let originalAudio = spokenLanguages.first?.englishName.nonEmpty
 
         return VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
             LegoText("Languages", style: styleSheet.text(.title))
@@ -52,8 +63,8 @@ public struct MediaDetailInformationView: View {
                 infoRow(title: "Original Audio", value: original)
             }
 
-            if !audioLanguages.isEmpty {
-                infoRow(title: "Audio", value: audioLanguages)
+            if !audioLanguagesText.isEmpty {
+                infoRow(title: "Audio", value: audioLanguagesText)
             }
 
             if let subtitles = subtitles {
@@ -65,11 +76,34 @@ public struct MediaDetailInformationView: View {
     private var accessibilitySection: some View {
         VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
             LegoText("Accessibility", style: styleSheet.text(.title))
+
             LegoText("SDH", style: styleSheet.text(.callout)) {
                 $0.bold().padding(.vertical, styleSheet.spacing.spacing50)
             }
-            LegoText("Subtitles for the deaf and hard of hearing (SDH) refer to subtitles in the original language with the addition of relevant non-dialogue information.", style: styleSheet.text(.caption))
+
+            LegoText(
+                "Subtitles for the deaf and hard of hearing (SDH) refer to subtitles in the original language with the addition of relevant non-dialogue information.",
+                style: styleSheet.text(.caption)
+            )
         }
+    }
+
+    // MARK: - Visibility Conditions
+
+    private var hasInformationSection: Bool {
+        !detail.releaseDateText.isEmpty ||
+        detail.runtimeInMinutes != nil ||
+        !detail.originCountry.isEmpty
+    }
+
+    private var hasLanguagesSection: Bool {
+        let hasOriginal = detail.spokenLanguages.first?.englishName.isEmpty == false
+        let hasAudio = detail.spokenLanguages.contains { !$0.name.isEmpty }
+        return hasOriginal || hasAudio
+    }
+
+    private var hasAccessibilitySection: Bool {
+        !detail.spokenLanguages.isEmpty
     }
 
     // MARK: - Helpers
@@ -77,9 +111,10 @@ public struct MediaDetailInformationView: View {
     @ViewBuilder
     private func infoRow(title: String, value: String) -> some View {
         VStack(alignment: .leading, spacing: styleSheet.spacing.spacing50) {
-            LegoText(title, style: styleSheet.text(.caption)) { text in
-                text.foregroundColor(.white)
+            LegoText(title, style: styleSheet.text(.caption)) {
+                $0.foregroundColor(.white)
             }
+
             LegoText(value, style: styleSheet.text(.caption))
         }
     }
@@ -91,3 +126,10 @@ public struct MediaDetailInformationView: View {
     }
 }
 
+// MARK: - Utilities
+
+private extension String {
+    var nonEmpty: String? {
+        isEmpty ? nil : self
+    }
+}
