@@ -81,14 +81,12 @@ struct PeriscopeApp: App {
                                     )
                                     .navigationTitle("Home")
                                     .navigationDestination(
-                                        isPresented: isPresented
-                                    ) {
-                                        if let selected = selectedMediaInfo {
-                                            DetailFeatureView(media: selected.media, viewModel: detailFeatureViewModel)
-                                                .navigationTitle(selected.media.title)
-                                                .navigationBarTitleDisplayMode(.inline)
-                                                .navigationTransition(.zoom(sourceID: selected, in: namespace))
-                                        }
+                                        item: $selectedMediaInfo
+                                    ) { selectedMediaInfo in
+                                        DetailFeatureView(media: selectedMediaInfo.media, viewModel: detailFeatureViewModel)
+                                            .navigationTitle(selectedMediaInfo.media.title)
+                                            .navigationBarTitleDisplayMode(.inline)
+                                            .navigationTransition(.zoom(sourceID: selectedMediaInfo, in: namespace))
                                     }
                                 }
                             }
@@ -118,14 +116,6 @@ struct PeriscopeApp: App {
         .environment(\.tmdbImageURLBuilder, tmdbImageURLBuilder)
         .environment(\.namespace, namespace)
         .environment(\.appRouter, router)
-    }
-    
-    private var isPresented: Binding<Bool> {
-        Binding {
-            selectedMediaInfo != nil
-        } set: { flag in
-            if !flag { selectedMediaInfo = nil }
-        }
     }
 }
 

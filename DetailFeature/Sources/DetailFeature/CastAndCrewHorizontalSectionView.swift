@@ -24,8 +24,8 @@ public struct CastAndCrewHorizontalSectionView: View {
                 header
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: styleSheet.spacing.spacing100) {
-                        ForEach(Array(castList.castAndCrew.enumerated()), id: \.element.id) { _, member in
-                            castAndCrewTile(for: member)
+                        ForEach(castList.castAndCrew, id: \.id) { member in
+                            CastAndCrewTileView(member: member)
                         }
                     }
                     .padding(.leading, styleSheet.spacing.spacing100)
@@ -45,12 +45,20 @@ public struct CastAndCrewHorizontalSectionView: View {
         }
         .padding(.leading, styleSheet.spacing.spacing100)
     }
+}
+
+private struct CastAndCrewTileView: View {
+    let member: any CastAndCrewMember
     
-    @ViewBuilder
-    private func castAndCrewTile(for member: any CastAndCrewMember) -> some View {
+    @Environment(\.styleSheet)
+    private var styleSheet: StyleSheet
+    
+    @Environment(\.tmdbImageURLBuilder)
+    private var imageURLBuilder: TMDBImageURLBuilder
+    
+    var body: some View {
         VStack(alignment: .center, spacing: styleSheet.spacing.spacing50) {
-            castProfileImage(for: member)
-                
+            profileImage
             LegoText(member.name, style: styleSheet.text(.body))
                 .lineLimit(1)
                 .truncationMode(.tail)
@@ -61,8 +69,7 @@ public struct CastAndCrewHorizontalSectionView: View {
         .frame(width: 160)
     }
     
-    @ViewBuilder
-    private func castProfileImage(for member: any CastAndCrewMember) -> some View {
+    private var profileImage: some View {
         LegoAsyncImage(
             url: imageURLBuilder.profileImageURL(cast: member, size: .w185),
             placeholder: {
@@ -75,7 +82,8 @@ public struct CastAndCrewHorizontalSectionView: View {
                     )
             },
             imageViewBuilder: { image in
-                image.resizable()
+                image
+                    .resizable()
                     .scaledToFill()
                     .clipShape(Circle())
                     .background(Circle().fill(styleSheet.colors.background))

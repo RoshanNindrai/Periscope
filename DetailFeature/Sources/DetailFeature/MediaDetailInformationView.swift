@@ -31,27 +31,35 @@ public struct MediaDetailInformationView: View {
             LegoText("Information", style: styleSheet.text(.title))
 
             infoRow(title: "Released", value: detail.releaseDateText)
+
             if let runtime = detail.runtimeInMinutes {
                 infoRow(title: "Run Time", value: formatRuntime(runtime))
             }
-            infoRow(title: "Region of Origin", value: detail.originCountry.joined(separator: ", "))
+
+            if !detail.originCountry.isEmpty {
+                infoRow(title: "Region of Origin", value: detail.originCountry.joined(separator: ", "))
+            }
         }
     }
 
     private var languagesSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        let audioLanguages = detail.spokenLanguages.map(\.name).joined(separator: ", ")
+        let subtitles = audioLanguages.isEmpty ? nil : audioLanguages + " (SDH)"
+        let originalAudio = detail.spokenLanguages.first?.englishName
+
+        return VStack(alignment: .leading, spacing: 16) {
             LegoText("Languages", style: styleSheet.text(.title))
 
-            if let original = detail.spokenLanguages.first?.englishName {
+            if let original = originalAudio {
                 infoRow(title: "Original Audio", value: original)
             }
 
-            if !detail.spokenLanguages.isEmpty {
-                infoRow(title: "Audio", value: detail.spokenLanguages.map(\.name).joined(separator: ", "))
+            if !audioLanguages.isEmpty {
+                infoRow(title: "Audio", value: audioLanguages)
             }
 
-            if !detail.spokenLanguages.isEmpty {
-                infoRow(title: "Subtitles", value: detail.spokenLanguages.map(\.name).joined(separator: ", ") + " (SDH)")
+            if let subtitles = subtitles {
+                infoRow(title: "Subtitles", value: subtitles)
             }
         }
     }
