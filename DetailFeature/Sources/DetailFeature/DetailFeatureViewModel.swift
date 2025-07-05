@@ -40,6 +40,18 @@ public final class DetailFeatureViewModel {
             output = .fetched(result)
         }
     }
+    
+    var mediaDetail: (any MediaDetail)? {
+        if case .fetched(let categories) = output {
+            return categories.compactMap {
+                if case let .mediaDetail(detail) = $0 {
+                    return detail
+                }
+                return nil
+            }.first
+        }
+        return nil
+    }
 }
 
 private extension Media {

@@ -15,5 +15,11 @@
 			</array>
 		</dict>
 	</array>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>nflx</string>
+		<string>primevideo</string>
+		<string>hbomax</string>
+	</array>
 </dict>
 </plist>

@@ -37,6 +37,9 @@ public struct DetailFeatureView: View {
     @Environment(\.tmdbImageURLBuilder)
     private var imageURLBuilder: TMDBImageURLBuilder
     
+    @Environment(\.openURL)
+    private var openURL
+    
     @Namespace
     private var namespace: Namespace.ID
 
@@ -65,7 +68,8 @@ public struct DetailFeatureView: View {
 
                     VStack {
                         titleSection
-                        
+                            .padding(.top, styleSheet.spacing.spacing400)
+
                         switch viewModel.output {
                         case .fetched(let mediaDetailCategory):
                             ForEach(mediaDetailCategory, id: \MediaDetailCategory.id) { detailCategory in
@@ -142,13 +146,27 @@ private extension DetailFeatureView {
         VStack(spacing: styleSheet.spacing.spacing100) {
             LegoText(media.title, style: styleSheet.text(.title)) {
                 $0.foregroundColor(styleSheet.colors.textPrimary)
+                    .multilineTextAlignment(.center)
             }
-
+            
             LegoText(media.overview, style: styleSheet.text(.subtitle)) {
                 $0.multilineTextAlignment(.center)
             }
+            
+            if let detail = viewModel.mediaDetail, let streamableURL = detail.streamingAppDeeplink {
+                LegoButton(
+                    style: styleSheet.button(.primary)
+                ) {
+                    LegoText("Watch now", style: styleSheet.text(.title))
+                } onTap: {
+                    openURL(streamableURL)
+                } buttonModifier: { button in
+                    button.frame(maxWidth: .infinity)
+                }.padding(
+                    styleSheet.spacing.spacing200
+                )
+            }
         }
-        .padding(styleSheet.spacing.spacing200)
         .frame(maxWidth: .infinity)
     }
     
