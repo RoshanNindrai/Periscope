@@ -14,20 +14,18 @@ public struct MediaDetailInformationView: View {
 
     public var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
                 informationSection
                 languagesSection
                 accessibilitySection
             }
-            .padding(.horizontal)
-            .padding(.top)
         }
     }
 
     // MARK: - Sections
 
     private var informationSection: some View {
-        VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
             LegoText("Information", style: styleSheet.text(.title))
 
             infoRow(title: "Released", value: detail.releaseDateText)
@@ -47,7 +45,7 @@ public struct MediaDetailInformationView: View {
         let subtitles = audioLanguages.isEmpty ? nil : audioLanguages + " (SDH)"
         let originalAudio = detail.spokenLanguages.first?.englishName
 
-        return VStack(alignment: .leading, spacing: 16) {
+        return VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
             LegoText("Languages", style: styleSheet.text(.title))
 
             if let original = originalAudio {
@@ -65,10 +63,10 @@ public struct MediaDetailInformationView: View {
     }
 
     private var accessibilitySection: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
             LegoText("Accessibility", style: styleSheet.text(.title))
             LegoText("SDH", style: styleSheet.text(.callout)) {
-                $0.bold().padding(.vertical, 4)
+                $0.bold().padding(.vertical, styleSheet.spacing.spacing50)
             }
             LegoText("Subtitles for the deaf and hard of hearing (SDH) refer to subtitles in the original language with the addition of relevant non-dialogue information.", style: styleSheet.text(.caption))
         }
@@ -78,7 +76,7 @@ public struct MediaDetailInformationView: View {
 
     @ViewBuilder
     private func infoRow(title: String, value: String) -> some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing50) {
             LegoText(title, style: styleSheet.text(.caption)) { text in
                 text.foregroundColor(.white)
             }
@@ -92,3 +90,4 @@ public struct MediaDetailInformationView: View {
         return "\(hours) hr \(mins) min"
     }
 }
+

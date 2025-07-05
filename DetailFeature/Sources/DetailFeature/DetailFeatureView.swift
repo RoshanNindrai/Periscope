@@ -22,7 +22,10 @@ public struct DetailFeatureView: View {
     private let viewModel: DetailFeatureViewModel
 
     @State
-    private var scrollOffset: CGFloat = 0
+    private var scrollOffset: CGFloat = 0.0
+    
+    @State
+    private var detailViewModel: DetailFeatureViewModel
     
     @State
     private var selectedMediaInfo: MediaSelection?
@@ -44,12 +47,14 @@ public struct DetailFeatureView: View {
     public init(media: any Media, viewModel: DetailFeatureViewModel) {
         self.media = media
         self.viewModel = viewModel
+        self.detailViewModel = DetailFeatureViewModel(repository: viewModel.repository)
     }
 
     // MARK: - Body
 
     public var body: some View {
         ZStack(alignment: .top) {
+
             backdropImage
 
             ScrollView(showsIndicators: false) {
@@ -89,7 +94,7 @@ public struct DetailFeatureView: View {
         .navigationDestination(item: $selectedMediaInfo) { selectedMediaInfo in
             DetailFeatureView(
                 media: selectedMediaInfo.media,
-                viewModel: viewModel
+                viewModel: detailViewModel
             )
             .navigationTitle(selectedMediaInfo.media.title)
             .navigationBarTitleDisplayMode(.inline)
@@ -112,6 +117,11 @@ private extension DetailFeatureView {
         let scale = clampScale(for: scrollOffset)
         return LegoAsyncImage(
             url: imageURLBuilder.posterImageURL(media: media, size: .w780),
+            placeholder: {
+                Rectangle()
+                    .fill(styleSheet.colors.background)
+
+            },
             imageViewBuilder: { image in
                 image
                     .resizable()

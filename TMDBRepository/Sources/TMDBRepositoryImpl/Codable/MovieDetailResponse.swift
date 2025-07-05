@@ -138,7 +138,7 @@ extension MovieDetailResponse {
             releaseDate: releaseDate,
             revenue: revenue,
             runtime: runtime,
-            spokenLanguages: spokenLanguages.map { $0.toDomainModel() },
+            spokenLanguages: spokenLanguages.filter(\.name.isEmpty).map { $0.toDomainModel() },
             status: status,
             tagline: tagline,
             title: title,

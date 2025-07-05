@@ -17,7 +17,7 @@ public final class DetailFeatureViewModel {
         case loadOtherInformation(any Media)
     }
     
-    private let repository: TMDBRepository
+    let repository: TMDBRepository
     private(set) var output: Output = .idle
     
     public init(repository: TMDBRepository) {
