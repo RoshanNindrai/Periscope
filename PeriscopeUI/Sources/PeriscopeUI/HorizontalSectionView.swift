@@ -56,7 +56,6 @@ public struct HorizontalSectionView: View {
                 .frame(height: Size.height)
             }
         }
-        .padding(.vertical, styleSheet.spacing.spacing100)
     }
 
     private var header: some View {
@@ -67,7 +66,6 @@ public struct HorizontalSectionView: View {
                 .foregroundColor(styleSheet.colors.textSecondary)
                 .font(styleSheet.typography.subtitle.weight(.bold))
         }
-        .padding(.leading, styleSheet.spacing.spacing100)
     }
 
     @ViewBuilder

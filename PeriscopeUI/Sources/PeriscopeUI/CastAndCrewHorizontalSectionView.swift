@@ -33,7 +33,6 @@ public struct CastAndCrewHorizontalSectionView: View {
                 .frame(height: 160)
             }
         }
-        .padding(.vertical, styleSheet.spacing.spacing100)
     }
     
     private var header: some View {
@@ -43,7 +42,6 @@ public struct CastAndCrewHorizontalSectionView: View {
                 .foregroundColor(styleSheet.colors.textSecondary)
                 .font(styleSheet.typography.subtitle.weight(.bold))
         }
-        .padding(.leading, styleSheet.spacing.spacing100)
     }
 }
 

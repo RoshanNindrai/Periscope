@@ -68,7 +68,7 @@ public struct DetailFeatureView: View {
 
                     VStack {
                         titleSection
-                            .padding(.top, styleSheet.spacing.spacing400)
+                            .padding(.vertical, styleSheet.spacing.spacing400)
 
                         switch viewModel.output {
                         case .fetched(let mediaDetailCategory):
@@ -89,8 +89,8 @@ public struct DetailFeatureView: View {
                         default:
                             EmptyView()
                         }
-                        
                     }
+                    .padding(styleSheet.spacing.spacing100)
                     .background(.black)
                 }
             }
@@ -186,6 +186,5 @@ private extension DetailFeatureView {
     @ViewBuilder
     func mediaDetailView(_ mediaDetail: any MediaDetail) -> some View {
         MediaDetailInformationView(detail: mediaDetail)
-            .padding(styleSheet.spacing.spacing100)
     }
 }

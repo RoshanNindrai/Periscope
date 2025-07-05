@@ -27,6 +27,10 @@ public struct HomeFeatureView: View {
             content
                 .padding(.bottom, styleSheet.spacing.spacing200)
         }
+        .padding(
+            .horizontal,
+            styleSheet.spacing.spacing100
+        )
         .refreshable {
             await viewModel.reduce(.fetchLatest)
         }
