@@ -1,6 +1,6 @@
 import Foundation
 
-public struct Movie: Media, Hashable, Sendable {
+public struct Movie: Media, Searchable, Hashable, Sendable {
     public let adult: Bool
     public let backdropPath: String?
     public let genreIds: [Int]
@@ -50,6 +50,14 @@ public struct Movie: Media, Hashable, Sendable {
     
     public var type: MediaItemType {
         .movie
+    }
+    
+    public var seachItemType: SearchItemType {
+        .movie
+    }
+    
+    public var subtitle: String {
+        overview
     }
 }
 

@@ -4,6 +4,15 @@ import Foundation
 public enum MediaItemType: Sendable, Equatable {
     case movie
     case tvShow
+    
+    public var description: String {
+        switch self {
+        case .movie:
+            return "Movie"
+        case .tvShow:
+            return "Tv Show"
+        }
+    }
 }
 
 public protocol Media: Equatable, Sendable {

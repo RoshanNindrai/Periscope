@@ -54,8 +54,8 @@ public struct RemoteTMDBRepository: TMDBRepository {
         try await fetchMediaItems(for: .trendingToday)
     }
     
-    public func search(for query: String) async throws -> MediaResultSet {
-        try await fetchMediaItems(for: .searchMulti(query: query))
+    public func search(for query: String) async throws -> SearchResultSet {
+        try await fetchSearchResults(for: .searchMulti(query: query))
     }
     
     public func mediaDetail(for mediaItem: MediaItem) async throws -> any MediaDetail {
@@ -116,6 +116,11 @@ private extension RemoteTMDBRepository {
     func fetchMediaItems(for request: TMDBAPI) async throws -> MediaResultSet {
         let mediaList: NetworkResponse<MediaResultSetResponse> = try await networkService.perform(apiRequest: request)
         return mediaList.resource.toDomainModel()
+    }
+    
+    func fetchSearchResults(for request: TMDBAPI) async throws -> SearchResultSet {
+        let searchResults: NetworkResponse<SearchResultSetResponse> = try await networkService.perform(apiRequest: request)
+        return searchResults.resource.toDomainModel()
     }
     
     func fetchCastAndCrew(for request: TMDBAPI) async throws -> CastList {

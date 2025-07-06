@@ -127,27 +127,27 @@ public extension StyleSheet {
 #Preview {
     let styleSheet = LegoStyleSheet()
     
-    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.largeTitle)) {
+    LegoText("Large Title", style: styleSheet.text(.largeTitle)) {
         $0.multilineTextAlignment(.center)
     }
     
-    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.title)) {
+    LegoText("Title", style: styleSheet.text(.title)) {
         $0.multilineTextAlignment(.center)
     }
     
-    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.subtitle)) {
+    LegoText("Subtitle", style: styleSheet.text(.subtitle)) {
         $0.multilineTextAlignment(.center)
     }
     
-    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.body)) {
+    LegoText("Body", style: styleSheet.text(.body)) {
         $0.multilineTextAlignment(.center)
     }
     
-    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.callout)) {
+    LegoText("Callout", style: styleSheet.text(.callout)) {
         $0.multilineTextAlignment(.center)
     }
     
-    LegoText("Welcome to the Galactic Library", style: styleSheet.text(.caption)) {
+    LegoText("Caption", style: styleSheet.text(.caption)) {
         $0.multilineTextAlignment(.center)
     }
 }

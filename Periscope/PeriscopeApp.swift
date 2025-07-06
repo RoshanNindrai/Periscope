@@ -4,6 +4,7 @@ import DetailFeature
 import HomeFeature
 import Lego
 import Routes
+import SearchFeature
 import SignInFeature
 import SwiftUI
 import TMDBRepository
@@ -80,6 +81,24 @@ struct PeriscopeApp: App {
                                         selectedMediaInfo: $selectedMediaInfo
                                     )
                                     .navigationTitle("Home")
+                                    .navigationDestination(
+                                        item: $selectedMediaInfo
+                                    ) { selectedMediaInfo in
+                                        DetailFeatureView(media: selectedMediaInfo.media, viewModel: detailFeatureViewModel)
+                                            .navigationTransition(.zoom(sourceID: selectedMediaInfo, in: namespace))
+                                    }
+                                }
+                            }
+                            
+                            Tab(role: .search) {
+                                NavigationStack {
+                                    SearchFeatureView(
+                                        viewModel: SearchFeatureViewModel(
+                                            repository: appSetup.repositoryContainer.tmdbRepository
+                                        ),
+                                        selectedMediaInfo: $selectedMediaInfo
+                                    )
+                                    .navigationTitle("Search")
                                     .navigationDestination(
                                         item: $selectedMediaInfo
                                     ) { selectedMediaInfo in

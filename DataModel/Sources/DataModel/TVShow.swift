@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TVShow: Media, Equatable, Sendable {
+public struct TVShow: Media, Searchable, Equatable, Sendable {
     public let adult: Bool
     public let backdropPath: String?
     public let genreIds: [Int]
@@ -58,5 +58,13 @@ public struct TVShow: Media, Equatable, Sendable {
     
     public var type: MediaItemType {
         .tvShow
+    }
+    
+    public var seachItemType: SearchItemType {
+        .tvShow
+    }
+    
+    public var subtitle: String {
+        releaseDate
     }
 }

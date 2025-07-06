@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */ = {isa = PBXBuildFile; productRef = 442CF78F2DFDBCD900A7E8DC /* Lego */; };
 		443354012E0CBF3D00E68A6D /* Routes in Frameworks */ = {isa = PBXBuildFile; productRef = 443354002E0CBF3D00E68A6D /* Routes */; };
+		446CEFF42E1AD5A600A10120 /* SearchFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 446CEFF32E1AD5A600A10120 /* SearchFeature */; };
 		447F95C42E1610BE0074E647 /* DetailFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 447F95C32E1610BE0074E647 /* DetailFeature */; };
 		4494321E2E135948002AC4D0 /* DataModel in Frameworks */ = {isa = PBXBuildFile; productRef = 4494321D2E135948002AC4D0 /* DataModel */; };
 		44BE54552E0597840088BE59 /* SignInFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 44BE54542E0597840088BE59 /* SignInFeature */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4422FADB2E1ACB79000479CA /* SearchFeature */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SearchFeature; sourceTree = "<group>"; };
 		442CF7612DFDBBFA00A7E8DC /* Periscope.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Periscope.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		442CF78D2DFDBC2400A7E8DC /* Lego */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Lego; sourceTree = "<group>"; };
 		442CF7912DFDC11500A7E8DC /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Networking; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 			files = (
 				443354012E0CBF3D00E68A6D /* Routes in Frameworks */,
 				44E578612E058B2C00C16D91 /* AppSetup in Frameworks */,
+				446CEFF42E1AD5A600A10120 /* SearchFeature in Frameworks */,
 				442CF7902DFDBCD900A7E8DC /* Lego in Frameworks */,
 				44BE54652E075AD10088BE59 /* HomeFeature in Frameworks */,
 				447F95C42E1610BE0074E647 /* DetailFeature in Frameworks */,
@@ -75,6 +78,7 @@
 		442CF7582DFDBBFA00A7E8DC = {
 			isa = PBXGroup;
 			children = (
+				4422FADB2E1ACB79000479CA /* SearchFeature */,
 				447F95C22E15FFEC0074E647 /* DetailFeature */,
 				4494321F2E135B97002AC4D0 /* PeriscopeUI */,
 				4494321C2E1357EB002AC4D0 /* DataModel */,
@@ -135,6 +139,7 @@
 				443354002E0CBF3D00E68A6D /* Routes */,
 				4494321D2E135948002AC4D0 /* DataModel */,
 				447F95C32E1610BE0074E647 /* DetailFeature */,
+				446CEFF32E1AD5A600A10120 /* SearchFeature */,
 			);
 			productName = Periscope;
 			productReference = 442CF7612DFDBBFA00A7E8DC /* Periscope.app */;
@@ -423,6 +428,10 @@
 		443354002E0CBF3D00E68A6D /* Routes */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Routes;
+		};
+		446CEFF32E1AD5A600A10120 /* SearchFeature */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SearchFeature;
 		};
 		447F95C32E1610BE0074E647 /* DetailFeature */ = {
 			isa = XCSwiftPackageProductDependency;
