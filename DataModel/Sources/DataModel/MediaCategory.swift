@@ -6,7 +6,7 @@ public enum MediaCategory: Identifiable, Equatable {
     case upcoming(MediaList)
     case popularTVShows(MediaList)
     case topRated(MediaList)
-    case trendingToday(TrendingList)
+    case trendingToday(MediaResultSet)
     
     public var id: String {
         switch self {

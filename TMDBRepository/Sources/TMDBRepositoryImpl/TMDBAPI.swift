@@ -34,6 +34,7 @@ enum TMDBAPI: API {
     case relatedTVShows(id: Int)
     case movieDetails(id: Int)
     case tvDetails(id: Int)
+    case searchMulti(query: String)
 
     /// The base URL for the selected TMDB endpoint.
     var baseURL: URL {
@@ -52,7 +53,8 @@ enum TMDBAPI: API {
              .movieCredits,
              .tvCredits,
              .movieDetails,
-             .tvDetails:
+             .tvDetails,
+             .searchMulti:
             // All these endpoints share the same API base URL
             return Self.apiBaseURL
         case .authorizeToken:
@@ -97,6 +99,8 @@ enum TMDBAPI: API {
             return "/movie/\(id)"
         case .tvDetails(let id):
             return "/tv/\(id)"
+        case .searchMulti:
+            return "/search/multi"
         }
     }
     
@@ -117,7 +121,8 @@ enum TMDBAPI: API {
              .movieCredits,
              .tvCredits,
              .movieDetails,
-             .tvDetails:
+             .tvDetails,
+             .searchMulti:
             return .get
         case .createSession:
             return .post
@@ -170,6 +175,10 @@ enum TMDBAPI: API {
             return ["redirect_to": "periscope://auth-callback"]
         case .createSession:
             return [:]
+        case .searchMulti(let query):
+            var params: [String: String] = ["query": query]
+            
+            return params
         }
     }
     
@@ -193,7 +202,8 @@ enum TMDBAPI: API {
              .movieCredits,
              .tvCredits,
              .movieDetails,
-             .tvDetails:
+             .tvDetails,
+             .searchMulti:
             return nil
         }
     }

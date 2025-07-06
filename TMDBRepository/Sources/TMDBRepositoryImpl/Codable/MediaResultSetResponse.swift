@@ -2,9 +2,9 @@ import DataModel
 import Foundation
 import TMDBRepository
 
-struct TrendingListResponse: Decodable {
+struct MediaResultSetResponse: Decodable {
     let page: Int
-    let results: [TrendingItemResponse]
+    let results: [MediaItemResponse]
     let totalPages: Int
     let totalResults: Int
 
@@ -16,7 +16,7 @@ struct TrendingListResponse: Decodable {
     }
 }
 
-enum TrendingItemResponse: Decodable {
+enum MediaItemResponse: Decodable {
     case movie(MovieResponse)
     case tvShow(TVShowResponse)
 
@@ -45,9 +45,9 @@ enum TrendingItemResponse: Decodable {
     }
 }
 
-extension TrendingListResponse {
-    func toDomainModel() -> TrendingList {
-        TrendingList(
+extension MediaResultSetResponse {
+    func toDomainModel() -> MediaResultSet {
+        MediaResultSet(
             page: page,
             items: results.compactMap { $0.toDomainModel() },
             totalPages: totalPages,
@@ -56,7 +56,7 @@ extension TrendingListResponse {
     }
 }
 
-extension TrendingItemResponse {
+extension MediaItemResponse {
     func toDomainModel() -> TrendingItem {
         switch self {
         case .movie(let movie):

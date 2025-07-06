@@ -52,7 +52,7 @@ public protocol TMDBRepository: Sendable {
     /// - Parameter page: The page number to retrieve.
     /// - Returns: A `TrendingList` of trending content.
     /// - Throws: `TMDBRepositoryError` on failure.
-    func trendingToday(page: Int) async throws -> TrendingList
+    func trendingToday(page: Int) async throws -> MediaResultSet
     
     /// Fetches a list of movies related to the specified movie.
     /// - Parameter movieId: The identifier of the movie for which to find related movies.
@@ -71,6 +71,12 @@ public protocol TMDBRepository: Sendable {
     /// - Returns: An object conforming to `MediaDetail` containing the detailed information.
     /// - Throws: `TMDBRepositoryError` on failure.
     func mediaDetail(for mediaItem: MediaItem) async throws -> any MediaDetail
+    
+    /// Searches for media items (movies or TV shows) matching the specified query string.
+    /// - Parameter query: The text to search for.
+    /// - Returns: A `MediaList` containing the search results.
+    /// - Throws: `TMDBRepositoryError` on failure.
+    func search(for query: String) async throws -> MediaResultSet
 
     /// Provides a builder for constructing URLs to TMDB images (e.g., poster or backdrop images).
     /// - Returns: A `TMDBImageURLBuilder` instance for building image URLs.
