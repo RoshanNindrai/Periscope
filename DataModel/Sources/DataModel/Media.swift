@@ -24,3 +24,9 @@ public protocol Media: Equatable, Sendable {
     var posterPath: String? { get }
     var backdropPath: String? { get }
 }
+
+public extension Media {
+    var releaseYear: String {
+        String(releaseDate.prefix(4))
+    }
+}

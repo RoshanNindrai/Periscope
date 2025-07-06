@@ -7,65 +7,35 @@ import SwiftUI
 public struct SearchFeatureView: View {
     
     private let viewModel: SearchFeatureViewModel
-    
-    @State
-    private var searchText: String  = ""
-    
+
     @Binding
     private var selectedMediaInfo: MediaSelection?
-    
+
+    @State
+    private var searchText: String = ""
+
     @FocusState
     private var isSearchFocused: Bool
-    
+
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
-    
+
     @Environment(\.namespace)
     private var namespace: Namespace.ID!
-    
-    
-    public init(viewModel: SearchFeatureViewModel, selectedMediaInfo: Binding<MediaSelection?>) {
+
+    public init(
+        viewModel: SearchFeatureViewModel,
+        selectedMediaInfo: Binding<MediaSelection?>
+    ) {
         self.viewModel = viewModel
         self._selectedMediaInfo = selectedMediaInfo
     }
-    
+
     public var body: some View {
         ScrollView {
-            switch viewModel.output {
-            case .initialized:
-                LegoText("Search for Movies, TV Shows from TMDB Catalog.", style: styleSheet.text(.title))
-                    .multilineTextAlignment(.center)
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .center
-                    ).padding()
-            case .emptySearcResults:
-                LegoText("No results to be found.", style: styleSheet.text(.title))
-                    .multilineTextAlignment(.center)
-                    .frame(
-                        maxWidth: .infinity,
-                        alignment: .center
-                    ).padding()
-            case .searchResult(let resultSet):
-                VStack {
-                    ForEach(resultSet, id:\.id) { mediaItem in
-                        Button {
-                            selectedMediaInfo = MediaSelection(
-                                media: mediaItem,
-                                key: "Search-\(mediaItem.title)-\(mediaItem.id)"
-                            )
-                        } label: {
-                            MediaRow(media: mediaItem)
-                                .matchedTransitionSource(
-                                    id: "Search-\(mediaItem.title)-\(mediaItem.id)",
-                                    in: namespace
-                                )
-                        }
-                    }
-                }
-            case .failedSearch:
-                LegoProgressView()
-            }
+            contentView
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding()
         }
         .searchable(
             text: $searchText,
@@ -73,19 +43,63 @@ public struct SearchFeatureView: View {
             prompt: Text("Shows, Movies, and More")
         )
         .searchFocused($isSearchFocused)
-        .onChange(of: searchText) { oldValue, newValue in
+        .onChange(of: searchText) { _, newValue in
             Task {
                 await viewModel.reduce(action: .search(query: newValue))
             }
         }
-        .onChange(of: isSearchFocused) { oldValue, newValue in
-            guard !newValue && searchText.isEmpty else {
-                return
-            }
-            
+        .onChange(of: isSearchFocused) { _, newValue in
+            guard !newValue && searchText.isEmpty else { return }
             Task {
                 await viewModel.reduce(action: .resetState)
             }
         }
+    }
+
+    @ViewBuilder
+    private var contentView: some View {
+        switch viewModel.output {
+        case .initialized:
+            infoText(
+                "Search for Movies, TV Shows from TMDB Catalog."
+            )
+
+        case .emptySearcResults:
+            infoText("No results to be found.")
+
+        case .searchResult(let resultSet):
+            LazyVStack(spacing: styleSheet.spacing.spacing200) {
+                ForEach(resultSet, id: \.id) { mediaItem in
+                    MediaRowButton(mediaItem)
+                }
+            }
+
+        case .failedSearch:
+            LegoProgressView()
+        }
+    }
+
+    @ViewBuilder
+    private func infoText(_ text: String) -> some View {
+        LegoText(text, style: styleSheet.text(.title))
+            .multilineTextAlignment(.center)
+    }
+
+    @ViewBuilder
+    private func MediaRowButton(_ media: any Media) -> some View {
+        let selectedMediaInfo = MediaSelection(
+            media: media,
+            key: "Search-\(media.title)-\(media.id)"
+        )
+        
+        Button {
+            self.selectedMediaInfo = selectedMediaInfo
+        } label: {
+            MediaRow(media: media)
+        }
+        .matchedTransitionSource(
+            id: selectedMediaInfo,
+            in: namespace
+        )
     }
 }

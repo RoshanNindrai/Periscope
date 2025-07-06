@@ -84,8 +84,16 @@ struct PeriscopeApp: App {
                                     .navigationDestination(
                                         item: $selectedMediaInfo
                                     ) { selectedMediaInfo in
-                                        DetailFeatureView(media: selectedMediaInfo.media, viewModel: detailFeatureViewModel)
-                                            .navigationTransition(.zoom(sourceID: selectedMediaInfo, in: namespace))
+                                        DetailFeatureView(
+                                            media: selectedMediaInfo.media,
+                                            viewModel: detailFeatureViewModel
+                                        )
+                                        .navigationTransition(
+                                            .zoom(
+                                                sourceID: selectedMediaInfo,
+                                                in: namespace
+                                            )
+                                        )
                                     }
                                 }
                             }
@@ -102,8 +110,16 @@ struct PeriscopeApp: App {
                                     .navigationDestination(
                                         item: $selectedMediaInfo
                                     ) { selectedMediaInfo in
-                                        DetailFeatureView(media: selectedMediaInfo.media, viewModel: detailFeatureViewModel)
-                                            .navigationTransition(.zoom(sourceID: selectedMediaInfo, in: namespace))
+                                        DetailFeatureView(
+                                            media: selectedMediaInfo.media,
+                                            viewModel: detailFeatureViewModel
+                                        )
+                                        .navigationTransition(
+                                            .zoom(
+                                                sourceID: selectedMediaInfo,
+                                                in: namespace
+                                            )
+                                        )
                                     }
                                 }
                             }
