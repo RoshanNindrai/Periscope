@@ -186,5 +186,6 @@ private extension DetailFeatureView {
     @ViewBuilder
     func mediaDetailView(_ mediaDetail: any MediaDetail) -> some View {
         MediaDetailInformationView(detail: mediaDetail)
+            .padding(.top, styleSheet.spacing.spacing100)
     }
 }

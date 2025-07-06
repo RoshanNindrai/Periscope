@@ -32,22 +32,24 @@ public struct MediaDetailInformationView: View {
     // MARK: - Sections
 
     private var informationSection: some View {
-        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
+        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
             LegoText("Information", style: styleSheet.text(.title))
 
-            if !detail.releaseDateText.isEmpty {
-                infoRow(title: "Released", value: detail.releaseDateText)
-            }
+            VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
+                if !detail.releaseDateText.isEmpty {
+                    infoRow(title: "Released", value: detail.releaseDateText)
+                }
 
-            if let runtime = detail.runtimeInMinutes {
-                infoRow(title: "Run Time", value: formatRuntime(runtime))
-            }
+                if let runtime = detail.runtimeInMinutes {
+                    infoRow(title: "Run Time", value: formatRuntime(runtime))
+                }
 
-            if !detail.originCountry.isEmpty {
-                infoRow(
-                    title: "Region of Origin",
-                    value: detail.originCountry.joined(separator: ", ")
-                )
+                if !detail.originCountry.isEmpty {
+                    infoRow(
+                        title: "Region of Origin",
+                        value: detail.originCountry.joined(separator: ", ")
+                    )
+                }
             }
         }
     }
@@ -59,35 +61,39 @@ public struct MediaDetailInformationView: View {
         let subtitles = audioLanguagesText.isEmpty ? nil : audioLanguagesText + " (SDH)"
         let originalAudio = spokenLanguages.first?.englishName.nonEmpty
 
-        return VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
+        return VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
             LegoText("Languages", style: styleSheet.text(.title))
 
-            if let original = originalAudio {
-                infoRow(title: "Original Audio", value: original)
-            }
-
-            if !audioLanguagesText.isEmpty {
-                infoRow(title: "Audio", value: audioLanguagesText)
-            }
-
-            if let subtitles = subtitles {
-                infoRow(title: "Subtitles", value: subtitles)
+            VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
+                if let original = originalAudio {
+                    infoRow(title: "Original Audio", value: original)
+                }
+                
+                if !audioLanguagesText.isEmpty {
+                    infoRow(title: "Audio", value: audioLanguagesText)
+                }
+                
+                if let subtitles = subtitles {
+                    infoRow(title: "Subtitles", value: subtitles)
+                }
             }
         }
     }
 
     private var accessibilitySection: some View {
-        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
+        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
             LegoText("Accessibility", style: styleSheet.text(.title))
 
-            LegoText("SDH", style: styleSheet.text(.callout)) {
-                $0.bold()
-            }
+            VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
+                LegoText("SDH", style: styleSheet.text(.callout)) {
+                    $0.bold()
+                }
 
-            LegoText(
-                "Subtitles for the deaf and hard of hearing (SDH) refer to subtitles in the original language with the addition of relevant non-dialogue information.",
-                style: styleSheet.text(.caption)
-            )
+                LegoText(
+                    "Subtitles for the deaf and hard of hearing (SDH) refer to subtitles in the original language with the addition of relevant non-dialogue information.",
+                    style: styleSheet.text(.caption)
+                )
+            }
         }
     }
 
