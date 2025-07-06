@@ -6,8 +6,9 @@ import PeriscopeUI
 
 public struct HomeFeatureView: View {
     
-    private let viewModel: HomeFeatureViewModel
-
+    @State
+    private var viewModel: HomeFeatureViewModel
+    
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
 
@@ -18,7 +19,7 @@ public struct HomeFeatureView: View {
         viewModel: HomeFeatureViewModel,
         selectedMediaInfo: Binding<MediaSelection?>
     ) {
-        self.viewModel = viewModel
+        self._viewModel = .init(initialValue: viewModel)
         self._selectedMediaInfo = selectedMediaInfo
     }
 
@@ -46,14 +47,19 @@ public struct HomeFeatureView: View {
             LegoProgressView()
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
-        case .fetched(let mediaCategories):
+        case .fetched(let mediaCategories) where !mediaCategories.isEmpty:
             LazyVStack(spacing: styleSheet.spacing.spacing200, pinnedViews: []) {
                 ForEach(mediaCategories) { mediaCategory in
                     sectionView(for: mediaCategory)
                 }
             }
             .animation(.default, value: mediaCategories)
-
+        case .fetched:
+            VStack {
+                LegoText("No content to show currently, please try again later.", style: styleSheet.text(.caption))
+                    .multilineTextAlignment(.center)
+                    .padding()
+            }.frame(maxWidth: .infinity)
         case .failed(let error):
             LegoText(
                 error.localizedDescription,

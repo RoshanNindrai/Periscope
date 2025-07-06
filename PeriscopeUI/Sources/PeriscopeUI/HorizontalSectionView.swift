@@ -51,7 +51,6 @@ public struct HorizontalSectionView: View {
                             mediaTileButton(for: mediaItems[index], index: index)
                         }
                     }
-                    .padding(.leading, styleSheet.spacing.spacing100)
                 }
                 .frame(height: Size.height)
             }

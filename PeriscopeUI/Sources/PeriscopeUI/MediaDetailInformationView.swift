@@ -13,7 +13,7 @@ public struct MediaDetailInformationView: View {
     }
 
     public var body: some View {
-        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
+        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
             if hasInformationSection {
                 informationSection
             }
@@ -35,7 +35,9 @@ public struct MediaDetailInformationView: View {
         VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
             LegoText("Information", style: styleSheet.text(.title))
 
-            infoRow(title: "Released", value: detail.releaseDateText)
+            if !detail.releaseDateText.isEmpty {
+                infoRow(title: "Released", value: detail.releaseDateText)
+            }
 
             if let runtime = detail.runtimeInMinutes {
                 infoRow(title: "Run Time", value: formatRuntime(runtime))
@@ -47,7 +49,7 @@ public struct MediaDetailInformationView: View {
                     value: detail.originCountry.joined(separator: ", ")
                 )
             }
-        }.padding(.vertical, styleSheet.spacing.spacing100)
+        }
     }
 
     private var languagesSection: some View {
@@ -75,11 +77,11 @@ public struct MediaDetailInformationView: View {
     }
 
     private var accessibilitySection: some View {
-        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
+        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing200) {
             LegoText("Accessibility", style: styleSheet.text(.title))
 
             LegoText("SDH", style: styleSheet.text(.callout)) {
-                $0.bold().padding(.vertical, styleSheet.spacing.spacing50)
+                $0.bold()
             }
 
             LegoText(

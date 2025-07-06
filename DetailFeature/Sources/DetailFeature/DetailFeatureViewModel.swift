@@ -17,7 +17,9 @@ public final class DetailFeatureViewModel {
         case loadOtherInformation(any Media)
     }
     
+    @ObservationIgnored
     let repository: TMDBRepository
+
     private(set) var output: Output = .idle
     
     public init(repository: TMDBRepository) {
@@ -27,6 +29,7 @@ public final class DetailFeatureViewModel {
     func reduce(_ action: Action) async {
         switch action {
         case .loadOtherInformation(let media):
+            
             async let mediaDetail: MediaDetailCategory? = try? .mediaDetail(repository.mediaDetail(for: media.mediaItemRequest))
             async let relatedMedia: MediaDetailCategory? = try? .relatedMedia(repository.relatedMedia(for: media.mediaItemRequest))
             async let castAndCrew: MediaDetailCategory? = try? .castAndCrew(repository.castAndCrewList(for: media.mediaItemRequest))

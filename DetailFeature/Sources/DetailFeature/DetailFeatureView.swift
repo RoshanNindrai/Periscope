@@ -19,13 +19,12 @@ public struct DetailFeatureView: View {
     // MARK: - Properties
 
     private let media: any Media
-    private let viewModel: DetailFeatureViewModel
+    
+    @State
+    private var viewModel: DetailFeatureViewModel
 
     @State
     private var scrollOffset: CGFloat = 0.0
-    
-    @State
-    private var detailViewModel: DetailFeatureViewModel
     
     @State
     private var selectedMediaInfo: MediaSelection?
@@ -49,8 +48,7 @@ public struct DetailFeatureView: View {
 
     public init(media: any Media, viewModel: DetailFeatureViewModel) {
         self.media = media
-        self.viewModel = viewModel
-        self.detailViewModel = DetailFeatureViewModel(repository: viewModel.repository)
+        self._viewModel = .init(initialValue: viewModel)
     }
 
     // MARK: - Body
@@ -98,7 +96,9 @@ public struct DetailFeatureView: View {
         .navigationDestination(item: $selectedMediaInfo) { selectedMediaInfo in
             DetailFeatureView(
                 media: selectedMediaInfo.media,
-                viewModel: detailViewModel
+                viewModel: DetailFeatureViewModel(
+                    repository: viewModel.repository
+                )
             )
             .navigationTransition(.zoom(sourceID: selectedMediaInfo, in: namespace))
         }
