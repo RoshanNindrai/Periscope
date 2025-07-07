@@ -58,12 +58,16 @@ public final class SearchFeatureViewModel {
                 }
 
                 await MainActor.run {
-                    self.output = result
+                    withAnimation(.easeIn) {
+                        self.output = result
+                    }
                 }
             }
             
         case .resetState:
-            self.output = .initialized
+            withAnimation(.easeIn) {
+                self.output = .initialized
+            }
         }
     }
 }

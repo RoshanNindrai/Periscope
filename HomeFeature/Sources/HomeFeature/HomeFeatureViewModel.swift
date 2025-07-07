@@ -41,7 +41,9 @@ public final class HomeFeatureViewModel {
                 topRatedMovies
             ].compactMap { $0 }
 
-            output = .fetched(result)
+            withAnimation(.easeOut) {
+                output = .fetched(result)
+            }
         }
     }
 }

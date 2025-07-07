@@ -22,7 +22,6 @@ struct PeriscopeApp: App {
     
     private let homeFeatureViewModel: HomeFeatureViewModel
     private let signInFeatureViewModel: SignInFeatureViewModel
-    private let detailFeatureViewModel: DetailFeatureViewModel
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
@@ -60,10 +59,6 @@ struct PeriscopeApp: App {
             authenticationService: appSetup.serviceContainer.tmdbRAuthenticationService,
             keychainStore: keychainStore
         )
-        
-        detailFeatureViewModel = DetailFeatureViewModel(
-            repository: appSetup.repositoryContainer.tmdbRepository
-        )
     }
     
     // MARK: - Body
@@ -86,7 +81,9 @@ struct PeriscopeApp: App {
                                     ) { selectedMediaInfo in
                                         DetailFeatureView(
                                             media: selectedMediaInfo.media,
-                                            viewModel: detailFeatureViewModel
+                                            viewModel: DetailFeatureViewModel(
+                                                repository: appSetup.repositoryContainer.tmdbRepository
+                                            )
                                         )
                                         .navigationTransition(
                                             .zoom(
@@ -112,7 +109,9 @@ struct PeriscopeApp: App {
                                     ) { selectedMediaInfo in
                                         DetailFeatureView(
                                             media: selectedMediaInfo.media,
-                                            viewModel: detailFeatureViewModel
+                                            viewModel: DetailFeatureViewModel(
+                                                repository: appSetup.repositoryContainer.tmdbRepository
+                                            )
                                         )
                                         .navigationTransition(
                                             .zoom(
