@@ -17,6 +17,7 @@ public final class HomeFeatureViewModel {
     
     private(set) var output: Output = .loading
     private let repository: TMDBRepository
+    let id = UUID()
     
     public init(repository: TMDBRepository) {
         self.repository = repository

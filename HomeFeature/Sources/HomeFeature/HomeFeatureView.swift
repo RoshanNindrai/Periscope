@@ -45,10 +45,14 @@ public struct HomeFeatureView: View {
         switch viewModel.output {
         case .loading:
             LegoProgressView()
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .center
+                )
 
         case .fetched(let mediaCategories) where !mediaCategories.isEmpty:
-            LazyVStack(spacing: styleSheet.spacing.spacing200, pinnedViews: []) {
+            LazyVStack(spacing: styleSheet.spacing.spacing200) {
                 ForEach(mediaCategories) { mediaCategory in
                     sectionView(for: mediaCategory)
                 }
@@ -56,9 +60,12 @@ public struct HomeFeatureView: View {
             .animation(.default, value: mediaCategories)
         case .fetched:
             VStack {
-                LegoText("No content to show currently, please try again later.", style: styleSheet.text(.caption))
-                    .multilineTextAlignment(.center)
-                    .padding()
+                LegoText(
+                    "No content to show currently, please try again later.",
+                    style: styleSheet.text(.caption)
+                )
+                .multilineTextAlignment(.center)
+                .padding()
             }.frame(maxWidth: .infinity)
         case .failed(let error):
             LegoText(

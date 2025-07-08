@@ -5,7 +5,7 @@ import SwiftUI
 
 public struct SignInFeatureView: View {
     
-    private let viewModel: SignInFeatureViewModel
+    private var viewModel: SignInFeatureViewModel
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
