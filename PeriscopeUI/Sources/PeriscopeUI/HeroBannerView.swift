@@ -1,35 +1,43 @@
+// HeroBannerView displays a horizontally paged set of media items in a prominent banner style, allowing users to select featured content.
 import DataModel
 import Routes
 import Lego
 import SwiftUI
 
 public struct HeroBannerView: View {
-
+    // Size constants for the banner display
     enum Size {
         static let height: CGFloat = 507
         static let width: CGFloat = height * (2 / 3)
     }
 
+    // The media items to display in the banner
     private let items: [any Media]
 
+    // Access the app's style sheet from the environment
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
 
+    // Namespace for matched geometry transitions
     @Environment(\.namespace)
     private var namespace: Namespace.ID!
 
+    // Currently selected banner index
     @State
     private var selectedItemIndex: Int = 0
 
+    // Binding to the currently selected media info
     @Binding
     private var selectedMediaInfo: MediaSelection?
 
+    // Initialize with items to display and binding to selection
     public init(items: [any Media], selectedMediaInfo: Binding<MediaSelection?>) {
         self.items = items
         self._selectedMediaInfo = selectedMediaInfo
     }
 
     public var body: some View {
+        // TabView provides horizontal paging for banners
         TabView(selection: $selectedItemIndex) {
             ForEach(items.indices, id: \.self) { index in
                 mediaTileButton(for: items[index], index: index)
@@ -37,22 +45,23 @@ public struct HeroBannerView: View {
         }
         .frame(height: Size.height)
         .scrollIndicators(.never)
-        .tabViewStyle(.page(indexDisplayMode: .always))
+        .tabViewStyle(.page(indexDisplayMode: .always)) // Shows page indicator dots
         .ignoresSafeArea(edges: .top)
     }
 
+    /// Creates a tappable media tile for the banner, triggering selection and matched transitions
     @ViewBuilder
     private func mediaTileButton(for media: any Media, index: Int) -> some View {
         let mediaSelection = MediaSelection(media: media, key: "Hero-\(media.id)")
 
         Button {
-            selectedMediaInfo = mediaSelection
+            selectedMediaInfo = mediaSelection // Update selection when tapped
         } label: {
             MediaTileView(
                 media: media,
                 posterSize: .w780
             )
-            .buttonStyle(.plain)
+            .buttonStyle(.plain) // Remove default button styling
         }
         .frame(width: Size.width, height: Size.height)
         .matchedTransitionSource(id: mediaSelection, in: namespace)
@@ -60,6 +69,7 @@ public struct HeroBannerView: View {
     }
 }
 
+// Preview for HeroBannerView with sample movies for design/testing
 #Preview {
     let items = [
         Movie(

@@ -3,7 +3,7 @@ import Routes
 import Lego
 import SwiftUI
 
-public struct HorizontalSectionView: View {
+public struct HMediaListView: View {
     
     enum Size {
         static let height: CGFloat = 180

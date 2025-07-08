@@ -5,8 +5,9 @@ import Routes
 import SwiftUI
 
 public struct SearchFeatureView: View {
-    
-    private let viewModel: SearchFeatureViewModel
+
+    @State
+    private var viewModel: SearchFeatureViewModel
 
     @Binding
     private var selectedMediaInfo: MediaSelection?
@@ -27,7 +28,7 @@ public struct SearchFeatureView: View {
         viewModel: SearchFeatureViewModel,
         selectedMediaInfo: Binding<MediaSelection?>
     ) {
-        self.viewModel = viewModel
+        self._viewModel = .init(wrappedValue: viewModel)
         self._selectedMediaInfo = selectedMediaInfo
     }
 
@@ -64,7 +65,7 @@ public struct SearchFeatureView: View {
                 "Search for Movies, TV Shows from TMDB Catalog."
             )
 
-        case .emptySearcResults:
+        case .emptySearchResults:
             infoText("No results to be found.")
 
         case .searchResult(let resultSet):

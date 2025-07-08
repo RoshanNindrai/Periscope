@@ -89,7 +89,7 @@ public struct HomeFeatureView: View {
             .ignoresSafeArea(edges: .top)
 
         case .popularMovies, .popularTVShows, .topRated, .upcoming, .nowPlaying:
-            HorizontalSectionView(
+            HMediaListView(
                 mediaCategory: mediaCategory,
                 selectedMediaInfo: $selectedMediaInfo
             )

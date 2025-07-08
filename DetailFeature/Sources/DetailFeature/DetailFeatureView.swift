@@ -170,13 +170,13 @@ private extension DetailFeatureView {
     
     @ViewBuilder
     func castAndCrewView(_ castList: CastAndCrewList) -> some View {
-        CastAndCrewHorizontalSectionView(castList: castList)
+        HCastAndCrewListView(castList: castList)
     }
     
     @ViewBuilder
     func relatedMediaView(_ media: MediaList) -> some View {
         VStack {
-            HorizontalSectionView(
+            HMediaListView(
                 mediaDetailCategory: .relatedMedia(media),
                 selectedMediaInfo: $selectedMediaInfo
             )
