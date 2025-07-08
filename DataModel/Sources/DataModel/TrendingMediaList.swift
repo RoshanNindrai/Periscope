@@ -1,6 +1,6 @@
 import Foundation
 
-public struct MediaResultSet: PageableMediaList, Equatable, Sendable {
+public struct TrendingMediaList: PageableMediaList, Equatable, Sendable {
     public let page: Int
     public let items: [any Media]
     public let totalPages: Int
@@ -13,7 +13,7 @@ public struct MediaResultSet: PageableMediaList, Equatable, Sendable {
         self.totalResults = totalResults
     }
     
-    public static func == (lhs: MediaResultSet, rhs: MediaResultSet) -> Bool {
+    public static func == (lhs: TrendingMediaList, rhs: TrendingMediaList) -> Bool {
         lhs.page == rhs.page &&
         lhs.totalPages == rhs.totalPages &&
         lhs.totalResults == rhs.totalResults &&

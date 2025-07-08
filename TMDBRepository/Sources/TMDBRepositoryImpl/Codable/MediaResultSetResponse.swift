@@ -46,8 +46,8 @@ enum MediaItemResponse: Decodable {
 }
 
 extension MediaResultSetResponse {
-    func toDomainModel() -> MediaResultSet {
-        MediaResultSet(
+    func toDomainModel() -> TrendingMediaList {
+        TrendingMediaList(
             page: page,
             items: results.compactMap { $0.toDomainModel() },
             totalPages: totalPages,

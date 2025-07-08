@@ -39,7 +39,7 @@ extension Person: Searchable {
         name
     }
     
-    public var seachItemType: SearchItemType {
+    public var searchItemType: SearchItemType {
         .person
     }
     

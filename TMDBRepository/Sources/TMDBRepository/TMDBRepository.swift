@@ -52,7 +52,7 @@ public protocol TMDBRepository: Sendable {
     /// - Parameter page: The page number to retrieve.
     /// - Returns: A `TrendingList` of trending content.
     /// - Throws: `TMDBRepositoryError` on failure.
-    func trendingToday(page: Int) async throws -> MediaResultSet
+    func trendingToday(page: Int) async throws -> TrendingMediaList
     
     /// Fetches a list of movies related to the specified movie.
     /// - Parameter movieId: The identifier of the movie for which to find related movies.
@@ -64,7 +64,7 @@ public protocol TMDBRepository: Sendable {
     /// - Parameter mediaItem: The media item (movie or TV show) for which to retrieve the cast and crew.
     /// - Returns: A `CastList` containing the cast and crew details.
     /// - Throws: `TMDBRepositoryError` on failure.
-    func castAndCrewList(for mediaItem: MediaItem) async throws -> CastList
+    func castAndCrewList(for mediaItem: MediaItem) async throws -> CastAndCrewList
     
     /// Fetches the detailed information for a specified media item (either a movie or TV show).
     /// - Parameter mediaItem: The media item (movie or TV show) for which to retrieve detailed information.

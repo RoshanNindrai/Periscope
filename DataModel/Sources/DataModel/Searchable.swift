@@ -10,7 +10,7 @@ public enum SearchItemType: Sendable, Equatable {
 public protocol Searchable: Equatable, Sendable {
     var id: Int { get }
     var title: String { get }
-    var seachItemType: SearchItemType { get }
+    var searchItemType: SearchItemType { get }
     var subtitle: String { get }
     var posterPath: String? { get }
     var backdropPath: String? { get }

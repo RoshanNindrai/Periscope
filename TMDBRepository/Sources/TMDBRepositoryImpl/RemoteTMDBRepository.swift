@@ -50,7 +50,7 @@ public struct RemoteTMDBRepository: TMDBRepository {
         try await fetchMovies(for: .upcomingMovies)
     }
     
-    public func trendingToday(page: Int = .zero) async throws -> MediaResultSet {
+    public func trendingToday(page: Int = .zero) async throws -> TrendingMediaList {
         try await fetchMediaItems(for: .trendingToday)
     }
     
@@ -76,7 +76,7 @@ public struct RemoteTMDBRepository: TMDBRepository {
         }
     }
     
-    public func castAndCrewList(for mediaItem: MediaItem) async throws -> CastList {
+    public func castAndCrewList(for mediaItem: MediaItem) async throws -> CastAndCrewList {
         switch mediaItem {
         case .movie(let id):
             try await fetchCastAndCrew(for: .movieCredits(id: id))
@@ -113,7 +113,7 @@ private extension RemoteTMDBRepository {
         return mediaList.resource.toDomainModel()
     }
     
-    func fetchMediaItems(for request: TMDBAPI) async throws -> MediaResultSet {
+    func fetchMediaItems(for request: TMDBAPI) async throws -> TrendingMediaList {
         let mediaList: NetworkResponse<MediaResultSetResponse> = try await networkService.perform(apiRequest: request)
         return mediaList.resource.toDomainModel()
     }
@@ -123,7 +123,7 @@ private extension RemoteTMDBRepository {
         return searchResults.resource.toDomainModel()
     }
     
-    func fetchCastAndCrew(for request: TMDBAPI) async throws -> CastList {
+    func fetchCastAndCrew(for request: TMDBAPI) async throws -> CastAndCrewList {
         let mediaList: NetworkResponse<CastListResponse> = try await networkService.perform(apiRequest: request)
         return mediaList.resource.toDomainModel()
     }

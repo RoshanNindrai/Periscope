@@ -4,7 +4,7 @@ import Lego
 import TMDBService
 
 public struct CastAndCrewHorizontalSectionView: View {
-    private let castList: CastList
+    private let castList: CastAndCrewList
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
@@ -12,7 +12,7 @@ public struct CastAndCrewHorizontalSectionView: View {
     @Environment(\.tmdbImageURLBuilder)
     private var imageURLBuilder: TMDBImageURLBuilder
     
-    public init(castList: CastList) {
+    public init(castList: CastAndCrewList) {
         self.castList = castList
     }
     

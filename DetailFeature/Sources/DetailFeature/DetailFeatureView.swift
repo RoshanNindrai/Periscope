@@ -169,7 +169,7 @@ private extension DetailFeatureView {
     }
     
     @ViewBuilder
-    func castAndCrewView(_ castList: CastList) -> some View {
+    func castAndCrewView(_ castList: CastAndCrewList) -> some View {
         CastAndCrewHorizontalSectionView(castList: castList)
     }
     

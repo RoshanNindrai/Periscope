@@ -52,7 +52,7 @@ public struct Movie: Media, Searchable, Hashable, Sendable {
         .movie
     }
     
-    public var seachItemType: SearchItemType {
+    public var searchItemType: SearchItemType {
         .movie
     }
     

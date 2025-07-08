@@ -70,8 +70,8 @@ struct CastListResponse: Decodable {
 
 
 extension CastListResponse {
-    func toDomainModel() -> CastList {
-        CastList(
+    func toDomainModel() -> CastAndCrewList {
+        CastAndCrewList(
             id: id,
             cast: cast.map { $0.toDomainModel() },
             crew: crew.map { $0.toDomainModel() }
