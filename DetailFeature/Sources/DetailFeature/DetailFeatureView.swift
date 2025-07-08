@@ -36,9 +36,6 @@ public struct DetailFeatureView: View {
     @Environment(\.tmdbImageURLBuilder)
     private var imageURLBuilder: TMDBImageURLBuilder
     
-    @Environment(\.openURL)
-    private var openURL
-    
     @Namespace
     private var namespace: Namespace.ID
 
@@ -149,20 +146,6 @@ private extension DetailFeatureView {
             
             LegoText(media.overview, style: styleSheet.text(.subtitle)) {
                 $0.multilineTextAlignment(.center)
-            }
-            
-            if let detail = viewModel.mediaDetail, let streamableURL = detail.streamingAppDeeplink {
-                LegoButton(
-                    style: styleSheet.button(.primary)
-                ) {
-                    LegoText("Watch now", style: styleSheet.text(.title))
-                } onTap: {
-                    openURL(streamableURL)
-                } buttonModifier: { button in
-                    button.frame(maxWidth: .infinity)
-                }.padding(
-                    styleSheet.spacing.spacing200
-                )
             }
         }
         .frame(maxWidth: .infinity)
