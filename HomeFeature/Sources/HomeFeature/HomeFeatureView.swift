@@ -19,15 +19,10 @@ public struct HomeFeatureView: View {
     @Environment(\.appRouter)
     private var appRouter: AppRouter?
 
-    @Binding
-    private var selectedMediaInfo: MediaSelection?
-
     public init(
-        viewModel: HomeFeatureViewModel,
-        selectedMediaInfo: Binding<MediaSelection?>
+        viewModel: HomeFeatureViewModel
     ) {
         self._viewModel = .init(initialValue: viewModel)
-        self._selectedMediaInfo = selectedMediaInfo
     }
 
     public var body: some View {

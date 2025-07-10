@@ -30,10 +30,7 @@ struct PeriscopeApp: App {
     
     @State
     private var router: AppRouter = .init()
-    
-    @State
-    private var selectedMediaInfo: MediaSelection?
-    
+
     @Namespace
     private var namespace: Namespace.ID
     
@@ -84,7 +81,7 @@ private extension PeriscopeApp {
     @ViewBuilder
     func routerRootView() -> some View {
         switch router.currentRoute {
-        case .home, .detail:
+        case .landing, .detail:
             appTabView()
         case .signIn:
             SignInFeatureView(viewModel: signInFeatureViewModel)
@@ -92,7 +89,7 @@ private extension PeriscopeApp {
             LegoProgressView()
                 .task {
                     if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
-                        router.navigate(to: .home)
+                        router.navigate(to: .landing)
                     } else {
                         router.navigate(to: .signIn)
                     }
@@ -108,8 +105,7 @@ private extension PeriscopeApp {
             Tab("Home", systemImage: "house") {
                 NavigationStack {
                     HomeFeatureView(
-                        viewModel: homeFeatureViewModel,
-                        selectedMediaInfo: $selectedMediaInfo
+                        viewModel: homeFeatureViewModel
                     )
                     .navigationTitle("Home")
                     .mediaDetailNavigationDestination(
@@ -124,7 +120,7 @@ private extension PeriscopeApp {
                                 if let selection {
                                     router.navigate(to: .detail(selection))
                                 } else {
-                                    router.navigate(to: .home)
+                                    router.navigate(to: .landing)
                                 }
                             }
                         ),
@@ -139,8 +135,7 @@ private extension PeriscopeApp {
                     SearchFeatureView(
                         viewModel: SearchFeatureViewModel(
                             repository: appSetup.repositoryContainer.tmdbRepository
-                        ),
-                        selectedMediaInfo: $selectedMediaInfo
+                        )
                     )
                     .navigationTitle("Search")
                     .mediaDetailNavigationDestination(
@@ -155,7 +150,7 @@ private extension PeriscopeApp {
                                 if let selection {
                                     router.navigate(to: .detail(selection))
                                 } else {
-                                    router.navigate(to: .home)
+                                    router.navigate(to: .landing)
                                 }
                             }
                         ),

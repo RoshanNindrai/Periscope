@@ -7,8 +7,8 @@ public enum AppRoute: Equatable {
     case none
     /// Route representing the sign-in screen.
     case signIn
-    /// Route representing the home screen after sign-in.
-    case home
+    /// Route representing the landing screen after sign-in.
+    case landing
     
     case detail(MediaSelection)
 }

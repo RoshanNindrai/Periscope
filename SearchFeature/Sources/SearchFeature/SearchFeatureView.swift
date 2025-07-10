@@ -9,9 +9,6 @@ public struct SearchFeatureView: View {
     @State
     private var viewModel: SearchFeatureViewModel
 
-    @Binding
-    private var selectedMediaInfo: MediaSelection?
-
     @State
     private var searchText: String = ""
 
@@ -23,13 +20,13 @@ public struct SearchFeatureView: View {
 
     @Environment(\.namespace)
     private var namespace: Namespace.ID!
-
+    
+    @Environment(\.appRouter)
+    private var appRouter: AppRouter?
     public init(
-        viewModel: SearchFeatureViewModel,
-        selectedMediaInfo: Binding<MediaSelection?>
+        viewModel: SearchFeatureViewModel
     ) {
         self._viewModel = .init(wrappedValue: viewModel)
-        self._selectedMediaInfo = selectedMediaInfo
     }
 
     public var body: some View {
@@ -94,7 +91,7 @@ public struct SearchFeatureView: View {
         )
         
         Button {
-            self.selectedMediaInfo = selectedMediaInfo
+            appRouter?.navigate(to: .detail(selectedMediaInfo))
         } label: {
             MediaRow(media: media)
         }

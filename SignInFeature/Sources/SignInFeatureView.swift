@@ -43,7 +43,7 @@ public struct SignInFeatureView: View {
             case .requestingUserPermissions:
                 isPresentingWebAuth = true
             case .fetchedSessionToken:
-                appRouter?.navigate(to: .home)
+                appRouter?.navigate(to: .landing)
             default:
                 break
             }
