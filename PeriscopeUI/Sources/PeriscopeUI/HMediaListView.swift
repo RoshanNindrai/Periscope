@@ -15,36 +15,35 @@ public struct HMediaListView: View {
     // Title and media items to be displayed
     private let title: String
     private let mediaItems: [any Media]
+    
+    private let onSelect: (MediaSelection) -> Void
+    private let transitionSourceBuilder: (MediaSelection, AnyView) -> AnyView
 
     // Styling and namespace from environment
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
 
-    @Environment(\.namespace)
-    private var namespace: Namespace.ID!
-
-    // Currently selected media info (binding)
-    @Binding
-    private var selectedMediaInfo: MediaSelection?
-
     // Initialize with a MediaCategory
     public init(
         mediaCategory: MediaCategory,
-        selectedMediaInfo: Binding<MediaSelection?>
+        onSelect: @escaping (MediaSelection) -> Void,
+        transitionSourceBuilder: @escaping (MediaSelection, AnyView) -> AnyView
     ) {
-        title = mediaCategory.title
-        mediaItems = mediaCategory.mediaItems
-        self._selectedMediaInfo = selectedMediaInfo
+        self.title = mediaCategory.title
+        self.mediaItems = mediaCategory.mediaItems
+        self.onSelect = onSelect
+        self.transitionSourceBuilder = transitionSourceBuilder
     }
-    
-    // Initialize with a MediaDetailCategory
+
     public init(
         mediaDetailCategory: MediaDetailCategory,
-        selectedMediaInfo: Binding<MediaSelection?>
+        onSelect: @escaping (MediaSelection) -> Void,
+        transitionSourceBuilder: @escaping (MediaSelection, AnyView) -> AnyView
     ) {
-        title = mediaDetailCategory.title
-        mediaItems = mediaDetailCategory.mediaItems ?? []
-        self._selectedMediaInfo = selectedMediaInfo
+        self.title = mediaDetailCategory.title
+        self.mediaItems = mediaDetailCategory.mediaItems ?? []
+        self.onSelect = onSelect
+        self.transitionSourceBuilder = transitionSourceBuilder
     }
 
     // Main view layout
@@ -82,14 +81,16 @@ public struct HMediaListView: View {
     private func mediaTileButton(for media: any Media, index: Int) -> some View {
         let mediaSelection = MediaSelection(media: media, key: "\(title)-\(media.id)")
 
-        Button {
-            // Set selection when tapped
-            selectedMediaInfo = mediaSelection
-        } label: {
-            MediaTileView(media: media)
-                .buttonStyle(.plain)
-        }
-        .frame(width: Size.width, height: Size.height)
-        .matchedTransitionSource(id: mediaSelection, in: namespace)
+        let base = AnyView(
+            Button {
+                onSelect(mediaSelection)
+            } label: {
+                MediaTileView(media: media)
+                    .buttonStyle(.plain)
+            }
+            .frame(width: Size.width, height: Size.height)
+        )
+
+        transitionSourceBuilder(mediaSelection, base)
     }
 }

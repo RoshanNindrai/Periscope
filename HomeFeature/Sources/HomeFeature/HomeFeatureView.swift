@@ -11,6 +11,13 @@ public struct HomeFeatureView: View {
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
+    
+    // Namespace for matched geometry transitions
+    @Environment(\.namespace)
+    private var namespace: Namespace.ID!
+    
+    @Environment(\.appRouter)
+    private var appRouter: AppRouter?
 
     @Binding
     private var selectedMediaInfo: MediaSelection?
@@ -83,7 +90,14 @@ public struct HomeFeatureView: View {
         case .trendingToday:
             HeroBannerView(
                 items: mediaCategory.mediaItems,
-                selectedMediaInfo: $selectedMediaInfo
+                onSelect: {
+                    appRouter?.navigate(to: .detail($0))
+                },
+                transitionSourceBuilder: { selection, base in
+                    return AnyView(
+                        base.matchedTransitionSource(id: selection, in: namespace)
+                    )
+                }
             )
             .frame(height: 507)
             .ignoresSafeArea(edges: .top)
@@ -91,7 +105,14 @@ public struct HomeFeatureView: View {
         case .popularMovies, .popularTVShows, .topRated, .upcoming, .nowPlaying:
             HMediaListView(
                 mediaCategory: mediaCategory,
-                selectedMediaInfo: $selectedMediaInfo
+                onSelect: {
+                    appRouter?.navigate(to: .detail($0))
+                },
+                transitionSourceBuilder: { selection, base in
+                    AnyView(
+                        base.matchedTransitionSource(id: selection, in: namespace)
+                    )
+                }
             )
         }
     }

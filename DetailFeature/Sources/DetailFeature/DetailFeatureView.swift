@@ -161,7 +161,12 @@ private extension DetailFeatureView {
         VStack {
             HMediaListView(
                 mediaDetailCategory: .relatedMedia(media),
-                selectedMediaInfo: $selectedMediaInfo
+                onSelect: {
+                    selectedMediaInfo = $0
+                },
+                transitionSourceBuilder: { selection, base in
+                    AnyView(base.matchedTransitionSource(id: selection, in: namespace))
+                }
             )
         }
     }

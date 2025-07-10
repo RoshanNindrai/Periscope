@@ -18,22 +18,22 @@ public struct HeroBannerView: View {
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
 
-    // Namespace for matched geometry transitions
-    @Environment(\.namespace)
-    private var namespace: Namespace.ID!
-
     // Currently selected banner index
     @State
     private var selectedItemIndex: Int = 0
 
-    // Binding to the currently selected media info
-    @Binding
-    private var selectedMediaInfo: MediaSelection?
+    private let onSelect: (MediaSelection) -> Void
+    private let transitionSourceBuilder: (MediaSelection, AnyView) -> AnyView
 
     // Initialize with items to display and binding to selection
-    public init(items: [any Media], selectedMediaInfo: Binding<MediaSelection?>) {
+    public init(
+            items: [any Media],
+            onSelect: @escaping (MediaSelection) -> Void,
+            transitionSourceBuilder: @escaping (MediaSelection, AnyView) -> AnyView
+    ) {
         self.items = items
-        self._selectedMediaInfo = selectedMediaInfo
+        self.onSelect = onSelect
+        self.transitionSourceBuilder = transitionSourceBuilder
     }
 
     public var body: some View {
@@ -52,20 +52,20 @@ public struct HeroBannerView: View {
     /// Creates a tappable media tile for the banner, triggering selection and matched transitions
     @ViewBuilder
     private func mediaTileButton(for media: any Media, index: Int) -> some View {
-        let mediaSelection = MediaSelection(media: media, key: "Hero-\(media.id)")
+        let selection = MediaSelection(media: media, key: "Hero-\(media.id)")
 
-        Button {
-            selectedMediaInfo = mediaSelection // Update selection when tapped
-        } label: {
-            MediaTileView(
-                media: media,
-                posterSize: .w780
-            )
-            .buttonStyle(.plain) // Remove default button styling
-        }
-        .frame(width: Size.width, height: Size.height)
-        .matchedTransitionSource(id: mediaSelection, in: namespace)
-        .tag(index)
+        let base = AnyView(
+            Button {
+                onSelect(selection)
+            } label: {
+                MediaTileView(media: media, posterSize: .w780)
+                    .buttonStyle(.plain)
+            }
+            .frame(width: Size.width, height: Size.height)
+            .tag(index)
+        )
+
+        transitionSourceBuilder(selection, base)
     }
 }
 
@@ -108,6 +108,7 @@ public struct HeroBannerView: View {
 
     HeroBannerView(
         items: items,
-        selectedMediaInfo: .constant(MediaSelection(media: items.first!, key: ""))
+        onSelect: { _ in },
+        transitionSourceBuilder: { selection, base in base }
     )
 }

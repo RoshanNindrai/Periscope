@@ -9,6 +9,8 @@ public enum AppRoute: Equatable {
     case signIn
     /// Route representing the home screen after sign-in.
     case home
+    
+    case detail(MediaSelection)
 }
 
 /// Manages the current navigation state of the app.

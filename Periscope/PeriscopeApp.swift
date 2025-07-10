@@ -66,78 +66,7 @@ struct PeriscopeApp: App {
     var body: some Scene {
         WindowGroup {
             ZStack {
-                switch router.currentRoute {
-                    case .home:
-                        TabView {
-                            Tab("Home", systemImage: "house") {
-                                NavigationStack {
-                                    HomeFeatureView(
-                                        viewModel: homeFeatureViewModel,
-                                        selectedMediaInfo: $selectedMediaInfo
-                                    )
-                                    .navigationTitle("Home")
-                                    .navigationDestination(
-                                        item: $selectedMediaInfo
-                                    ) { selectedMediaInfo in
-                                        DetailFeatureView(
-                                            media: selectedMediaInfo.media,
-                                            viewModel: DetailFeatureViewModel(
-                                                repository: appSetup.repositoryContainer.tmdbRepository
-                                            )
-                                        )
-                                        .navigationTransition(
-                                            .zoom(
-                                                sourceID: selectedMediaInfo,
-                                                in: namespace
-                                            )
-                                        )
-                                    }
-                                }
-                            }
-                            
-                            Tab(role: .search) {
-                                NavigationStack {
-                                    SearchFeatureView(
-                                        viewModel: SearchFeatureViewModel(
-                                            repository: appSetup.repositoryContainer.tmdbRepository
-                                        ),
-                                        selectedMediaInfo: $selectedMediaInfo
-                                    )
-                                    .navigationTitle("Search")
-                                    .navigationDestination(
-                                        item: $selectedMediaInfo
-                                    ) { selectedMediaInfo in
-                                        DetailFeatureView(
-                                            media: selectedMediaInfo.media,
-                                            viewModel: DetailFeatureViewModel(
-                                                repository: appSetup.repositoryContainer.tmdbRepository
-                                            )
-                                        )
-                                        .navigationTransition(
-                                            .zoom(
-                                                sourceID: selectedMediaInfo,
-                                                in: namespace
-                                            )
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    case .signIn:
-                        SignInFeatureView(
-                            viewModel: signInFeatureViewModel
-                        )
-                    case .none:
-                        LegoProgressView()
-                            .task {
-                                // Secure session validation logic for navigation
-                                if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
-                                    router.navigate(to: .home)
-                                } else {
-                                    router.navigate(to: .signIn)
-                                }
-                        }
-                    }
+                routerRootView()
             }
             .task {
                 tmdbImageURLBuilder = await appSetup.repositoryContainer.tmdbRepository.imageURLBuilder()
@@ -151,3 +80,108 @@ struct PeriscopeApp: App {
     }
 }
 
+private extension PeriscopeApp {
+    @ViewBuilder
+    func routerRootView() -> some View {
+        switch router.currentRoute {
+        case .home, .detail:
+            appTabView()
+        case .signIn:
+            SignInFeatureView(viewModel: signInFeatureViewModel)
+        case .none:
+            LegoProgressView()
+                .task {
+                    if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
+                        router.navigate(to: .home)
+                    } else {
+                        router.navigate(to: .signIn)
+                    }
+                }
+        }
+    }
+}
+
+private extension PeriscopeApp {
+    @ViewBuilder
+    func appTabView() -> some View {
+        TabView {
+            Tab("Home", systemImage: "house") {
+                NavigationStack {
+                    HomeFeatureView(
+                        viewModel: homeFeatureViewModel,
+                        selectedMediaInfo: $selectedMediaInfo
+                    )
+                    .navigationTitle("Home")
+                    .mediaDetailNavigationDestination(
+                        selection: Binding(
+                            get: {
+                                if case let .detail(selection) = router.currentRoute {
+                                    return selection
+                                }
+                                return nil
+                            },
+                            set: { selection in
+                                if let selection {
+                                    router.navigate(to: .detail(selection))
+                                } else {
+                                    router.navigate(to: .home)
+                                }
+                            }
+                        ),
+                        repository: appSetup.repositoryContainer.tmdbRepository,
+                        namespace: namespace
+                    )
+                }
+            }
+
+            Tab(role: .search) {
+                NavigationStack {
+                    SearchFeatureView(
+                        viewModel: SearchFeatureViewModel(
+                            repository: appSetup.repositoryContainer.tmdbRepository
+                        ),
+                        selectedMediaInfo: $selectedMediaInfo
+                    )
+                    .navigationTitle("Search")
+                    .mediaDetailNavigationDestination(
+                        selection: Binding(
+                            get: {
+                                if case let .detail(selection) = router.currentRoute {
+                                    return selection
+                                }
+                                return nil
+                            },
+                            set: { selection in
+                                if let selection {
+                                    router.navigate(to: .detail(selection))
+                                } else {
+                                    router.navigate(to: .home)
+                                }
+                            }
+                        ),
+                        repository: appSetup.repositoryContainer.tmdbRepository,
+                        namespace: namespace
+                    )
+                }
+            }
+        }
+    }
+}
+
+private extension View {
+    func mediaDetailNavigationDestination(
+        selection: Binding<MediaSelection?>,
+        repository: TMDBRepository,
+        namespace: Namespace.ID
+    ) -> some View {
+        self.navigationDestination(item: selection) { selectedMediaInfo in
+            DetailFeatureView(
+                media: selectedMediaInfo.media,
+                viewModel: DetailFeatureViewModel(repository: repository)
+            )
+            .navigationTransition(
+                .zoom(sourceID: selectedMediaInfo, in: namespace)
+            )
+        }
+    }
+}
