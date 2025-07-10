@@ -18,10 +18,6 @@ struct PeriscopeApp: App {
     // MARK: - Dependencies and View Models
     
     private let appSetup: PeriscopeAppSetup
-    private let keychainStore: KeychainStore  // Security-sensitive store for credentials
-    
-    private let homeFeatureViewModel: HomeFeatureViewModel
-    private let signInFeatureViewModel: SignInFeatureViewModel
     
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
@@ -43,18 +39,6 @@ struct PeriscopeApp: App {
 
         appSetup = PeriscopeAppSetup(
             dependencies: AppSetupDependencies()
-        )
-        
-        // KeychainStore handles sensitive authentication data securely
-        keychainStore = appSetup.keychainStore
-        
-        homeFeatureViewModel = HomeFeatureViewModel(
-            repository: appSetup.repositoryContainer.tmdbRepository
-        )
-        
-        signInFeatureViewModel = SignInFeatureViewModel(
-            authenticationService: appSetup.serviceContainer.tmdbRAuthenticationService,
-            keychainStore: keychainStore
         )
     }
     
@@ -84,7 +68,12 @@ private extension PeriscopeApp {
         case .landing, .detail:
             appTabView()
         case .signIn:
-            SignInFeatureView(viewModel: signInFeatureViewModel)
+            SignInFeatureView(
+                viewModel: SignInFeatureViewModel(
+                    authenticationService: appSetup.serviceContainer.tmdbRAuthenticationService,
+                    keychainStore: appSetup.keychainStore
+                )
+            )
         case .none:
             LegoProgressView()
                 .task {
@@ -105,25 +94,13 @@ private extension PeriscopeApp {
             Tab("Home", systemImage: "house") {
                 NavigationStack {
                     HomeFeatureView(
-                        viewModel: homeFeatureViewModel
+                        viewModel: HomeFeatureViewModel(
+                            repository: appSetup.repositoryContainer.tmdbRepository
+                        )
                     )
                     .navigationTitle("Home")
                     .mediaDetailNavigationDestination(
-                        selection: Binding(
-                            get: {
-                                if case let .detail(selection) = router.currentRoute {
-                                    return selection
-                                }
-                                return nil
-                            },
-                            set: { selection in
-                                if let selection {
-                                    router.navigate(to: .detail(selection))
-                                } else {
-                                    router.navigate(to: .landing)
-                                }
-                            }
-                        ),
+                        router: router,
                         repository: appSetup.repositoryContainer.tmdbRepository,
                         namespace: namespace
                     )
@@ -139,21 +116,7 @@ private extension PeriscopeApp {
                     )
                     .navigationTitle("Search")
                     .mediaDetailNavigationDestination(
-                        selection: Binding(
-                            get: {
-                                if case let .detail(selection) = router.currentRoute {
-                                    return selection
-                                }
-                                return nil
-                            },
-                            set: { selection in
-                                if let selection {
-                                    router.navigate(to: .detail(selection))
-                                } else {
-                                    router.navigate(to: .landing)
-                                }
-                            }
-                        ),
+                        router: router,
                         repository: appSetup.repositoryContainer.tmdbRepository,
                         namespace: namespace
                     )
@@ -165,11 +128,28 @@ private extension PeriscopeApp {
 
 private extension View {
     func mediaDetailNavigationDestination(
-        selection: Binding<MediaSelection?>,
+        router: AppRouter,
         repository: TMDBRepository,
         namespace: Namespace.ID
     ) -> some View {
-        self.navigationDestination(item: selection) { selectedMediaInfo in
+        
+        let selection: Binding<MediaSelection?> = Binding(
+            get: {
+                if case let .detail(selection) = router.currentRoute {
+                    return selection
+                }
+                return nil
+            },
+            set: { selection in
+                if let selection {
+                    router.navigate(to: .detail(selection))
+                } else {
+                    router.navigate(to: .landing)
+                }
+            }
+        )
+        
+        return self.navigationDestination(item: selection) { selectedMediaInfo in
             DetailFeatureView(
                 media: selectedMediaInfo.media,
                 viewModel: DetailFeatureViewModel(repository: repository)

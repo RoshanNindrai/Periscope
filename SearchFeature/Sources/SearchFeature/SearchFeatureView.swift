@@ -23,6 +23,7 @@ public struct SearchFeatureView: View {
     
     @Environment(\.appRouter)
     private var appRouter: AppRouter?
+    
     public init(
         viewModel: SearchFeatureViewModel
     ) {
