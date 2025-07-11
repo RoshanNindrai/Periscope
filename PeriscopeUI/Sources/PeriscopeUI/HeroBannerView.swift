@@ -5,9 +5,9 @@ import SwiftUI
 
 public struct HeroBannerView: View {
 
-    // MARK: - Constants
+    // MARK: - Size
 
-    private enum Constants {
+    private enum Size {
         static let height: CGFloat = 507
         static let width: CGFloat = height * (2 / 3)
     }
@@ -46,7 +46,7 @@ public struct HeroBannerView: View {
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .always))
-        .frame(height: Constants.height)
+        .frame(height: Size.height)
         .scrollIndicators(.never)
         .ignoresSafeArea(edges: .top)
     }
@@ -62,7 +62,7 @@ public struct HeroBannerView: View {
                 onSelect(selection)
             } label: {
                 MediaTileView(media: media, posterSize: .w780)
-                    .frame(width: Constants.width, height: Constants.height)
+                    .frame(width: Size.width, height: Size.height)
             }
             .buttonStyle(.plain)
         )

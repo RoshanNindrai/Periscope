@@ -65,7 +65,6 @@ struct PeriscopeApp: App {
             .environment(\.colorScheme, .dark)
         }
         .environment(\.tmdbImageURLBuilder, tmdbImageURLBuilder)
-        .environment(\.namespace, namespace)
         .environment(\.appRouter, router)
     }
 }
@@ -111,7 +110,7 @@ private extension PeriscopeApp {
                     .mediaDetailNavigationDestination(
                         router: router,
                         repository: appSetup.repositoryContainer.tmdbRepository,
-                        namespace: namespace
+                        namespace: router.namespace ?? namespace
                     )
                 }
             } label: {
@@ -129,7 +128,7 @@ private extension PeriscopeApp {
                     .mediaDetailNavigationDestination(
                         router: router,
                         repository: appSetup.repositoryContainer.tmdbRepository,
-                        namespace: namespace
+                        namespace: router.namespace ?? namespace
                     )
                 }
             }

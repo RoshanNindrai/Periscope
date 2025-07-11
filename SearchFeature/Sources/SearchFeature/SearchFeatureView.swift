@@ -18,8 +18,8 @@ public struct SearchFeatureView: View {
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
 
-    @Environment(\.namespace)
-    private var namespace: Namespace.ID!
+    @Namespace
+    private var namespace: Namespace.ID
     
     @Environment(\.appRouter)
     private var appRouter: AppRouter?
@@ -92,7 +92,7 @@ public struct SearchFeatureView: View {
         )
         
         Button {
-            appRouter?.navigate(to: .detail(selectedMediaInfo))
+            appRouter?.navigate(to: .detail(selectedMediaInfo), in: namespace)
         } label: {
             MediaRow(media: media)
         }

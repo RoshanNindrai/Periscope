@@ -9,7 +9,7 @@ import TMDBService
 /// DetailView displays media details with parallax effect
 public struct DetailFeatureView: View {
 
-    // MARK: - Constants
+    // MARK: - Size
 
     private enum Size {
         static let height: CGFloat = 506

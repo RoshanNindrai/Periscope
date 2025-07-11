@@ -26,6 +26,9 @@ public final class AppRouter: Sendable {
     
     @ObservationIgnored
     public private(set) var previousRoute: AppRoute
+    
+    @ObservationIgnored
+    public private(set) var namespace: Namespace.ID?
 
     /// Initializes the router with no active route.
     public init() {
@@ -35,7 +38,8 @@ public final class AppRouter: Sendable {
     
     /// Navigate to a specified route.
     /// - Parameter route: The destination route to navigate to.
-    public func navigate(to route: AppRoute) {
+    public func navigate(to route: AppRoute, in namespace: Namespace.ID? = nil) {
+        self.namespace = namespace
         previousRoute = currentRoute
         currentRoute = route
     }

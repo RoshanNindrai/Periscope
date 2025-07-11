@@ -13,8 +13,8 @@ public struct HomeFeatureView: View {
     private var styleSheet: StyleSheet
     
     // Namespace for matched geometry transitions
-    @Environment(\.namespace)
-    private var namespace: Namespace.ID!
+    @Namespace
+    private var namespace: Namespace.ID
     
     @Environment(\.appRouter)
     private var appRouter: AppRouter?
@@ -86,7 +86,7 @@ public struct HomeFeatureView: View {
             HeroBannerView(
                 items: mediaCategory.mediaItems,
                 onSelect: {
-                    appRouter?.navigate(to: .detail($0))
+                    appRouter?.navigate(to: .detail($0), in: namespace)
                 },
                 transitionSourceBuilder: { selection, base in
                     return AnyView(
@@ -101,7 +101,7 @@ public struct HomeFeatureView: View {
             HMediaListView(
                 mediaCategory: mediaCategory,
                 onSelect: {
-                    appRouter?.navigate(to: .detail($0))
+                    appRouter?.navigate(to: .detail($0), in: namespace)
                 },
                 transitionSourceBuilder: { selection, base in
                     AnyView(

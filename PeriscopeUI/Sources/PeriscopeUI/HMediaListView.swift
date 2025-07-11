@@ -5,11 +5,11 @@ import SwiftUI
 
 public struct HMediaListView: View {
     
-    // MARK: - Constants
+    // MARK: - Size
     
-    private enum Constants {
-        static let tileHeight: CGFloat = 180
-        static let tileWidth: CGFloat = tileHeight * (2 / 3)
+    private enum Size {
+        static let height: CGFloat = 180
+        static let width: CGFloat = height * (2 / 3)
     }
 
     // MARK: - Properties
@@ -60,7 +60,7 @@ public struct HMediaListView: View {
                         }
                     }
                 }
-                .frame(height: Constants.tileHeight)
+                .frame(height: Size.height)
             }
         }
     }
@@ -86,7 +86,7 @@ public struct HMediaListView: View {
                 onSelect(selection)
             } label: {
                 MediaTileView(media: media)
-                    .frame(width: Constants.tileWidth, height: Constants.tileHeight)
+                    .frame(width: Size.width, height: Size.height)
             }
             .buttonStyle(.plain)
         )
