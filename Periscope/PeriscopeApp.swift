@@ -84,13 +84,13 @@ private extension PeriscopeApp {
             )
         case .none:
             LegoProgressView()
-                .task {
-                    if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
-                        router.navigate(to: .landing)
-                    } else {
-                        router.navigate(to: .signIn)
-                    }
+            .task {
+                if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
+                    router.navigate(to: .landing)
+                } else {
+                    router.navigate(to: .signIn)
                 }
+            }
         }
     }
 }

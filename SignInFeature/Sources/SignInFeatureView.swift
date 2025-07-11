@@ -7,15 +7,15 @@ public struct SignInFeatureView: View {
     
     private var viewModel: SignInFeatureViewModel
     
+    @State
+    private var isPresentingWebAuth = false
+    
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
     
     @Environment(\.appRouter)
     private var appRouter: AppRouter?
     
-    @State
-    private var isPresentingWebAuth = false
-
     public init(viewModel: SignInFeatureViewModel) {
         self.viewModel = viewModel
     }

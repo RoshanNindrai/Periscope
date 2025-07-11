@@ -17,12 +17,12 @@ public struct SearchFeatureView: View {
 
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
-
-    @Namespace
-    private var namespace: Namespace.ID
     
     @Environment(\.appRouter)
     private var appRouter: AppRouter?
+    
+    @Namespace
+    private var namespace: Namespace.ID
     
     public init(
         viewModel: SearchFeatureViewModel
