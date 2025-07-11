@@ -1,4 +1,3 @@
-/// A horizontally-scrolling media list view with selectable media tiles.
 import DataModel
 import Routes
 import Lego
@@ -6,24 +5,25 @@ import SwiftUI
 
 public struct HMediaListView: View {
     
-    // Constants for tile size
-    enum Size {
-        static let height: CGFloat = 180
-        static let width: CGFloat = height * (2 / 3)
+    // MARK: - Constants
+    
+    private enum Constants {
+        static let tileHeight: CGFloat = 180
+        static let tileWidth: CGFloat = tileHeight * (2 / 3)
     }
 
-    // Title and media items to be displayed
+    // MARK: - Properties
+
     private let title: String
     private let mediaItems: [any Media]
-    
     private let onSelect: (MediaSelection) -> Void
     private let transitionSourceBuilder: (MediaSelection, AnyView) -> AnyView
 
-    // Styling and namespace from environment
     @Environment(\.styleSheet)
     private var styleSheet: StyleSheet
 
-    // Initialize with a MediaCategory
+    // MARK: - Initializers
+
     public init(
         mediaCategory: MediaCategory,
         onSelect: @escaping (MediaSelection) -> Void,
@@ -46,26 +46,27 @@ public struct HMediaListView: View {
         self.transitionSourceBuilder = transitionSourceBuilder
     }
 
-    // Main view layout
+    // MARK: - Body
+
     public var body: some View {
-        VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
-            if !mediaItems.isEmpty {
+        if !mediaItems.isEmpty {
+            VStack(alignment: .leading, spacing: styleSheet.spacing.spacing100) {
                 header
 
                 ScrollView(.horizontal, showsIndicators: false) {
                     LazyHStack(spacing: styleSheet.spacing.spacing100) {
                         ForEach(mediaItems.indices, id: \.self) { index in
-                            // Use index as ID for ForEach
-                            mediaTileButton(for: mediaItems[index], index: index)
+                            mediaTile(for: mediaItems[index], index: index)
                         }
                     }
                 }
-                .frame(height: Size.height)
+                .frame(height: Constants.tileHeight)
             }
         }
     }
 
-    // Section header with title and chevron
+    // MARK: - Components
+
     private var header: some View {
         HStack(spacing: styleSheet.spacing.spacing50) {
             LegoText(title, style: styleSheet.text(.title))
@@ -76,21 +77,20 @@ public struct HMediaListView: View {
         }
     }
 
-    // Single media tile button with matched transition and selection logic
     @ViewBuilder
-    private func mediaTileButton(for media: any Media, index: Int) -> some View {
-        let mediaSelection = MediaSelection(media: media, key: "\(title)-\(media.id)")
+    private func mediaTile(for media: any Media, index: Int) -> some View {
+        let selection = MediaSelection(media: media, key: "\(title)-\(media.id)")
 
-        let base = AnyView(
+        let tile = AnyView(
             Button {
-                onSelect(mediaSelection)
+                onSelect(selection)
             } label: {
                 MediaTileView(media: media)
-                    .buttonStyle(.plain)
+                    .frame(width: Constants.tileWidth, height: Constants.tileHeight)
             }
-            .frame(width: Size.width, height: Size.height)
+            .buttonStyle(.plain)
         )
 
-        transitionSourceBuilder(mediaSelection, base)
+        transitionSourceBuilder(selection, tile)
     }
 }
