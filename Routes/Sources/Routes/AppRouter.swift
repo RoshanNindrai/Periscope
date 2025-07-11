@@ -11,6 +11,8 @@ public enum AppRoute: Equatable {
     case landing
     
     case detail(MediaSelection)
+    
+    case search
 }
 
 /// Manages the current navigation state of the app.
@@ -21,20 +23,26 @@ public final class AppRouter: Sendable {
     
     /// The current active route in the app.
     public private(set) var currentRoute: AppRoute
+    
+    @ObservationIgnored
+    public private(set) var previousRoute: AppRoute
 
     /// Initializes the router with no active route.
     public init() {
+        previousRoute = .none
         currentRoute = .none
     }
     
     /// Navigate to a specified route.
     /// - Parameter route: The destination route to navigate to.
     public func navigate(to route: AppRoute) {
+        previousRoute = currentRoute
         currentRoute = route
     }
     
     /// Resets the current route to `.none`, typically used to dismiss modals or reset navigation.
     public func reset() {
+        previousRoute = currentRoute
         currentRoute = .none
     }
 }

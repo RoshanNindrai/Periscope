@@ -14,6 +14,11 @@ import Utils
 @MainActor
 @main
 struct PeriscopeApp: App {
+    
+    enum Tabs {
+        case home
+        case search
+    }
  
     // MARK: - Dependencies and View Models
     
@@ -31,12 +36,16 @@ struct PeriscopeApp: App {
     private var namespace: Namespace.ID
     
     @State
-    private var tmdbImageURLBuilder: TMDBImageURLBuilder = .init(configuration: .default)
+    private var tabSelection: Tabs = .home
+    
+    @State
+    private var tmdbImageURLBuilder: TMDBImageURLBuilder = .init(
+        configuration: .default
+    )
     
     // MARK: - Initialization
     
     init() {
-
         appSetup = PeriscopeAppSetup(
             dependencies: AppSetupDependencies()
         )
@@ -65,7 +74,7 @@ private extension PeriscopeApp {
     @ViewBuilder
     func routerRootView() -> some View {
         switch router.currentRoute {
-        case .landing, .detail:
+        case .landing, .search, .detail:
             appTabView()
         case .signIn:
             SignInFeatureView(
@@ -90,8 +99,8 @@ private extension PeriscopeApp {
 private extension PeriscopeApp {
     @ViewBuilder
     func appTabView() -> some View {
-        TabView {
-            Tab("Home", systemImage: "house") {
+        TabView(selection: tabSelectionBinding) {
+            Tab(value: .home) {
                 NavigationStack {
                     HomeFeatureView(
                         viewModel: HomeFeatureViewModel(
@@ -105,9 +114,11 @@ private extension PeriscopeApp {
                         namespace: namespace
                     )
                 }
+            } label: {
+                Label("Home", systemImage: "house")
             }
 
-            Tab(role: .search) {
+            Tab(value: .search, role: .search) {
                 NavigationStack {
                     SearchFeatureView(
                         viewModel: SearchFeatureViewModel(
@@ -144,7 +155,7 @@ private extension View {
                 if let selection {
                     router.navigate(to: .detail(selection))
                 } else {
-                    router.navigate(to: .landing)
+                    router.navigate(to: router.previousRoute)
                 }
             }
         )
@@ -160,3 +171,32 @@ private extension View {
         }
     }
 }
+
+private extension PeriscopeApp {
+    var tabSelectionBinding: Binding<Tabs> {
+        Binding(
+            get: {
+                switch router.currentRoute {
+                case .search:
+                    return .search
+                case .landing:
+                    return .home
+                case .detail:
+                    return tabSelection
+                case .signIn, .none:
+                    return .home
+                }
+            },
+            set: { tab in
+                tabSelection = tab
+                switch tab {
+                case .home:
+                    router.navigate(to: .landing)
+                case .search:
+                    router.navigate(to: .search)
+                }
+            }
+        )
+    }
+}
+
