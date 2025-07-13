@@ -1,80 +1,47 @@
 import AppSetup
-import DataModel
-import DetailFeature
+import SwiftUI
 import HomeFeature
-import Lego
-import Routes
 import SearchFeature
 import SignInFeature
-import SwiftUI
+import DetailFeature
+import Lego
+import Routes
 import TMDBRepository
 import TMDBService
-import Utils
+import DataModel
 
-@MainActor
-@main
-struct PeriscopeApp: App {
-    
-    enum Tabs {
-        case home
-        case search
-    }
- 
-    // MARK: - Dependencies and View Models
-    
-    private let appSetup: PeriscopeAppSetup
-    
-    @Environment(\.styleSheet)
-    private var styleSheet: StyleSheet
-    
-    // MARK: - Routing
-    
-    @State
-    private var router: AppRouter = .init()
-
-    @Namespace
-    private var namespace: Namespace.ID
-    
-    @State
-    private var tabSelection: Tabs = .home
-    
-    @State
-    private var tmdbImageURLBuilder: TMDBImageURLBuilder = .init(
-        configuration: .default
-    )
-    
-    // MARK: - Initialization
-    
-    init() {
-        appSetup = PeriscopeAppSetup(
-            dependencies: AppSetupDependencies()
-        )
-    }
-    
-    // MARK: - Body
-    
-    var body: some Scene {
-        WindowGroup {
-            ZStack {
-                routerRootView()
-            }
-            .task {
-                tmdbImageURLBuilder = await appSetup.repositoryContainer.tmdbRepository.imageURLBuilder()
-            }
-            .tint(styleSheet.colors.primary)
-            .environment(\.colorScheme, .dark)
-        }
-        .environment(\.tmdbImageURLBuilder, tmdbImageURLBuilder)
-        .environment(\.appRouter, router)
-    }
+enum PeriscopeTab: Hashable {
+    case home
+    case search
 }
 
-private extension PeriscopeApp {
-    @ViewBuilder
-    func routerRootView() -> some View {
+struct PeriscopeAppView: View {
+    
+    let appSetup: PeriscopeAppSetup
+    let namespace: Namespace.ID
+    
+    @Binding
+    private var router: AppRouter
+    
+    @Binding
+    private var tabSelection: PeriscopeTab
+
+    init(
+        appSetup: PeriscopeAppSetup,
+        router: Binding<AppRouter>,
+        namespace: Namespace.ID,
+        tabSelection: Binding<PeriscopeTab>
+    ) {
+        self.appSetup = appSetup
+        self._router = router
+        self.namespace = namespace
+        self._tabSelection = tabSelection
+    }
+
+    var body: some View {
         switch router.currentRoute {
         case .landing, .search, .detail:
-            appTabView()
+            tabView
         case .signIn:
             SignInFeatureView(
                 viewModel: SignInFeatureViewModel(
@@ -84,20 +51,18 @@ private extension PeriscopeApp {
             )
         case .none:
             LegoProgressView()
-            .task {
-                if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
-                    router.navigate(to: .landing)
-                } else {
-                    router.navigate(to: .signIn)
+                .task {
+                    if appSetup.serviceContainer.tmdbRAuthenticationService.haveAnActiveSession() {
+                        router.navigate(to: .landing)
+                    } else {
+                        router.navigate(to: .signIn)
+                    }
                 }
-            }
         }
     }
-}
 
-private extension PeriscopeApp {
     @ViewBuilder
-    func appTabView() -> some View {
+    private var tabView: some View {
         TabView(selection: tabSelectionBinding) {
             Tab(value: .home) {
                 NavigationStack {
@@ -133,6 +98,32 @@ private extension PeriscopeApp {
                 }
             }
         }
+    }
+
+    private var tabSelectionBinding: Binding<PeriscopeTab> {
+        Binding(
+            get: {
+                switch router.currentRoute {
+                case .search:
+                    return .search
+                case .landing:
+                    return .home
+                case .detail:
+                    return tabSelection
+                case .signIn, .none:
+                    return .home
+                }
+            },
+            set: { tab in
+                tabSelection = tab
+                switch tab {
+                case .home:
+                    router.navigate(to: .landing)
+                case .search:
+                    router.navigate(to: .search)
+                }
+            }
+        )
     }
 }
 
@@ -170,32 +161,3 @@ private extension View {
         }
     }
 }
-
-private extension PeriscopeApp {
-    var tabSelectionBinding: Binding<Tabs> {
-        Binding(
-            get: {
-                switch router.currentRoute {
-                case .search:
-                    return .search
-                case .landing:
-                    return .home
-                case .detail:
-                    return tabSelection
-                case .signIn, .none:
-                    return .home
-                }
-            },
-            set: { tab in
-                tabSelection = tab
-                switch tab {
-                case .home:
-                    router.navigate(to: .landing)
-                case .search:
-                    router.navigate(to: .search)
-                }
-            }
-        )
-    }
-}
-

@@ -6,7 +6,7 @@
 import Foundation
 
 /// Represents a category in a media detail UI, such as Details, Cast & Crew, or Related, each holding its relevant model.
-public enum MediaDetailCategory: Identifiable, Equatable {
+public enum MediaDetailCategory: Identifiable, Equatable, Sendable {
     /// Main media details (e.g., synopsis, ratings). Holds any MediaDetail model.
     case mediaDetail(any MediaDetail)
     /// Cast and crew list for the media.

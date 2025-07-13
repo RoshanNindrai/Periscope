@@ -9,28 +9,31 @@ public enum AppRoute: Equatable {
     case signIn
     /// Route representing the landing screen after sign-in.
     case landing
-    
+    /// Route for displaying the detail screen for a selected media item.
     case detail(MediaSelection)
-    
+    /// Route representing the media search screen.
     case search
 }
 
-/// Manages the current navigation state of the app.
-/// Responsible for navigating between high-level routes and resetting navigation state.
+///
+/// AppRouter is responsible for managing and controlling the app's navigation state, including keeping track of current, previous routes, and any associated animation namespace. Use it to programmatically navigate or reset navigation.
+///
 @MainActor
 @Observable
 public final class AppRouter: Sendable {
     
-    /// The current active route in the app.
+    /// The current active navigation route.
     public private(set) var currentRoute: AppRoute
     
+    /// The last active navigation route prior to the most recent change.
     @ObservationIgnored
     public private(set) var previousRoute: AppRoute
     
+    /// The current SwiftUI namespace used for animations (if any).
     @ObservationIgnored
     public private(set) var namespace: Namespace.ID?
 
-    /// Initializes the router with no active route.
+    /// Creates a new AppRouter with no active or previous navigation route.
     public init() {
         previousRoute = .none
         currentRoute = .none

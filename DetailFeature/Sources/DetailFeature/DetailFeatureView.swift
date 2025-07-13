@@ -101,7 +101,6 @@ public struct DetailFeatureView: View {
         }
         .ignoresSafeArea(edges: .top)
         .background(.black)
-        .environment(\.namespace, namespace)
         .task(id: media.id) {
             await viewModel.reduce(.loadOtherInformation(media))
         }

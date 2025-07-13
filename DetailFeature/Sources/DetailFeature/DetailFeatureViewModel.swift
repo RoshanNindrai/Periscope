@@ -6,14 +6,14 @@ import DataModel
 @Observable
 public final class DetailFeatureViewModel {
     
-    internal enum Output {
+    enum Output {
         case idle
         case loading
         case fetched([MediaDetailCategory])
         case failed(Error)
     }
     
-    internal enum Action {
+    enum Action {
         case loadOtherInformation(any Media)
     }
     

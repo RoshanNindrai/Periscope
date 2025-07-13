@@ -6,7 +6,7 @@ import Foundation
 /// Represents a category of media in the app, such as popular movies, now playing movies, upcoming movies,
 /// popular TV shows, top rated movies, and trending media today.
 /// Each category holds an underlying list of media items to display and manage.
-public enum MediaCategory: Identifiable, Equatable {
+public enum MediaCategory: Identifiable, Equatable, Sendable {
     /// Popular movies category.
     case popularMovies(MediaList)
     /// Currently playing movies in theaters.

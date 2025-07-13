@@ -176,9 +176,7 @@ enum TMDBAPI: API {
         case .createSession:
             return [:]
         case .searchMulti(let query):
-            var params: [String: String] = ["query": query]
-            
-            return params
+            return ["query": query]
         }
     }
     

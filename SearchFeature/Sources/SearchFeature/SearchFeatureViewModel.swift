@@ -6,7 +6,9 @@ import TMDBRepository
 @Observable
 public final class SearchFeatureViewModel {
     private let repository: TMDBRepository
+    
     private(set) var output: Output = .initialized
+    
     @ObservationIgnored
     private var searchTask: Task<Void, Never>?
     

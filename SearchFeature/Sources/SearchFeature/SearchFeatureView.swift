@@ -33,7 +33,10 @@ public struct SearchFeatureView: View {
     public var body: some View {
         ScrollView {
             contentView
-                .frame(maxWidth: .infinity, alignment: .center)
+                .frame(
+                    maxWidth: .infinity,
+                    alignment: .center
+                )
                 .padding()
         }
         .searchable(
@@ -62,7 +65,6 @@ public struct SearchFeatureView: View {
             infoText(
                 "Search for Movies, TV Shows from TMDB Catalog."
             )
-
         case .emptySearchResults:
             infoText("No results to be found.")
 
@@ -75,6 +77,11 @@ public struct SearchFeatureView: View {
 
         case .failedSearch:
             LegoProgressView()
+                .frame(
+                    maxWidth: .infinity,
+                    maxHeight: .infinity,
+                    alignment: .center
+                )
         }
     }
 

@@ -2,7 +2,7 @@
 import Foundation
 
 /// Represents all possible image sizes for generic images.
-public enum ImageSize: String, CaseIterable, Sendable {
+public enum ImageSize: String, Sendable {
     case w45 = "w45"      // Very small (thumbnail)
     case w92 = "w92"      // Small (thumbnail)
     case w154 = "w154"    // Small/medium
@@ -17,7 +17,7 @@ public enum ImageSize: String, CaseIterable, Sendable {
 }
 
 /// Represents possible sizes for backdrop images (large background banners).
-public enum BackdropSize: String, CaseIterable, Sendable {
+public enum BackdropSize: String, Sendable {
     case w300     // Small
     case w780     // Medium
     case w1280    // Large
@@ -25,7 +25,7 @@ public enum BackdropSize: String, CaseIterable, Sendable {
 }
 
 /// Represents possible sizes for logo images.
-public enum LogoSize: String, CaseIterable, Sendable {
+public enum LogoSize: String, Sendable {
     case w45      // Very small
     case w92      // Small
     case w154     // Small/medium
@@ -36,7 +36,7 @@ public enum LogoSize: String, CaseIterable, Sendable {
 }
 
 /// Represents possible sizes for poster images.
-public enum PosterSize: String, CaseIterable, Sendable {
+public enum PosterSize: String, Sendable {
     case w92      // Small
     case w154     // Small/medium
     case w185     // Medium
@@ -47,7 +47,7 @@ public enum PosterSize: String, CaseIterable, Sendable {
 }
 
 /// Represents possible sizes for profile images (people, actors, etc.).
-public enum ProfileSize: String, CaseIterable, Sendable {
+public enum ProfileSize: String, Sendable {
     case w45      // Very small
     case w185     // Medium
     case h632     // Tall profile
@@ -55,7 +55,7 @@ public enum ProfileSize: String, CaseIterable, Sendable {
 }
 
 /// Represents possible sizes for still images (scene stills, etc.).
-public enum StillSize: String, CaseIterable, Sendable {
+public enum StillSize: String, Sendable {
     case w92      // Small
     case w185     // Medium
     case w300     // Large

@@ -4,7 +4,7 @@
 import Foundation
 
 /// The type of media item, either a Movie or a TV Show.
-public enum MediaItemType: Sendable, Equatable {
+public enum MediaItemType: Equatable, Sendable {
     /// A feature film.
     case movie
     /// A television show or series.
