@@ -1,7 +1,7 @@
 
 # Periscope
 
-Periscope is a simple Movie bookmark app built in Swift. This project is designed as a learning resource for SwiftUI and the new Swift Concurrency APIs (async/await, structured concurrency, etc). THIS IS NOT PRODUCTION READY IN ANY MANNER
+Periscope is a simple Movie bookmark app built in Swift. This project is designed as a learning playground for me to explore SwiftUI and the new Swift Concurrency APIs (async/await, structured concurrency, etc). THIS IS NOT PRODUCTION READY IN ANY MANNER
 
 
 
