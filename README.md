@@ -1,15 +1,70 @@
+# 🎥 Periscope
 
-# Periscope
+Periscope is a simple movie search app built in SwiftUI. This project is a personal learning playground to explore:
 
-Periscope is a simple Movie search App. This project is designed as a learning playground for me to explore SwiftUI and the new Swift Concurrency APIs (async/await, structured concurrency, etc). THIS IS NOT PRODUCTION READY IN ANY MANNER
+- Swift Concurrency (`async/await`, structured concurrency)
+- Modular architecture with Swift Package Manager
+- SwiftUI-based UI patterns and design systems
 
-https://github.com/user-attachments/assets/4f398da3-6368-4fc4-b2a0-aeffa1c1850a
+> ⚠️ **Note:** This project is not production ready.
+
+https://github.com/user-attachments/assets/4f398da3-6368-4fc4-b2a0-aeffa1c1850a](https://github.com/user-attachments/assets/4f398da3-6368-4fc4-b2a0-aeffa1c1850a
 
 ---
 
-## Project Structure & Modules
+## 🚀 Installation Instructions
 
-### Module Structure
+1. **Clone the Repository**
+
+   ```bash
+   git clone git@github.com:RoshanNindrai/Periscope.git
+   cd Periscope
+   ```
+
+2. **Open in Xcode**
+
+   ```bash
+   open Periscope.xcodeproj
+   ```
+
+3. **Set Up API Key**
+
+   Create a new file named `Secrets.swift` in the project and add the following:
+
+   ```swift
+   enum Secrets {
+       static let TMDB_API_KEY = "<Your_TMDB_API_Key_Here>"
+   }
+   ```
+
+   > ⚠️ **Important:** Do not commit this file. Add `Secrets.swift` to your `.gitignore`.
+
+4. **Build and Run**
+
+   Select the `Periscope` target and run it on a simulator or device.
+
+---
+
+## 🎬 Get Your TMDB API Key
+
+1. **Create a TMDB Account**  
+   Sign up at [themoviedb.org](https://www.themoviedb.org) and verify your email.
+
+2. **Request an API Key**  
+   - Go to your profile → **Settings** → **API**  
+   - Choose **Developer**, agree to terms, fill in app details  
+   - Submit your request
+
+3. **Copy the Key**  
+   Once approved, your key will appear in the API section.
+
+> 📖 See the full guide: [TMDB Getting Started Docs](https://developer.themoviedb.org/docs/getting-started)
+
+---
+
+## 🧱 Project Structure & Modules
+
+### Module Graph
 
 ```mermaid
 graph TD
@@ -121,54 +176,48 @@ SignInFeature --> Utils
 Routes --> DataModel
 ```
 
+---
 
-### DataModel
-- **Purpose:**  
-  Contains all data models for movies, people, genres, collections, and related entities.  
-  Provides the core Domain model types used throughout the app for representing and passing media data.
+## 📦 Key Modules
 
+### `DataModel`
+Contains all data models for movies, people, genres, collections, and related entities.  
+Provides the core domain model types used throughout the app.
 
-### HomeFeature
-- **Purpose:**  
-  Manages the main home screen feature of the app.  
-  Handles fetching of trending, popular, upcoming, and top-rated media categories using Swift concurrency for efficient parallel data loading.
+### `HomeFeature`
+Handles the home screen feature logic and parallel data fetching of trending, popular, upcoming, and top-rated categories.
 
-### PeriscopeUI
-- **Purpose:**  
-  Hosts reusable SwiftUI views and UI components for displaying media items, images, and related visual elements.  
-  Leverages environment objects for style and image URL construction.
+### `PeriscopeUI`
+Hosts reusable SwiftUI views and UI components for media displays.  
+Includes environment-based theming and image URL logic.
 
+### `Lego`
+A minimal SwiftUI-based design system.  
+Includes typography, spacing, colors, and layout primitives.
 
-### Lego
-- **Purpose:**  
-  A Simple attempt on a SwiftUI based Design System  
-  Provides reusable building blocks, including theming, to ensure consistent UI across the app.
+### `SignInFeature`
+Manages the sign-in flow and localization for multi-language support.
 
+### `TMDBRepository`
+The main data access layer for TMDB APIs.  
+Uses async/await with dependency injection via factories and protocol abstraction.
 
-### AppSetup
-- **Purpose:**  
-  Responsible for dependency injection and application-wide setup.  
-  Centralizes configuration of core services such as networking and authentication, ensuring modular and testable architecture.
+### `Networking`
+Composes and abstracts HTTP networking layer to power repository and service calls.
 
-
-### SignInFeature
-- **Purpose:**  
-  Handles the sign-in flow for the app.  
-  Includes localization resources to support multiple languages and enhance accessibility.
-
-### Supporting Files
-- **Configuration and Assets:**  
-  Includes app configuration files, URL scheme definitions, and image assets necessary for app branding and integration with external services.
+### `AppSetup`
+Centralized app bootstrapping and dependency configuration module.
 
 ---
 
-## Learning Focus
+## 🧠 Learning Focus
 
-- **SwiftUI:**  
-  The project is structured around SwiftUI for modern, declarative user interface development.
-- **Swift Concurrency:**  
-  Makes extensive use of async/await and structured concurrency to handle asynchronous tasks in a safe and readable way.
-- **Modular Design:**  
-  Codebase is organized into clear, feature-oriented modules to reflect best practices in Swift app architecture.
+- **SwiftUI**: Learn modern declarative UI building blocks.
+- **Swift Concurrency**: Use structured concurrency and async/await for clean async code.
+- **Modular Architecture**: Explore a scalable modular project layout.
 
 ---
+
+## 📄 License
+
+This project is licensed for educational use only.
