@@ -22,3 +22,6 @@ Generated/
 # Xcode project noise
 *.xcworkspace/xcuserdata/
 *.xcuserstate
+
+deps.json
+describe.json
