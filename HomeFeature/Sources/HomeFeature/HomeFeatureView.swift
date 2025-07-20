@@ -38,6 +38,7 @@ public struct HomeFeatureView: View {
             await viewModel.reduce(.fetchLatest)
         }
         .task {
+            await viewModel.reduce(.requestForLocationPermission)
             await viewModel.reduce(.fetchLatest)
         }
     }

@@ -1,0 +1,76 @@
+{
+  "dependencies" : [
+    {
+      "identity" : "datamodel",
+      "path" : "/Users/rnindrai/Desktop/Periscope/DataModel",
+      "type" : "fileSystem"
+    },
+    {
+      "identity" : "lego",
+      "path" : "/Users/rnindrai/Desktop/Periscope/Lego",
+      "type" : "fileSystem"
+    },
+    {
+      "identity" : "periscopeui",
+      "path" : "/Users/rnindrai/Desktop/Periscope/PeriscopeUI",
+      "type" : "fileSystem"
+    },
+    {
+      "identity" : "routes",
+      "path" : "/Users/rnindrai/Desktop/Periscope/Routes",
+      "type" : "fileSystem"
+    },
+    {
+      "identity" : "tmdbrepository",
+      "path" : "/Users/rnindrai/Desktop/Periscope/TMDBRepository",
+      "type" : "fileSystem"
+    }
+  ],
+  "manifest_display_name" : "DetailFeature",
+  "name" : "DetailFeature",
+  "path" : "/Users/rnindrai/Desktop/Periscope/DetailFeature",
+  "platforms" : [
+    {
+      "name" : "ios",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "DetailFeature",
+      "targets" : [
+        "DetailFeature"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "targets" : [
+    {
+      "c99name" : "DetailFeature",
+      "module_type" : "SwiftTarget",
+      "name" : "DetailFeature",
+      "path" : "Sources/DetailFeature",
+      "product_dependencies" : [
+        "DataModel",
+        "Lego",
+        "PeriscopeUI",
+        "Routes",
+        "TMDBRepository"
+      ],
+      "product_memberships" : [
+        "DetailFeature"
+      ],
+      "sources" : [
+        "DetailFeatureView.swift",
+        "DetailFeatureViewModel.swift",
+        "OffsetReader.swift"
+      ],
+      "type" : "library"
+    }
+  ],
+  "tools_version" : "6.2"
+}

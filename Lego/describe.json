@@ -1,0 +1,60 @@
+{
+  "dependencies" : [
+
+  ],
+  "manifest_display_name" : "Lego",
+  "name" : "Lego",
+  "path" : "/Users/rnindrai/Desktop/Periscope/Lego",
+  "platforms" : [
+    {
+      "name" : "ios",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "Lego",
+      "targets" : [
+        "Lego"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "targets" : [
+    {
+      "c99name" : "Lego",
+      "module_type" : "SwiftTarget",
+      "name" : "Lego",
+      "path" : "Sources/Lego",
+      "product_memberships" : [
+        "Lego"
+      ],
+      "resources" : [
+        {
+          "path" : "/Users/rnindrai/Desktop/Periscope/Lego/Sources/Lego/Tokens/Media.xcassets",
+          "rule" : {
+            "process" : {
+
+            }
+          }
+        }
+      ],
+      "sources" : [
+        "Primitives/LegoAsyncImage.swift",
+        "Primitives/LegoButton.swift",
+        "Primitives/LegoProgressView.swift",
+        "Primitives/LegoText.swift",
+        "Tokens/Color.swift",
+        "Tokens/Spacing.swift",
+        "Tokens/StyleSheet.swift",
+        "Tokens/Typography.swift"
+      ],
+      "type" : "library"
+    }
+  ],
+  "tools_version" : "6.2"
+}

@@ -1,6 +1,7 @@
 import DataModel
 import SwiftUI
 import TMDBRepository
+import Utils
 
 @MainActor
 @Observable
@@ -12,19 +13,26 @@ public final class HomeFeatureViewModel {
     }
     
     enum Action {
+        case requestForLocationPermission
         case fetchLatest
     }
     
     private(set) var output: Output = .loading
-    private let repository: TMDBRepository
-    let id = UUID()
     
-    public init(repository: TMDBRepository) {
+    private let repository: TMDBRepository
+    private let countryCodeProvider: CountryCodeProviding
+    
+    public init(repository: TMDBRepository, countryCodeProvider: CountryCodeProviding) {
         self.repository = repository
+        self.countryCodeProvider = countryCodeProvider
     }
 
     func reduce(_ action: Action) async {
         switch action {
+        
+        case .requestForLocationPermission:
+            countryCodeProvider.requestForPermission()
+            
         case .fetchLatest:
             async let popularMovies: MediaCategory? = try? .popularMovies(repository.popularMovies(page: .zero))
             async let trendingToday: MediaCategory? = try? .trendingToday(repository.trendingToday(page: .zero))

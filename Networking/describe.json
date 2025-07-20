@@ -1,0 +1,103 @@
+{
+  "dependencies" : [
+
+  ],
+  "manifest_display_name" : "Networking",
+  "name" : "Networking",
+  "path" : "/Users/rnindrai/Desktop/Periscope/Networking",
+  "platforms" : [
+    {
+      "name" : "ios",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "Networking",
+      "targets" : [
+        "Networking"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "NetworkingImpl",
+      "targets" : [
+        "NetworkingImpl"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "NetworkingFactory",
+      "targets" : [
+        "NetworkingFactory"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "targets" : [
+    {
+      "c99name" : "NetworkingImpl",
+      "module_type" : "SwiftTarget",
+      "name" : "NetworkingImpl",
+      "path" : "Sources/NetworkingImpl",
+      "product_memberships" : [
+        "NetworkingImpl",
+        "NetworkingFactory"
+      ],
+      "sources" : [
+        "URLSessionNetworkService.swift"
+      ],
+      "target_dependencies" : [
+        "Networking"
+      ],
+      "type" : "library"
+    },
+    {
+      "c99name" : "NetworkingFactory",
+      "module_type" : "SwiftTarget",
+      "name" : "NetworkingFactory",
+      "path" : "Sources/NetworkingFactory",
+      "product_memberships" : [
+        "NetworkingFactory"
+      ],
+      "sources" : [
+        "Sources/DefaultNetworkServiceFactory.swift"
+      ],
+      "target_dependencies" : [
+        "Networking",
+        "NetworkingImpl"
+      ],
+      "type" : "library"
+    },
+    {
+      "c99name" : "Networking",
+      "module_type" : "SwiftTarget",
+      "name" : "Networking",
+      "path" : "Sources/Networking",
+      "product_memberships" : [
+        "Networking",
+        "NetworkingImpl",
+        "NetworkingFactory"
+      ],
+      "sources" : [
+        "API.swift",
+        "NetworkService.swift",
+        "NetworkServiceFactory.swift"
+      ],
+      "type" : "library"
+    }
+  ],
+  "tools_version" : "6.2"
+}

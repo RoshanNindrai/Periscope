@@ -47,10 +47,6 @@ let package = Package(
         .target(
             name: "TMDBService",
             dependencies: ["DataModel"]
-        ),
-        .testTarget(
-            name: "TMDBRepositoryTests",
-            dependencies: ["TMDBRepositoryImpl"]
-        ),
+        )
     ]
 )

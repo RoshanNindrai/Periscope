@@ -1,0 +1,179 @@
+{
+  "dependencies" : [
+    {
+      "identity" : "datamodel",
+      "path" : "/Users/rnindrai/Desktop/Periscope/DataModel",
+      "type" : "fileSystem"
+    },
+    {
+      "identity" : "networking",
+      "path" : "/Users/rnindrai/Desktop/Periscope/Networking",
+      "type" : "fileSystem"
+    },
+    {
+      "identity" : "utils",
+      "path" : "/Users/rnindrai/Desktop/Periscope/Utils",
+      "type" : "fileSystem"
+    }
+  ],
+  "manifest_display_name" : "TMDBRepository",
+  "name" : "TMDBRepository",
+  "path" : "/Users/rnindrai/Desktop/Periscope/TMDBRepository",
+  "platforms" : [
+    {
+      "name" : "ios",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "TMDBRepository",
+      "targets" : [
+        "TMDBRepository"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "TMDBRepositoryFactory",
+      "targets" : [
+        "TMDBRepositoryFactory"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "TMDBRepositoryImpl",
+      "targets" : [
+        "TMDBRepositoryImpl"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    },
+    {
+      "name" : "TMDBService",
+      "targets" : [
+        "TMDBService"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "targets" : [
+    {
+      "c99name" : "TMDBService",
+      "module_type" : "SwiftTarget",
+      "name" : "TMDBService",
+      "path" : "Sources/TMDBService",
+      "product_dependencies" : [
+        "DataModel"
+      ],
+      "product_memberships" : [
+        "TMDBRepository",
+        "TMDBRepositoryFactory",
+        "TMDBRepositoryImpl",
+        "TMDBService"
+      ],
+      "sources" : [
+        "TMDBAuthenticationService.swift",
+        "TMDBConfiguration.swift",
+        "TMDBImageURLBuilder.swift"
+      ],
+      "type" : "library"
+    },
+    {
+      "c99name" : "TMDBRepositoryImpl",
+      "module_type" : "SwiftTarget",
+      "name" : "TMDBRepositoryImpl",
+      "path" : "Sources/TMDBRepositoryImpl",
+      "product_dependencies" : [
+        "DataModel",
+        "Networking",
+        "Utils"
+      ],
+      "product_memberships" : [
+        "TMDBRepositoryFactory",
+        "TMDBRepositoryImpl"
+      ],
+      "sources" : [
+        "Codable/CastListResponse.swift",
+        "Codable/ConfigurationResponse.swift",
+        "Codable/MediaResultSetResponse.swift",
+        "Codable/MovieDetailResponse.swift",
+        "Codable/MovieListResponse.swift",
+        "Codable/RequestTokenResponse.swift",
+        "Codable/SearchResultSetResponse.swift",
+        "Codable/SessionTokenResponse.swift",
+        "Codable/ShowDetailResponse.swift",
+        "Codable/TVShowListResponse.swift",
+        "RemoteTMDBRepository.swift",
+        "Secrets/Secrets.swift",
+        "Service/RemoteTMDBAuthenticationService.swift",
+        "TMDBAPI.swift"
+      ],
+      "target_dependencies" : [
+        "TMDBRepository",
+        "TMDBService"
+      ],
+      "type" : "library"
+    },
+    {
+      "c99name" : "TMDBRepositoryFactory",
+      "module_type" : "SwiftTarget",
+      "name" : "TMDBRepositoryFactory",
+      "path" : "Sources/TMDBRepositoryFactory",
+      "product_dependencies" : [
+        "Networking",
+        "Utils"
+      ],
+      "product_memberships" : [
+        "TMDBRepositoryFactory"
+      ],
+      "sources" : [
+        "Sources/DefaultTMDBRepositoryFactory.swift"
+      ],
+      "target_dependencies" : [
+        "TMDBRepository",
+        "TMDBRepositoryImpl"
+      ],
+      "type" : "library"
+    },
+    {
+      "c99name" : "TMDBRepository",
+      "module_type" : "SwiftTarget",
+      "name" : "TMDBRepository",
+      "path" : "Sources/TMDBRepository",
+      "product_dependencies" : [
+        "DataModel",
+        "Networking",
+        "Utils"
+      ],
+      "product_memberships" : [
+        "TMDBRepository",
+        "TMDBRepositoryFactory",
+        "TMDBRepositoryImpl"
+      ],
+      "sources" : [
+        "TMDBRepository.swift",
+        "TMDBRepositoryFactory.swift"
+      ],
+      "target_dependencies" : [
+        "TMDBService"
+      ],
+      "type" : "library"
+    }
+  ],
+  "tools_version" : "6.2"
+}

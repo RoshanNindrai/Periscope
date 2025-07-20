@@ -68,7 +68,8 @@ struct PeriscopeAppView: View {
                 NavigationStack {
                     HomeFeatureView(
                         viewModel: HomeFeatureViewModel(
-                            repository: appSetup.repositoryContainer.tmdbRepository
+                            repository: appSetup.repositoryContainer.tmdbRepository,
+                            countryCodeProvider: appSetup.countryCodeProvider
                         )
                     )
                     .navigationTitle("Home")

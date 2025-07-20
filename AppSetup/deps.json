@@ -1,0 +1,69 @@
+{
+  "identity": "appsetup",
+  "name": "AppSetup",
+  "url": "/Users/rnindrai/Desktop/Periscope/AppSetup",
+  "version": "unspecified",
+  "path": "/Users/rnindrai/Desktop/Periscope/AppSetup",
+  "dependencies": [
+    {
+      "identity": "tmdbrepository",
+      "name": "TMDBRepository",
+      "url": "/Users/rnindrai/Desktop/Periscope/TMDBRepository",
+      "version": "unspecified",
+      "path": "/Users/rnindrai/Desktop/Periscope/TMDBRepository",
+      "dependencies": [
+        {
+          "identity": "datamodel",
+          "name": "DataModel",
+          "url": "/Users/rnindrai/Desktop/Periscope/DataModel",
+          "version": "unspecified",
+          "path": "/Users/rnindrai/Desktop/Periscope/DataModel",
+          "dependencies": [
+
+          ]
+        },
+        {
+          "identity": "networking",
+          "name": "Networking",
+          "url": "/Users/rnindrai/Desktop/Periscope/Networking",
+          "version": "unspecified",
+          "path": "/Users/rnindrai/Desktop/Periscope/Networking",
+          "dependencies": [
+
+          ]
+        },
+        {
+          "identity": "utils",
+          "name": "Utils",
+          "url": "/Users/rnindrai/Desktop/Periscope/Utils",
+          "version": "unspecified",
+          "path": "/Users/rnindrai/Desktop/Periscope/Utils",
+          "dependencies": [
+
+          ]
+        }
+      ]
+    },
+    {
+      "identity": "networking",
+      "name": "Networking",
+      "url": "/Users/rnindrai/Desktop/Periscope/Networking",
+      "version": "unspecified",
+      "path": "/Users/rnindrai/Desktop/Periscope/Networking",
+      "dependencies": [
+
+      ]
+    },
+    {
+      "identity": "utils",
+      "name": "Utils",
+      "url": "/Users/rnindrai/Desktop/Periscope/Utils",
+      "version": "unspecified",
+      "path": "/Users/rnindrai/Desktop/Periscope/Utils",
+      "dependencies": [
+
+      ]
+    }
+  ]
+}
+

@@ -1,0 +1,60 @@
+{
+  "dependencies" : [
+
+  ],
+  "manifest_display_name" : "DataModel",
+  "name" : "DataModel",
+  "path" : "/Users/rnindrai/Desktop/Periscope/DataModel",
+  "platforms" : [
+    {
+      "name" : "ios",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "DataModel",
+      "targets" : [
+        "DataModel"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "targets" : [
+    {
+      "c99name" : "DataModel",
+      "module_type" : "SwiftTarget",
+      "name" : "DataModel",
+      "path" : "Sources/DataModel",
+      "product_memberships" : [
+        "DataModel"
+      ],
+      "sources" : [
+        "CastAndCrewList.swift",
+        "ImageSize.swift",
+        "Media.swift",
+        "MediaCategory.swift",
+        "MediaDetail.swift",
+        "MediaDetailCategory.swift",
+        "MediaList.swift",
+        "Movie.swift",
+        "MovieDetail.swift",
+        "Person.swift",
+        "RequestToken.swift",
+        "SearchResultSet.swift",
+        "Searchable.swift",
+        "SessionToken.swift",
+        "ShowDetail.swift",
+        "TVShow.swift",
+        "TrendingItem.swift",
+        "TrendingMediaList.swift"
+      ],
+      "type" : "library"
+    }
+  ],
+  "tools_version" : "6.2"
+}

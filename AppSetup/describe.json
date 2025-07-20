@@ -1,0 +1,65 @@
+{
+  "dependencies" : [
+    {
+      "identity" : "tmdbrepository",
+      "path" : "/Users/rnindrai/Desktop/Periscope/TMDBRepository",
+      "type" : "fileSystem"
+    },
+    {
+      "identity" : "networking",
+      "path" : "/Users/rnindrai/Desktop/Periscope/Networking",
+      "type" : "fileSystem"
+    },
+    {
+      "identity" : "utils",
+      "path" : "/Users/rnindrai/Desktop/Periscope/Utils",
+      "type" : "fileSystem"
+    }
+  ],
+  "manifest_display_name" : "AppSetup",
+  "name" : "AppSetup",
+  "path" : "/Users/rnindrai/Desktop/Periscope/AppSetup",
+  "platforms" : [
+    {
+      "name" : "ios",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "AppSetup",
+      "targets" : [
+        "AppSetup"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "targets" : [
+    {
+      "c99name" : "AppSetup",
+      "module_type" : "SwiftTarget",
+      "name" : "AppSetup",
+      "path" : "Sources/AppSetup",
+      "product_dependencies" : [
+        "Networking",
+        "NetworkingFactory",
+        "TMDBRepository",
+        "TMDBRepositoryFactory",
+        "Utils"
+      ],
+      "product_memberships" : [
+        "AppSetup"
+      ],
+      "sources" : [
+        "AppSetup.swift",
+        "Container/AppServiceContainer.swift"
+      ],
+      "type" : "library"
+    }
+  ],
+  "tools_version" : "6.2"
+}

@@ -1,0 +1,43 @@
+{
+  "dependencies" : [
+
+  ],
+  "manifest_display_name" : "Utils",
+  "name" : "Utils",
+  "path" : "/Users/rnindrai/Desktop/Periscope/Utils",
+  "platforms" : [
+    {
+      "name" : "ios",
+      "version" : "26.0"
+    }
+  ],
+  "products" : [
+    {
+      "name" : "Utils",
+      "targets" : [
+        "Utils"
+      ],
+      "type" : {
+        "library" : [
+          "automatic"
+        ]
+      }
+    }
+  ],
+  "targets" : [
+    {
+      "c99name" : "Utils",
+      "module_type" : "SwiftTarget",
+      "name" : "Utils",
+      "path" : "Sources/Utils",
+      "product_memberships" : [
+        "Utils"
+      ],
+      "sources" : [
+        "KeychainStore.swift"
+      ],
+      "type" : "library"
+    }
+  ],
+  "tools_version" : "6.2"
+}

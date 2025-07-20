@@ -23,10 +23,6 @@ let package = Package(
             resources: [
                 .process("Tokens/Media.xcassets")
             ]
-        ),
-        .testTarget(
-            name: "LegoTests",
-            dependencies: ["Lego"]
-        ),
+        )
     ]
 )

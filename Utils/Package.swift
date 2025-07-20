@@ -14,6 +14,14 @@ let package = Package(
             name: "Utils",
             targets: ["Utils"]
         ),
+        .library(
+            name: "UtilsImpl",
+            targets: ["UtilsImpl"]
+        ),
+        .library(
+            name: "UtilsFactory",
+            targets: ["UtilsFactory"]
+        )
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -21,6 +29,13 @@ let package = Package(
         .target(
             name: "Utils"
         ),
-
+        .target(
+            name: "UtilsImpl",
+            dependencies: ["Utils"]
+        ),
+        .target(
+            name: "UtilsFactory",
+            dependencies: ["Utils", "UtilsImpl"]
+        ),
     ]
 )

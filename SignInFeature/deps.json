@@ -1,0 +1,88 @@
+{
+  "identity": "signinfeature",
+  "name": "SignInFeature",
+  "url": "/Users/rnindrai/Desktop/Periscope/SignInFeature",
+  "version": "unspecified",
+  "path": "/Users/rnindrai/Desktop/Periscope/SignInFeature",
+  "dependencies": [
+    {
+      "identity": "lego",
+      "name": "Lego",
+      "url": "/Users/rnindrai/Desktop/Periscope/Lego",
+      "version": "unspecified",
+      "path": "/Users/rnindrai/Desktop/Periscope/Lego",
+      "dependencies": [
+
+      ]
+    },
+    {
+      "identity": "routes",
+      "name": "Routes",
+      "url": "/Users/rnindrai/Desktop/Periscope/Routes",
+      "version": "unspecified",
+      "path": "/Users/rnindrai/Desktop/Periscope/Routes",
+      "dependencies": [
+        {
+          "identity": "datamodel",
+          "name": "DataModel",
+          "url": "/Users/rnindrai/Desktop/Periscope/DataModel",
+          "version": "unspecified",
+          "path": "/Users/rnindrai/Desktop/Periscope/DataModel",
+          "dependencies": [
+
+          ]
+        }
+      ]
+    },
+    {
+      "identity": "tmdbrepository",
+      "name": "TMDBRepository",
+      "url": "/Users/rnindrai/Desktop/Periscope/TMDBRepository",
+      "version": "unspecified",
+      "path": "/Users/rnindrai/Desktop/Periscope/TMDBRepository",
+      "dependencies": [
+        {
+          "identity": "datamodel",
+          "name": "DataModel",
+          "url": "/Users/rnindrai/Desktop/Periscope/DataModel",
+          "version": "unspecified",
+          "path": "/Users/rnindrai/Desktop/Periscope/DataModel",
+          "dependencies": [
+
+          ]
+        },
+        {
+          "identity": "networking",
+          "name": "Networking",
+          "url": "/Users/rnindrai/Desktop/Periscope/Networking",
+          "version": "unspecified",
+          "path": "/Users/rnindrai/Desktop/Periscope/Networking",
+          "dependencies": [
+
+          ]
+        },
+        {
+          "identity": "utils",
+          "name": "Utils",
+          "url": "/Users/rnindrai/Desktop/Periscope/Utils",
+          "version": "unspecified",
+          "path": "/Users/rnindrai/Desktop/Periscope/Utils",
+          "dependencies": [
+
+          ]
+        }
+      ]
+    },
+    {
+      "identity": "utils",
+      "name": "Utils",
+      "url": "/Users/rnindrai/Desktop/Periscope/Utils",
+      "version": "unspecified",
+      "path": "/Users/rnindrai/Desktop/Periscope/Utils",
+      "dependencies": [
+
+      ]
+    }
+  ]
+}
+

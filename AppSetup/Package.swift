@@ -32,7 +32,8 @@ let package = Package(
                 .product(name: "NetworkingFactory", package: "Networking"),
                 "TMDBRepository",
                 .product(name: "TMDBRepositoryFactory", package: "TMDBRepository"),
-                "Utils"
+                "Utils",
+                .product(name: "UtilsFactory", package: "Utils")
             ]
         ),
     ]

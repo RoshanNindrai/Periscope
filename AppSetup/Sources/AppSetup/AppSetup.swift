@@ -4,14 +4,18 @@ import SwiftUI
 import TMDBRepository
 import TMDBRepositoryFactory
 import Utils
+import UtilsFactory
 
 public struct AppSetupDependencies: Sendable {
     let networkServiceFactory: NetworkServiceFactory
     let tmdbRepositoryFactory: TMDBRepositoryFactory
+    let countryCodeProviderFactory: CountryCodeProviderFactory
+    
     let keychainStore = KeychainStore(service: "com.periscope.keychain")
     
     public init() {
         networkServiceFactory = DefaultNetworkServiceFactory()
+        countryCodeProviderFactory = DefaultCountryCodeProviderFactory()
         
         tmdbRepositoryFactory = DefaultTMDBRepositoryFactory(
             dependencies: DefaultTMDBRepositoryFactoryDependencies(
@@ -34,6 +38,7 @@ public struct PeriscopeAppSetup: Sendable  {
     public let serviceContainer: AppServiceContainer
     public let repositoryContainer: RepositoryContainer
     public let keychainStore: KeychainStore
+    public let countryCodeProvider: CountryCodeProviding
     
     private let dependencies: AppSetupDependencies
     
@@ -50,6 +55,8 @@ public struct PeriscopeAppSetup: Sendable  {
         repositoryContainer = RepositoryContainer(
             tmdbRepository: dependencies.tmdbRepositoryFactory.makeRepository()
         )
+        
+        countryCodeProvider = dependencies.countryCodeProviderFactory.makeCountryCodeProvider()
     }
 }
 
