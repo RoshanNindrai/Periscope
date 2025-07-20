@@ -9,6 +9,7 @@ import Routes
 import TMDBRepository
 import TMDBService
 import DataModel
+import Utils
 
 enum PeriscopeTab: Hashable {
     case home
@@ -76,6 +77,7 @@ struct PeriscopeAppView: View {
                     .mediaDetailNavigationDestination(
                         router: router,
                         repository: appSetup.repositoryContainer.tmdbRepository,
+                        countryCodeProvider: appSetup.countryCodeProvider,
                         namespace: router.namespace ?? namespace
                     )
                 }
@@ -94,6 +96,7 @@ struct PeriscopeAppView: View {
                     .mediaDetailNavigationDestination(
                         router: router,
                         repository: appSetup.repositoryContainer.tmdbRepository,
+                        countryCodeProvider: appSetup.countryCodeProvider,
                         namespace: router.namespace ?? namespace
                     )
                 }
@@ -132,6 +135,7 @@ private extension View {
     func mediaDetailNavigationDestination(
         router: AppRouter,
         repository: TMDBRepository,
+        countryCodeProvider: CountryCodeProviding,
         namespace: Namespace.ID
     ) -> some View {
         
@@ -154,7 +158,10 @@ private extension View {
         return self.navigationDestination(item: selection) { selectedMediaInfo in
             DetailFeatureView(
                 media: selectedMediaInfo.media,
-                viewModel: DetailFeatureViewModel(repository: repository)
+                viewModel: DetailFeatureViewModel(
+                    repository: repository,
+                    countryCodeProvider: countryCodeProvider
+                ),
             )
             .navigationTransition(
                 .zoom(sourceID: selectedMediaInfo, in: namespace)

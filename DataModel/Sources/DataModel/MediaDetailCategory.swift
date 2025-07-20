@@ -14,6 +14,8 @@ public enum MediaDetailCategory: Identifiable, Equatable, Sendable {
     /// Related media items as suggestions.
     case relatedMedia(MediaList)
     
+    case watchProvider(WatchProviderRegion?)
+    
     /// Unique identifier for diffing/UI, combining type and model identity.
     public var id: String {
         switch self {
@@ -25,13 +27,15 @@ public enum MediaDetailCategory: Identifiable, Equatable, Sendable {
         case .relatedMedia:
             // Section-level identity for related media.
             return "relatedMedia"
+        case .watchProvider:
+            return "Watch"
         }
     }
     
     /// Returns pageable model if supported (only for related media). Nil otherwise. No allocation if unavailable.
     public var pageableMediaList: (any PageableMediaList)? {
         switch self {
-        case .mediaDetail, .castAndCrew:
+        case .mediaDetail, .castAndCrew, .watchProvider:
             // Only related media supports paging.
             return nil
         case .relatedMedia(let mediaList):
@@ -42,7 +46,7 @@ public enum MediaDetailCategory: Identifiable, Equatable, Sendable {
     /// The array of media items for display (only in related media). Nil for others. Fast, no copy.
     public var mediaItems: [any Media]? {
         switch self {
-        case .mediaDetail, .castAndCrew:
+        case .mediaDetail, .castAndCrew, .watchProvider:
             // No items for detail/cast.
             return nil
         case .relatedMedia(let mediaList):
@@ -59,6 +63,8 @@ public enum MediaDetailCategory: Identifiable, Equatable, Sendable {
             return "Cast & Crew"
         case .relatedMedia:
             return "Related"
+        case .watchProvider:
+            return "Available on"
         }
     }
     

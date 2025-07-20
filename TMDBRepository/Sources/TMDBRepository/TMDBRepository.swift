@@ -77,6 +77,9 @@ public protocol TMDBRepository: Sendable {
     /// - Returns: A `MediaList` containing the search results.
     /// - Throws: `TMDBRepositoryError` on failure.
     func search(for query: String) async throws -> SearchResultSet
+    
+    
+    func watchProviders(for mediaItem: MediaItem) async throws -> WatchProviders
 
     /// Provides a builder for constructing URLs to TMDB images (e.g., poster or backdrop images).
     /// - Returns: A `TMDBImageURLBuilder` instance for building image URLs.

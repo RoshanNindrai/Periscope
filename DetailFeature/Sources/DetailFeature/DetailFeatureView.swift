@@ -75,6 +75,8 @@ public struct DetailFeatureView: View {
                                     relatedMediaView(mediaList)
                                 case .mediaDetail(let detail):
                                     mediaDetailView(detail)
+                                case .watchProvider(let providerRegion):
+                                    watchProviderView(providerRegion)
                                 }
                             }
                         case .loading:
@@ -94,7 +96,8 @@ public struct DetailFeatureView: View {
             DetailFeatureView(
                 media: selectedMediaInfo.media,
                 viewModel: DetailFeatureViewModel(
-                    repository: viewModel.repository
+                    repository: viewModel.repository,
+                    countryCodeProvider: viewModel.countryCodeProvider
                 )
             )
             .navigationTransition(.zoom(sourceID: selectedMediaInfo, in: namespace))
@@ -111,9 +114,7 @@ public struct DetailFeatureView: View {
 
 private extension DetailFeatureView {
     var backdropImage: some View {
-        let parallaxOffset = scrollOffset * 0.4
-        let scale = clampScale(for: scrollOffset)
-        return LegoAsyncImage(
+        LegoAsyncImage(
             url: imageURLBuilder.posterImageURL(media: media, size: .w780),
             placeholder: {
                 Rectangle()
@@ -124,8 +125,8 @@ private extension DetailFeatureView {
                 image
                     .resizable()
                     .scaledToFill()
-                    .scaleEffect(scale)
-                    .offset(y: parallaxOffset)
+                    .scaleEffect(clampScale(for: scrollOffset))
+                    .offset(y: scrollOffset * 0.4)
             }
         )
         .frame(height: Size.height)
@@ -157,22 +158,31 @@ private extension DetailFeatureView {
     
     @ViewBuilder
     func relatedMediaView(_ media: MediaList) -> some View {
-        VStack {
-            HMediaListView(
-                mediaDetailCategory: .relatedMedia(media),
-                onSelect: {
-                    selectedMediaInfo = $0
-                },
-                transitionSourceBuilder: { selection, base in
-                    AnyView(base.matchedTransitionSource(id: selection, in: namespace))
-                }
-            )
-        }
+        HMediaListView(
+            mediaDetailCategory: .relatedMedia(media),
+            onSelect: {
+                selectedMediaInfo = $0
+            },
+            transitionSourceBuilder: { selection, base in
+                AnyView(base.matchedTransitionSource(id: selection, in: namespace))
+            }
+        )
     }
     
     @ViewBuilder
     func mediaDetailView(_ mediaDetail: any MediaDetail) -> some View {
         MediaDetailInformationView(detail: mediaDetail)
             .padding(.top, styleSheet.spacing.spacing100)
+    }
+    
+    @ViewBuilder
+    func watchProviderView(_ watchProviderRegion: WatchProviderRegion?) -> some View {
+        if let watchProviderRegion = watchProviderRegion {
+            HWatchProviderView(
+                watchRegion: watchProviderRegion
+            ) { provider in
+                print(provider)
+            }
+        }
     }
 }

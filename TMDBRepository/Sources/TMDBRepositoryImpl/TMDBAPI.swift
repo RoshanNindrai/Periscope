@@ -15,7 +15,7 @@ enum TMDBAPI: API {
     ]
     
     case configuration
-    
+
     // MARK: - Authentication Endpoints
     case requestToken
     case authorizeToken(requestToken: String)
@@ -35,18 +35,22 @@ enum TMDBAPI: API {
     case movieDetails(id: Int)
     case tvDetails(id: Int)
     case searchMulti(query: String)
+    
+    // MARK: - Watch Providers
+    case movieWatchProviders(id: Int)
+    case tvWatchProviders(id: Int)
 
     /// The base URL for the selected TMDB endpoint.
     var baseURL: URL {
         switch self {
-        case .configuration, 
-             .requestToken, 
-             .createSession, 
-             .popularMovies, 
-             .topRatedMovies, 
-             .popularTVShows, 
-             .upcomingMovies, 
-             .nowPlayingMovies, 
+        case .configuration,
+             .requestToken,
+             .createSession,
+             .popularMovies,
+             .topRatedMovies,
+             .popularTVShows,
+             .upcomingMovies,
+             .nowPlayingMovies,
              .trendingToday,
              .relatedMovies,
              .relatedTVShows,
@@ -54,15 +58,15 @@ enum TMDBAPI: API {
              .tvCredits,
              .movieDetails,
              .tvDetails,
-             .searchMulti:
-            // All these endpoints share the same API base URL
+             .searchMulti,
+             .movieWatchProviders,
+             .tvWatchProviders:
             return Self.apiBaseURL
         case .authorizeToken:
-            // Authorization happens on a different domain
             return Self.authBaseURL
         }
     }
-    
+
     /// The path appended to the baseURL for the endpoint.
     var path: String {
         switch self {
@@ -75,7 +79,6 @@ enum TMDBAPI: API {
         case .requestToken:
             return "/authentication/token/new"
         case .authorizeToken(let requestToken):
-            // Path includes dynamic request token for authentication
             return "/authenticate/\(requestToken)"
         case .createSession:
             return "/authentication/session/new"
@@ -101,20 +104,24 @@ enum TMDBAPI: API {
             return "/tv/\(id)"
         case .searchMulti:
             return "/search/multi"
+        case .movieWatchProviders(let id):
+            return "/movie/\(id)/watch/providers"
+        case .tvWatchProviders(let id):
+            return "/tv/\(id)/watch/providers"
         }
     }
-    
+
     /// The HTTP method (GET, POST) to use for this API call.
     var method: HTTPMethod {
         switch self {
-        case .configuration, 
-             .popularMovies, 
-             .requestToken, 
-             .authorizeToken, 
-             .topRatedMovies, 
-             .popularTVShows, 
-             .upcomingMovies, 
-             .nowPlayingMovies, 
+        case .configuration,
+             .popularMovies,
+             .requestToken,
+             .authorizeToken,
+             .topRatedMovies,
+             .popularTVShows,
+             .upcomingMovies,
+             .nowPlayingMovies,
              .trendingToday,
              .relatedMovies,
              .relatedTVShows,
@@ -122,56 +129,57 @@ enum TMDBAPI: API {
              .tvCredits,
              .movieDetails,
              .tvDetails,
-             .searchMulti:
+             .searchMulti,
+             .movieWatchProviders,
+             .tvWatchProviders:
             return .get
         case .createSession:
             return .post
         }
     }
-    
+
     /// The cache policy to use for the URLRequest.
     var cachePolicy: URLRequest.CachePolicy {
         switch self {
-        // Example: in future, you could set .returnCacheDataElseLoad for certain endpoints
         default:
             return .reloadIgnoringLocalCacheData
         }
     }
-    
+
     /// The timeout interval for the URLRequest.
     var timeout: TimeInterval {
         switch self {
-        // Example: in future, you could use a different timeout per endpoint
         default:
             return 30
         }
     }
-    
+
     /// The HTTP headers to include in the request.
     var headers: [String: String] {
         return Self.defaultHeaders
     }
-    
+
     /// The query parameters to include in the URL request.
     var queryParameters: [String : String] {
         switch self {
-        case .configuration, 
-             .popularMovies, 
-             .requestToken, 
-             .topRatedMovies, 
-             .popularTVShows, 
-             .upcomingMovies, 
-             .nowPlayingMovies, 
+        case .configuration,
+             .popularMovies,
+             .requestToken,
+             .topRatedMovies,
+             .popularTVShows,
+             .upcomingMovies,
+             .nowPlayingMovies,
              .trendingToday,
              .relatedMovies,
              .relatedTVShows,
              .movieCredits,
              .tvCredits,
              .movieDetails,
-             .tvDetails:
-            return [:] // No query parameters for these endpoints
+             .tvDetails,
+             .movieWatchProviders,
+             .tvWatchProviders:
+            return [:]
         case .authorizeToken:
-            // Redirect URL after authorization
             return ["redirect_to": "periscope://auth-callback"]
         case .createSession:
             return [:]
@@ -179,21 +187,20 @@ enum TMDBAPI: API {
             return ["query": query]
         }
     }
-    
+
     /// The HTTP body to include in the request, if any.
     var body: [String: Any]? {
         switch self {
         case .createSession(let requestToken):
-            // Send request token in body to create session
             return ["request_token": requestToken]
-        case .configuration, 
-             .requestToken, 
-             .authorizeToken, 
-             .popularMovies, 
-             .popularTVShows, 
-             .topRatedMovies, 
-             .upcomingMovies, 
-             .nowPlayingMovies, 
+        case .configuration,
+             .requestToken,
+             .authorizeToken,
+             .popularMovies,
+             .popularTVShows,
+             .topRatedMovies,
+             .upcomingMovies,
+             .nowPlayingMovies,
              .trendingToday,
              .relatedMovies,
              .relatedTVShows,
@@ -201,7 +208,9 @@ enum TMDBAPI: API {
              .tvCredits,
              .movieDetails,
              .tvDetails,
-             .searchMulti:
+             .searchMulti,
+             .movieWatchProviders,
+             .tvWatchProviders:
             return nil
         }
     }

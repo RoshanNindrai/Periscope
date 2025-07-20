@@ -44,6 +44,16 @@ public struct TMDBImageURLBuilder: Sendable {
                 .appending(profilePath)
         )!
     }
+    
+    public func watchProviderImageURL(watchProvider: WatchProvider, size: LogoSize) -> URL {
+        let logopath = watchProvider.logoPath
+        
+        return URL(
+            string: configuration.images.secureBaseURL
+                .appending(size.rawValue)
+                .appending(logopath)
+        )!
+    }
 }
 
 public struct TMDBImageURLBuilderEnvironmentKey: EnvironmentKey {
